@@ -13,7 +13,7 @@
 <script src="js/bootstrapjs/raphael-2.1.0.min.js" type="text/javascript"></script>
 <script src="js/jqgrid/grid.locale-es.js" type="text/javascript"></script>
 <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
-
+<script src="js/usuario.js" type="text/javascript"></script>
 
 
 <link href="css/bootstraptemplate/bootstrap.css" rel="stylesheet" type="text/css"/>
