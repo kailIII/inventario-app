@@ -14,7 +14,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Mantenimiento Usuarios</title>
         <%@ include file="utiles/includes.jsp" %>
-        <script src="js/usuario.js" type="text/javascript"></script>
         <!-- GOOGLE FONTS-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     </head>
