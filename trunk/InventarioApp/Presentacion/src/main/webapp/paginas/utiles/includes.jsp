@@ -6,8 +6,8 @@
 <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="js/jquery-ui.js" type="text/javascript"></script>
 <script src="js/jquery-validate.js" type="text/javascript"></script>
-<script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
 <script src="js/usuario.js" type="text/javascript"></script>
+<script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
 <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>
 <script src="js/bootstrapjs/jquery.metisMenu.js" type="text/javascript"></script>
 <script src="js/bootstrapjs/morris.js" type="text/javascript"></script>
