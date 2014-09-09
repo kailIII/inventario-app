@@ -75,8 +75,9 @@ $(document).ready(function() {
         url: 'listar-proveedores',
         dataType: 'JSON',
         mtype: 'POST',
-        colNames: ['Nombre Proveedor', 'Cédula Juridica', 'Direccion', 'Telefono'],
+        colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
+            {name: 'id', index: 'id', align: 'center', search: false},
             {name: 'nombreProveedor', index: 'nombreProveedor', align: 'center', search: false},
             {name: 'cedulaJuridica', index: 'cedulaJuridica', align: 'center', search: false},
             {name: 'telefono', index: 'telefono', align: 'center', search: false},
@@ -84,7 +85,8 @@ $(document).ready(function() {
         ],
         caption: 'Lista de Proveedores',
         jsonReader: {
-            repeatitems: false
+            repeatitems: false,
+            root: "rows",
         },
         pager: '#pager',
         height: 'auto',
@@ -93,6 +95,8 @@ $(document).ready(function() {
         sortname: 'nombreProveedor',
         sortorder: 'asc',
         viewrecords: true,
+        pagination: true,
+        pgbuttons: true,
         emptyrecords: "No hay datos disponibles"
     });
 });

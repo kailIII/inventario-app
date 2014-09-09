@@ -8,13 +8,12 @@ package com.app.inventario.controlador;
 import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 /**
  *
@@ -33,6 +33,8 @@ public class Controlador {
 
     UsuarioServicioImpl usuarioServicio;
     ProveedorServicioImpl proveedorServicio;
+    
+    private org.springframework.web.servlet.view.json.MappingJacksonJsonView jsonView = new MappingJacksonJsonView();
 
     // Generales
     @RequestMapping(value = "/login")
@@ -130,23 +132,33 @@ public class Controlador {
         return "redirect:mantenimiento-proveedor";
     }
 
-    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
-    public @ResponseBody String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
+    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
         String datos = "";
+        Map<String, Object> lista = null;
         try {
             ObjectMapper om = new ObjectMapper();
             int numeroPagina = Integer.parseInt(request.getParameter("page"));
             int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
             String ordenarPor = request.getParameter("sidx");
             String ordenarAsc = request.getParameter("sord");
-            Map<String, Object> lista = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+            lista = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
 
             datos = om.writeValueAsString(lista);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return datos;
+        return lista;
+    }*/
+    
+    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    public ModelAndView obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        //String role = request.getParameter("role");
+        List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
+        map.put("rows", proveedores);
+        return new ModelAndView(this.jsonView, map);
     }
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
@@ -154,7 +166,7 @@ public class Controlador {
     List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         List<String> nombresProveedores = new ArrayList<String>();
-        for (Proveedor p : proveedores) {
+        for(Proveedor p : proveedores){
             nombresProveedores.add(p.getNombreProveedor());
         }
         return nombresProveedores;
