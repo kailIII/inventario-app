@@ -131,7 +131,7 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
-    public String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
         String datos = "";
         try {
             ObjectMapper om = new ObjectMapper();

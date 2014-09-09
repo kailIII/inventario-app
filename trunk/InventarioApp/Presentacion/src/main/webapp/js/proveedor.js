@@ -79,8 +79,8 @@ $(document).ready(function() {
         colModel: [
             {name: 'nombreProveedor', index: 'nombreProveedor', align: 'center', search: false},
             {name: 'cedulaJuridica', index: 'cedulaJuridica', align: 'center', search: false},
-            {name: 'direccion', index: 'direccion', align: 'center', search: false},
-            {name: 'telefono', index: 'telefono', align: 'center', search: false}
+            {name: 'telefono', index: 'telefono', align: 'center', search: false},
+            {name: 'direccion', index: 'direccion', align: 'center', search: false}
         ],
         caption: 'Lista de Proveedores',
         jsonReader: {

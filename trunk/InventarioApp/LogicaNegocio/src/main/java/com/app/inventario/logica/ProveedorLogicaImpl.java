@@ -84,8 +84,8 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             if(numeroPagina > totalPaginas){
                 numeroPagina = totalPaginas;
             }
-            map.put("page", numeroPagina);
-            map.put("total", totalPaginas);
+            map.put("page", 1);
+            map.put("total", 1);
             map.put("records", proveedores.size());
             map.put("rows", proveedores);
         } catch (Exception ex) {
