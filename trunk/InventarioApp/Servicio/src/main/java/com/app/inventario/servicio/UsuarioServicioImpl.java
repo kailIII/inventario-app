@@ -9,6 +9,7 @@ import com.app.inventario.entidades.Usuario;
 import com.app.inventario.logica.UsuarioLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -36,6 +37,10 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
 
     public List<Usuario> obtenerTodos() {
         return usuarioLogica.obtenerTodos();
+    }
+    
+    public List<Usuario> obtenerListaTodos(){
+        return usuarioLogica.obtenerListaTodos();
     }
     
     public boolean validarUsername(String username){

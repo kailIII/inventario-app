@@ -16,7 +16,6 @@ $(document).ready(function() {
         }
     });
 
-
     $("#btnBuscarProveedor").click(function() {
         $.ajax({
             url: 'buscar-proveedor-nombre',
@@ -24,7 +23,6 @@ $(document).ready(function() {
             type: 'GET',
             data: {'nombreProveedor': $("#nombreProveedorBuscar").val()},
             beforeSend: function() {
-                alert("Enviando datos");
             },
             success: function(proveedor) {
                 $("#nombreProveedorAct").val(proveedor.nombreProveedor);
@@ -73,7 +71,6 @@ $(document).ready(function() {
         });
     });
 
-
     $("#list").jqGrid({
         url: 'listar-proveedores',
         dataType: 'JSON',
@@ -82,14 +79,20 @@ $(document).ready(function() {
         colModel: [
             {name: 'nombreProveedor', index: 'nombreProveedor', align: 'center', search: false},
             {name: 'cedulaJuridica', index: 'cedulaJuridica', align: 'center', search: false},
-            {name: 'direccion', index: 'direccion', align: 'center',  search: false},
-            {name: 'telefono', index: 'telefono', align: 'center',  search: false}
+            {name: 'direccion', index: 'direccion', align: 'center', search: false},
+            {name: 'telefono', index: 'telefono', align: 'center', search: false}
         ],
         caption: 'Lista de Proveedores',
         jsonReader: {
             repeatitems: false
         },
         pager: '#pager',
-        height : 'auto'
+        height: 'auto',
+        rowNum: 15,
+        rowList: [15, 30, 45],
+        sortname: 'nombreProveedor',
+        sortorder: 'asc',
+        viewrecords: true,
+        emptyrecords: "No hay datos disponibles"
     });
 });

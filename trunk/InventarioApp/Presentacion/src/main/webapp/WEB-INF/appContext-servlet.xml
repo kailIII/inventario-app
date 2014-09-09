@@ -111,11 +111,7 @@
     
     
     
-    <!-- Beans inyectados en las fachadas que se declaran como un objeto del DAOImpl -->
-    
-    <!-- bean que se inyecta para el dao donde va incluido el encriptador 
-         y una clave para unir al encriptador
-    -->
+   <!-- Beans utilizados para todo el flujo con las entidades Usuario -->
     <bean id="usuarioDAO" class="com.app.inventario.dao.UsuarioDAOImpl">
         <property name="messageDigestPasswordEncoder" ref="passwordEncoder"/>
         <property name="saltSource" ref="saltSource"/>
@@ -127,7 +123,15 @@
     <bean id="usuarioServicio" class="com.app.inventario.servicio.UsuarioServicioImpl">  
     </bean>
     
-    <!-- Aquí termina la capa de fachadas o servicio -->
+    <!-- Beans utilizados para todo el flujo con las entidades Proveedor -->
+    <bean id="proveedorDAO" class="com.app.inventario.dao.ProveedorDAOImpl">
+    </bean>
+    
+    <bean id="proveedorLogica" class="com.app.inventario.logica.ProveedorLogicaImpl">  
+    </bean>
+    
+    <bean id="proveedorServicio" class="com.app.inventario.servicio.ProveedorServicioImpl">  
+    </bean>
 
         
     <!-- Controladores que utilizan la capa de servicio o fachadas -->

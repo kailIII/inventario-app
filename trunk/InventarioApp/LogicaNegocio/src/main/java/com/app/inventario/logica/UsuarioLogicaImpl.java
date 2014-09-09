@@ -8,7 +8,9 @@ package com.app.inventario.logica;
 import com.app.inventario.dao.UsuarioDAOImpl;
 import com.app.inventario.entidades.Usuario;
 import com.app.inventario.logicainterface.ILogica;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -67,31 +69,41 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
         }
         return usuarios;
     }
-    
+
     @Transactional(readOnly = true)
-    public boolean validarUsername(String username){
-        boolean valido = false;
-        try{
-            valido = usuarioDAO.validarUsername(username);
+    public List<Usuario> obtenerListaTodos() {
+        Map<String, Object> datos = new HashMap<String, Object>();
+        List<Usuario> usuarios = null;
+        try {
+            usuarios = usuarioDAO.obtenerTodos();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        catch(Exception e){
+        return usuarios;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean validarUsername(String username) {
+        boolean valido = false;
+        try {
+            valido = usuarioDAO.validarUsername(username);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return valido;
     }
 
     @Transactional(readOnly = true)
-    public Usuario obtenerUsuarioUsername(String username){
+    public Usuario obtenerUsuarioUsername(String username) {
         Usuario usuario = null;
-        try{
+        try {
             usuario = usuarioDAO.obtenerUsuarioUsername(username);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return usuario;
     }
-    
+
     public UsuarioDAOImpl getUsuarioDAO() {
         return usuarioDAO;
     }
