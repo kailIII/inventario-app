@@ -79,14 +79,14 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
         try {
             proveedores = proveedorDAO.obtenerTodosAGrid(primerResultado, numeroFilas, ordenarPor, ordenarAsc);
             if(proveedores.size() > 0){
-                totalPaginas = proveedores.size() / numeroFilas;
+                totalPaginas = Math.round(proveedores.size() / numeroFilas);
             }
             if(numeroPagina > totalPaginas){
                 numeroPagina = totalPaginas;
             }
-            map.put("page", String.valueOf(1));
-            map.put("total", String.valueOf(1));
-            map.put("records", String.valueOf(proveedores.size()));
+            map.put("page", 1);
+            map.put("total", 1);
+            map.put("records", proveedores.size());
             map.put("rows", proveedores);
         } catch (Exception ex) {
             ex.printStackTrace();

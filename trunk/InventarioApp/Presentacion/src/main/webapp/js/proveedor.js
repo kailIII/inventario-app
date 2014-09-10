@@ -73,7 +73,7 @@ $(document).ready(function() {
 
     $("#list").jqGrid({
         url: 'listar-proveedores',
-        dataType: 'JSON',
+        dataType: 'json',
         mtype: 'POST',
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
@@ -87,12 +87,15 @@ $(document).ready(function() {
         jsonReader: {
             repeatitems: false,
             root: "rows",
+            page: "page",
+            total: "total",
+            records: "records",
         },
         pager: '#pager',
         height: 'auto',
         rowNum: 15,
         rowList: [15, 30, 45],
-        sortname: 'nombreProveedor',
+        sortname: 'id',
         sortorder: 'asc',
         viewrecords: true,
         pagination: true,

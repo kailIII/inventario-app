@@ -8,12 +8,13 @@ package com.app.inventario.controlador;
 import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -132,9 +133,9 @@ public class Controlador {
         return "redirect:mantenimiento-proveedor";
     }
 
-    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
+    String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
         String datos = "";
         Map<String, Object> lista = null;
         try {
@@ -149,17 +150,17 @@ public class Controlador {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return lista;
-    }*/
+        return datos;
+    }
     
-    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.GET)
     public ModelAndView obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         //String role = request.getParameter("role");
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         map.put("rows", proveedores);
         return new ModelAndView(this.jsonView, map);
-    }
+    }*/
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
