@@ -9,9 +9,7 @@ import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -133,7 +131,7 @@ public class Controlador {
         return "redirect:mantenimiento-proveedor";
     }
 
-    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
     public @ResponseBody
     String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
         String datos = "";
@@ -151,16 +149,16 @@ public class Controlador {
             e.printStackTrace();
         }
         return datos;
-    }
+    }*/
     
-    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.GET)
+    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
     public ModelAndView obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         //String role = request.getParameter("role");
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         map.put("rows", proveedores);
         return new ModelAndView(this.jsonView, map);
-    }*/
+    }
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
