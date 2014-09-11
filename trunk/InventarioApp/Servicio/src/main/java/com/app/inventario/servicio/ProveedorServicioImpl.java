@@ -40,8 +40,9 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
         return proveedorLogica.obtenerTodos();
     }
     
-    public Map<String, Object> obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
-        return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+    public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
+        String datos = proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+        return datos;
     }
     
     public Proveedor obtenerProveedorNombre(String nombreProveedor){

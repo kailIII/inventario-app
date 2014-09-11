@@ -32,7 +32,7 @@ public class Controlador {
 
     UsuarioServicioImpl usuarioServicio;
     ProveedorServicioImpl proveedorServicio;
-    
+
     private org.springframework.web.servlet.view.json.MappingJacksonJsonView jsonView = new MappingJacksonJsonView();
 
     // Generales
@@ -131,33 +131,16 @@ public class Controlador {
         return "redirect:mantenimiento-proveedor";
     }
 
-    /*@RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
+    @RequestMapping(value = "/listar-proveedores", method = {RequestMethod.POST}, produces = "application/xml")
     public @ResponseBody
     String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
         String datos = "";
-        Map<String, Object> lista = null;
-        try {
-            ObjectMapper om = new ObjectMapper();
-            int numeroPagina = Integer.parseInt(request.getParameter("page"));
-            int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
-            String ordenarPor = request.getParameter("sidx");
-            String ordenarAsc = request.getParameter("sord");
-            lista = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
-
-            datos = om.writeValueAsString(lista);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        int numeroPagina = Integer.parseInt(request.getParameter("page"));
+        int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
+        String ordenarPor = request.getParameter("sidx");
+        String ordenarAsc = request.getParameter("sord");
+        datos = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
         return datos;
-    }*/
-    
-    @RequestMapping(value = "/listar-proveedores", method = RequestMethod.POST)
-    public ModelAndView obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        //String role = request.getParameter("role");
-        List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
-        map.put("rows", proveedores);
-        return new ModelAndView(this.jsonView, map);
     }
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
@@ -165,7 +148,7 @@ public class Controlador {
     List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         List<String> nombresProveedores = new ArrayList<String>();
-        for(Proveedor p : proveedores){
+        for (Proveedor p : proveedores) {
             nombresProveedores.add(p.getNombreProveedor());
         }
         return nombresProveedores;

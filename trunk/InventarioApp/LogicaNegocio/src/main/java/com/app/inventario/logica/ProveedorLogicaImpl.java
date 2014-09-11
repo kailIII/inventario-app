@@ -7,7 +7,9 @@ package com.app.inventario.logica;
 
 import com.app.inventario.dao.ProveedorDAOImpl;
 import com.app.inventario.entidades.Proveedor;
+import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
+import com.thoughtworks.xstream.XStream;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProveedorLogicaImpl implements ILogica<Proveedor> {
 
     private ProveedorDAOImpl proveedorDAO;
+    private jqGridModel<Proveedor> modelo;
 
     @Transactional
     public void guardar(Proveedor proveedor) {
@@ -71,10 +74,13 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, Object> obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
+    public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
+        XStream xstream = new XStream();
+        xstream.alias("root", jqGridModel.class);
+        xstream.alias("proveedor", Proveedor.class);
+        modelo = new jqGridModel<Proveedor>();
         int primerResultado = numeroFilas *(numeroPagina - 1);
         int totalPaginas = 0;
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
         List<Proveedor> proveedores = null;
         try {
             proveedores = proveedorDAO.obtenerTodosAGrid(primerResultado, numeroFilas, ordenarPor, ordenarAsc);
@@ -84,14 +90,15 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             if(numeroPagina > totalPaginas){
                 numeroPagina = totalPaginas;
             }
-            map.put("page", 1);
-            map.put("total", 1);
-            map.put("records", proveedores.size());
-            map.put("rows", proveedores);
+            modelo.setPage(1);
+            modelo.setTotal(1);
+            modelo.setRecords(proveedores.size());
+            modelo.setRows(proveedores);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return map;
+        return xstream.toXML(modelo);
+        //return map;
     }
     
     @Transactional(readOnly = true)

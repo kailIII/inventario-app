@@ -3,15 +3,13 @@
     Created on : 17/11/2013, 03:22:05 PM
     Author     : Erick Pérez
 --%>
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8" accept="application/json"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Mantenimiento Proveedores</title>
         <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
@@ -115,5 +113,4 @@
         </div>
         <!-- /. WRAPPER  -->
     </body>
-    <script src="js/proveedor.js" type="text/javascript"></script>
 </html>

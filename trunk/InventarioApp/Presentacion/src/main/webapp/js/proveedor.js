@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     $("#modificar-proveedor").hide();
 
@@ -6,39 +6,39 @@ $(document).ready(function() {
         url: 'cargar-proveedores',
         dataType: 'JSON',
         type: 'GET',
-        success: function(data) {
+        success: function (data) {
             $("#nombreProveedorBuscar").autocomplete({
                 source: data
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
     });
 
-    $("#btnBuscarProveedor").click(function() {
+    $("#btnBuscarProveedor").click(function () {
         $.ajax({
             url: 'buscar-proveedor-nombre',
             dataType: 'json',
             type: 'GET',
             data: {'nombreProveedor': $("#nombreProveedorBuscar").val()},
-            beforeSend: function() {
+            beforeSend: function () {
             },
-            success: function(proveedor) {
+            success: function (proveedor) {
                 $("#nombreProveedorAct").val(proveedor.nombreProveedor);
                 $("#cedulaJuridicaAct").val(proveedor.cedulaJuridica);
                 $("#direccionAct").val(proveedor.direccion);
                 $("#telefonoAct").val(proveedor.telefono);
                 $("#modificar-proveedor").show("slow");
             },
-            error: function(error) {
+            error: function (error) {
                 alert(error);
                 console.log(error);
             }
         });
     });
 
-    $("#btnGuardar").click(function() {
+    $("#btnGuardar").click(function () {
         $("#agregar-proveedor").validate({
             rules: {
                 nombreProveedor: {
@@ -73,8 +73,16 @@ $(document).ready(function() {
 
     $("#list").jqGrid({
         url: 'listar-proveedores',
-        dataType: 'json',
         mtype: 'POST',
+        dataType: 'xml',
+        xmlReader: {
+            repeatitems: false,
+            root: 'rows',
+            row: 'proveedor',
+            page: "rows>page",
+            total: "rows>total",
+            records: "rows>records"
+        },
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false},
@@ -84,13 +92,6 @@ $(document).ready(function() {
             {name: 'direccion', index: 'direccion', align: 'center', search: false}
         ],
         caption: 'Lista de Proveedores',
-        jsonReader: {
-            repeatitems: false,
-            root: "rows",
-            page: "page",
-            total: "total",
-            records: "records",
-        },
         pager: '#pager',
         height: 'auto',
         rowNum: 15,
