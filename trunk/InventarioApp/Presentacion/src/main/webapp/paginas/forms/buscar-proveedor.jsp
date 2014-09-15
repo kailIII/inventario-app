@@ -1,27 +1,30 @@
+<%-- 
+    Document   : buscar-proveedor
+    Created on : 17/11/2013, 03:22:05 PM
+    Author     : Erick
+--%>
 
 <fieldset>
     <legend>Datos del Proveedor</legend>
-    <form>
         <div>
             <table>
                 <tbody>
                     <tr>
                         <td>
                             <label for="nombreProveedorBuscar">Nombre Proveedor:</label>
-                            <input type="text" id="nombreProveedorBuscar" />
+                            <input type="text" class="form-control" id="nombreProveedorBuscar" />
                             <button id="btnBuscarProveedor" type="button" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </form>
 </fieldset>
 
 <div id="modificar-proveedor">
-    <fieldset class="col_12">
+    <fieldset>
         <legend>Datos del Proveedor</legend>
-        <form:form cssClass="vertical" id="form-modifcar-proveedor" method="POST" action="actualizar-proveedor" modelAttribute="proveedor-modificar">  
+        <form:form role="form" id="form-modifcar-proveedor" method="POST" action="actualizar-proveedor" modelAttribute="proveedor-modificar">  
             <input type="hidden" id="nombreProveedorAct" path="nombreProveedor"/>
             <input type="hidden" id="cedulaJuridicaAct" path="cedulaJuridica"/>
             <div class="col_12">

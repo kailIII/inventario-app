@@ -1,6 +1,6 @@
 <fieldset>
     <legend>Datos del Proveedor</legend>
-    <form:form role="form" id="agregar-proveedor" method="POST" action="agregar-proveedor" modelAttribute="proveedor">  
+    <form:form role="form" id="agregar-proveedor" modelAttribute="proveedor">  
         <div>
             <table>  
                 <tbody>

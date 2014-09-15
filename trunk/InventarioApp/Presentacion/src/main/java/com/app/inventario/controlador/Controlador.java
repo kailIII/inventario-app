@@ -8,11 +8,9 @@ package com.app.inventario.controlador;
 import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
-import java.io.IOException;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -113,9 +111,8 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/agregar-proveedor", method = RequestMethod.POST)
-    public String agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor) {
-        proveedorServicio.guardar(proveedor);
-        return "redirect:mantenimiento-proveedor";
+    public @ResponseBody int agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor) {
+        return proveedorServicio.guardar(proveedor);
     }
 
     @RequestMapping(value = "/buscar-proveedor-nombre", method = RequestMethod.GET)

@@ -19,16 +19,16 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
 
     UsuarioLogicaImpl usuarioLogica;
 
-    public void guardar(Usuario usuario) {
-        usuarioLogica.guardar(usuario);
+    public int guardar(Usuario usuario) {
+        return usuarioLogica.guardar(usuario);
     }
 
-    public void actualizar(Usuario usuario) {
-        usuarioLogica.actualizar(usuario);
+    public int actualizar(Usuario usuario) {
+        return usuarioLogica.actualizar(usuario);
     }
 
-    public void eliminar(Usuario usuario) {
-        usuarioLogica.eliminar(usuario);
+    public int eliminar(Usuario usuario) {
+        return usuarioLogica.eliminar(usuario);
     }
 
     public Usuario obtener(int id) {

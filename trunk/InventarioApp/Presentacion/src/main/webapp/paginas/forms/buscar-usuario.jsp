@@ -6,7 +6,6 @@
 
 <fieldset>
     <legend>Datos del usuario</legend>
-    <form>
         <div>
             <table>
                 <tbody>
@@ -20,13 +19,12 @@
                 </tbody>
             </table>
         </div>
-    </form>
 </fieldset>
 
 <div id="modificar-usuario">
     <fieldset>
         <legend>Datos del usuario</legend>
-        <form:form role="form" method="POST" id="form-modificar-usuario" modelAttribute="usuario-modificar" action="actualizar-usuario">  
+        <form:form role="form" method="POST" id="form-modificar-usuario" modelAttribute="usuario-modificar">  
             <div>
                 <form:input type="hidden" id="idAct" path="id"></form:input>
                 <form:input type="hidden" id="cedulaAct" path="cedula"></form:input>

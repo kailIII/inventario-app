@@ -2,19 +2,22 @@ $(document).ready(function () {
 
     $("#modificar-proveedor").hide();
 
-    $.ajax({
-        url: 'cargar-proveedores',
-        dataType: 'JSON',
-        type: 'GET',
-        success: function (data) {
-            $("#nombreProveedorBuscar").autocomplete({
-                source: data
-            });
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    $.fn.cargar_proveedores = function () {
+        $.ajax({
+            url: 'cargar-proveedores',
+            dataType: 'JSON',
+            type: 'GET',
+            success: function (data) {
+                $("#nombreProveedorBuscar").empty();
+                $("#nombreProveedorBuscar").autocomplete({
+                    source: data
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
@@ -67,6 +70,33 @@ $(document).ready(function () {
                 telefono: {
                     required: "Campo obligatorio"
                 }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: 'agregar-proveedor',
+                    data: $(form).serialize(),
+                    dataType: 'JSON',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data === 1) {
+                            $("#list").trigger('reloadGrid');
+                            $.cargar_proveedores();
+                            $('#agregar-proveedor').each(function () {
+                                this.reset();
+                            });
+                        }
+                        else {
+                            alert("Error al agregar el proveedor");
+                            $('#agregar-proveedor').each(function () {
+                                this.reset();
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+                return false;
             }
         });
     });
@@ -74,7 +104,7 @@ $(document).ready(function () {
     $("#list").jqGrid({
         url: 'listar-proveedores',
         mtype: 'POST',
-        dataType: 'xml',
+        dataType: 'JSON',
         xmlReader: {
             repeatitems: false,
             root: 'rows',
@@ -83,6 +113,10 @@ $(document).ready(function () {
             total: "rows>total",
             records: "rows>records"
         },
+        /*jsonReader: {
+         repeatitems: false,
+         root: 'rows'
+         },*/
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false},

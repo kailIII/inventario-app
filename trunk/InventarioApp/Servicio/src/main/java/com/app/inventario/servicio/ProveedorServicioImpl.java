@@ -20,16 +20,16 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
 
     ProveedorLogicaImpl proveedorLogica;
 
-    public void guardar(Proveedor proveedor) {
-        proveedorLogica.guardar(proveedor);
+    public int guardar(Proveedor proveedor) {
+        return proveedorLogica.guardar(proveedor);
     }
 
-    public void actualizar(Proveedor proveedor) {
-        proveedorLogica.actualizar(proveedor);
+    public int actualizar(Proveedor proveedor) {
+        return proveedorLogica.actualizar(proveedor);
     }
 
-    public void eliminar(Proveedor proveedor) {
-        proveedorLogica.eliminar(proveedor);
+    public int eliminar(Proveedor proveedor) {
+        return proveedorLogica.eliminar(proveedor);
     }
 
     public Proveedor obtener(int id) {
@@ -44,6 +44,10 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
         String datos = proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
         return datos;
     }
+    
+    /*public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
+        return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+    }*/
     
     public Proveedor obtenerProveedorNombre(String nombreProveedor){
         return proveedorLogica.obtenerProveedorNombre(nombreProveedor);

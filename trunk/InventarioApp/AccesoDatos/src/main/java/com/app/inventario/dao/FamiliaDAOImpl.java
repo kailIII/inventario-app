@@ -26,45 +26,57 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
     private Transaction tx;
 
     @Override
-    public void guardar(Familia familia) {
+    public int guardar(Familia familia) {
+        int id = 0;
         try {
             this.iniciaOperacion();
             session.save(familia);
+            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            he.printStackTrace();
+            id = -1;
         } finally {
             session.close();
         }
+        return id;
     }
 
     @Override
-    public void actualizar(Familia familia) {
+    public int actualizar(Familia familia) {
+        int id = 0;
         try {
             this.iniciaOperacion();
             session.saveOrUpdate(familia);
+            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            he.printStackTrace();
+            id = -1;
         } finally {
             session.close();
         }
+        return id;
     }
 
     @Override
-    public void eliminar(Familia familia) {
+    public int eliminar(Familia familia) {
+        int id = 0;
         try {
             this.iniciaOperacion();
             session.delete(familia);
+            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            he.printStackTrace();
+            id = -1;
         } finally {
             session.close();
         }
+        return id;
     }
 
     @Override

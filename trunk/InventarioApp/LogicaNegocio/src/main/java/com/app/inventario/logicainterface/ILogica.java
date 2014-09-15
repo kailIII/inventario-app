@@ -13,11 +13,11 @@ import java.util.List;
  * @author Erick
  */
 public interface ILogica<T> {
-    public void guardar(T objeto);
+    public int guardar(T objeto);
 
-    public void actualizar(T objeto);
+    public int actualizar(T objeto);
 
-    public void eliminar(T objeto);
+    public int eliminar(T objeto);
 
     public T obtener(int id);
 

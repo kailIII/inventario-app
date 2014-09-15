@@ -91,12 +91,15 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade active in" id="add">
+                                        <br/>
                                         <%@ include file="forms/agregar-proveedor.jsp" %>
                                     </div>
                                     <div class="tab-pane fade" id="search">
+                                        <br/>
                                         <%@ include file="forms/buscar-proveedor.jsp" %>
                                     </div>
                                     <div class="tab-pane fade" id="all">
+                                        <br/>
                                         <%@include file="forms/listar-proveedores.jsp" %>
                                     </div>
                                 </div>
