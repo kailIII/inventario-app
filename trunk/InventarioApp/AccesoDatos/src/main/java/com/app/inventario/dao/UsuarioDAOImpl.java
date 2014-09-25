@@ -42,7 +42,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
     private SaltSource saltSource;
 
     @Override
-    public int guardar(Usuario usuario) {
+    public void guardar(Usuario usuario) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -69,11 +69,10 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
                 throw he;
             }
         }
-        return id;
     }
 
     @Override
-    public int actualizar(Usuario usuario) {
+    public void actualizar(Usuario usuario) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -96,11 +95,10 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
                 throw he;
             }
         }
-        return id;
     }
 
     @Override
-    public int eliminar(Usuario usuario) {
+    public void eliminar(Usuario usuario) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -120,7 +118,6 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
                 throw he;
             }
         }
-        return id;
     }
 
     @Override

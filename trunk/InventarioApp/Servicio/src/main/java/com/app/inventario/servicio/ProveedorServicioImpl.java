@@ -7,10 +7,10 @@
 package com.app.inventario.servicio;
 
 import com.app.inventario.entidades.Proveedor;
+import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logica.ProveedorLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,36 +20,36 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
 
     ProveedorLogicaImpl proveedorLogica;
 
-    public int guardar(Proveedor proveedor) {
-        return proveedorLogica.guardar(proveedor);
+    public void guardar(Proveedor proveedor) throws Exception {
+        proveedorLogica.guardar(proveedor);
     }
 
-    public int actualizar(Proveedor proveedor) {
-        return proveedorLogica.actualizar(proveedor);
+    public void actualizar(Proveedor proveedor) throws Exception {
+        proveedorLogica.actualizar(proveedor);
     }
 
-    public int eliminar(Proveedor proveedor) {
-        return proveedorLogica.eliminar(proveedor);
+    public void eliminar(Proveedor proveedor) throws Exception{
+        proveedorLogica.eliminar(proveedor);
     }
 
-    public Proveedor obtener(int id) {
+    public Proveedor obtener(int id)throws Exception {
         return proveedorLogica.obtener(id);
     }
 
-    public List<Proveedor> obtenerTodos() {
+    public List<Proveedor> obtenerTodos() throws Exception{
         return proveedorLogica.obtenerTodos();
     }
     
-    public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
+    /*public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
         String datos = proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
         return datos;
-    }
-    
-    /*public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc){
-        return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
     }*/
     
-    public Proveedor obtenerProveedorNombre(String nombreProveedor){
+    public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc)throws Exception{
+        return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+    }
+    
+    public Proveedor obtenerProveedorNombre(String nombreProveedor)throws Exception{
         return proveedorLogica.obtenerProveedorNombre(nombreProveedor);
     }
     

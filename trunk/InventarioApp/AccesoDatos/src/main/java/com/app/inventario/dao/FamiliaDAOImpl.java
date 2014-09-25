@@ -26,7 +26,7 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
     private Transaction tx;
 
     @Override
-    public int guardar(Familia familia) {
+    public void guardar(Familia familia) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -40,11 +40,10 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
         } finally {
             session.close();
         }
-        return id;
     }
 
     @Override
-    public int actualizar(Familia familia) {
+    public void actualizar(Familia familia) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -58,11 +57,10 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
         } finally {
             session.close();
         }
-        return id;
     }
 
     @Override
-    public int eliminar(Familia familia) {
+    public void eliminar(Familia familia) {
         int id = 0;
         try {
             this.iniciaOperacion();
@@ -76,7 +74,6 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
         } finally {
             session.close();
         }
-        return id;
     }
 
     @Override

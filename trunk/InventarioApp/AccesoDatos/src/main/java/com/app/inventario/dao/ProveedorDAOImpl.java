@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -29,17 +28,14 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
     private Transaction tx;
 
     @Override
-    public int guardar(Proveedor proveedor) {
-        int id = 0;
+    public void guardar(Proveedor proveedor) {
         try {
             this.iniciaOperacion();
             session.save(proveedor);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            this.manejaExcepcion(he);
         } finally {
             try {
                 session.close();
@@ -49,21 +45,17 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw he;
             }
         }
-        return id;
     }
 
     @Override
-    public int actualizar(Proveedor proveedor) {
-        int id = 0;
+    public void actualizar(Proveedor proveedor) {
         try {
             this.iniciaOperacion();
             session.update(proveedor);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            this.manejaExcepcion(he);
         } finally {
             try {
                 session.close();
@@ -73,21 +65,17 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw he;
             }
         }
-        return -1;
     }
 
     @Override
-    public int eliminar(Proveedor proveedor) {
-        int id = 0;
+    public void eliminar(Proveedor proveedor) {
         try {
             this.iniciaOperacion();
             session.save(proveedor);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            this.manejaExcepcion(he);
         } finally {
             try {
                 session.close();
@@ -97,7 +85,6 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw he;
             }
         }
-        return -1;
     }
 
     @Override
@@ -154,7 +141,6 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             } else if (ordenarAsc.equalsIgnoreCase("desc")) {
                 criteria.addOrder(Order.desc(ordenarPor));
             }
-
             proveedores = criteria.list();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);

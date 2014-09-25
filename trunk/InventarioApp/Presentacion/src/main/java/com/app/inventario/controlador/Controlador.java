@@ -11,6 +11,8 @@ import com.app.inventario.servicio.UsuarioServicioImpl;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -111,38 +113,40 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/agregar-proveedor", method = RequestMethod.POST)
-    public @ResponseBody int agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor) {
-        return proveedorServicio.guardar(proveedor);
+    public @ResponseBody
+    void agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, HttpServletResponse response) throws Exception{
+        proveedorServicio.guardar(proveedor);
     }
 
     @RequestMapping(value = "/buscar-proveedor-nombre", method = RequestMethod.GET)
     public @ResponseBody
-    Proveedor obtenerProveedorNombre(@RequestParam("nombreProveedor") String nombreProveedor) {
+    Proveedor obtenerProveedorNombre(@RequestParam("nombreProveedor") String nombreProveedor) throws Exception{
         Proveedor proveedor = proveedorServicio.obtenerProveedorNombre(nombreProveedor);
         return proveedor;
     }
 
     @RequestMapping(value = "/actualizar-proveedor", method = RequestMethod.POST)
-    public String actualizarProveedor(@ModelAttribute("proveedor-modificar") Proveedor proveedor) {
+    public String actualizarProveedor(@ModelAttribute("proveedor-modificar") Proveedor proveedor) throws Exception{
         proveedorServicio.actualizar(proveedor);
         return "redirect:mantenimiento-proveedor";
     }
 
-    @RequestMapping(value = "/listar-proveedores", method = {RequestMethod.POST}, produces = "application/xml")
+    @RequestMapping(value = "/listar-proveedores", method = {RequestMethod.POST}, produces = "application/json")
     public @ResponseBody
-    String obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) {
+    jqGridModel obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String datos = "";
         int numeroPagina = Integer.parseInt(request.getParameter("page"));
         int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
         String ordenarPor = request.getParameter("sidx");
         String ordenarAsc = request.getParameter("sord");
-        datos = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
-        return datos;
+        return this.proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+        //datos = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+        //return datos;
     }
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) {
+    List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         List<String> nombresProveedores = new ArrayList<String>();
         for (Proveedor p : proveedores) {

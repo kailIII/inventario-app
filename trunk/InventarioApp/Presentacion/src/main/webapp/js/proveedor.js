@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $("#modificar-proveedor").hide();
 
+
     $.fn.cargar_proveedores = function () {
         $.ajax({
             url: 'cargar-proveedores',
@@ -17,8 +18,10 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
-    }
-
+    };
+    
+    $.cargar_proveedores();
+    
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
             url: 'buscar-proveedor-nombre',
@@ -78,21 +81,15 @@ $(document).ready(function () {
                     dataType: 'JSON',
                     type: 'POST',
                     success: function (data) {
-                        if (data === 1) {
-                            $("#list").trigger('reloadGrid');
-                            $.cargar_proveedores();
-                            $('#agregar-proveedor').each(function () {
-                                this.reset();
-                            });
-                        }
-                        else {
-                            alert("Error al agregar el proveedor");
-                            $('#agregar-proveedor').each(function () {
-                                this.reset();
-                            });
-                        }
+                        console.log("Agregado correctamente");
+                        $("#list").trigger('reloadGrid');
+                        $.cargar_proveedores();
+                        $('#agregar-proveedor').each(function () {
+                            this.reset();
+                        });
                     },
                     error: function (error) {
+                        alert("Error");
                         console.log(error);
                     }
                 });
@@ -104,19 +101,20 @@ $(document).ready(function () {
     $("#list").jqGrid({
         url: 'listar-proveedores',
         mtype: 'POST',
-        dataType: 'JSON',
-        xmlReader: {
+        datatype: 'json',
+        ajaxGridOptions: {Accept: 'application/json'},
+        /*xmlReader: {
             repeatitems: false,
             root: 'rows',
             row: 'proveedor',
             page: "rows>page",
             total: "rows>total",
             records: "rows>records"
-        },
-        /*jsonReader: {
+        },*/
+        jsonReader: {
          repeatitems: false,
          root: 'rows'
-         },*/
+         },
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false},

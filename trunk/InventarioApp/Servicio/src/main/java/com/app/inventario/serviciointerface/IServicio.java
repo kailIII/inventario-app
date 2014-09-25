@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.app.inventario.serviciointerface;
 
 import java.util.List;
@@ -12,14 +11,15 @@ import java.util.List;
  *
  * @author Erick
  */
-public interface IServicio <T> {
-    public int guardar(T objeto);
+public interface IServicio<T> {
 
-    public int actualizar(T objeto);
+    public void guardar(T objeto) throws Exception;
 
-    public int eliminar(T objeto);
+    public void actualizar(T objeto) throws Exception;
 
-    public T obtener(int id);
+    public void eliminar(T objeto) throws Exception;
 
-    public List<T> obtenerTodos();
+    public T obtener(int id) throws Exception;
+
+    public List<T> obtenerTodos() throws Exception;
 }

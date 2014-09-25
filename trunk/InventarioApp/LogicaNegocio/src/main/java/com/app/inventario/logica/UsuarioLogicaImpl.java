@@ -22,36 +22,33 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     UsuarioDAOImpl usuarioDAO;
 
     @Transactional
-    public int guardar(Usuario usuario) {
+    public void guardar(Usuario usuario) {
         int id = 0;
         try {
-            id = usuarioDAO.guardar(usuario);
+            usuarioDAO.guardar(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
     }
 
     @Transactional
-    public int actualizar(Usuario usuario) {
+    public void actualizar(Usuario usuario) {
         int id = 0;
         try {
-            id = usuarioDAO.actualizar(usuario);
+            usuarioDAO.actualizar(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
     }
 
     @Transactional
-    public int eliminar(Usuario usuario) {
+    public void eliminar(Usuario usuario) {
         int id = 0;
         try {
-            id = usuarioDAO.eliminar(usuario);
+            usuarioDAO.eliminar(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
     }
 
     @Transactional(readOnly = true)

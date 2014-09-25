@@ -25,40 +25,39 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     private jqGridModel<Proveedor> modelo;
 
     @Transactional
-    public int guardar(Proveedor proveedor) {
+    public void guardar(Proveedor proveedor) throws Exception {
         int id = 0;
         try {
-            id = proveedorDAO.guardar(proveedor);
+            proveedorDAO.guardar(proveedor);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
+
     }
 
     @Transactional
-    public int actualizar(Proveedor proveedor) {
+    public void actualizar(Proveedor proveedor) throws Exception {
         int id = 0;
         try {
-            id = proveedorDAO.actualizar(proveedor);
+            proveedorDAO.actualizar(proveedor);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
+
     }
 
     @Transactional
-    public int eliminar(Proveedor proveedor) {
+    public void eliminar(Proveedor proveedor) throws Exception {
         int id = 0;
         try {
-            id = proveedorDAO.eliminar(proveedor);
+            proveedorDAO.eliminar(proveedor);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
     }
 
     @Transactional(readOnly = true)
-    public Proveedor obtener(int id) {
+    public Proveedor obtener(int id) throws Exception {
         Proveedor proveedor = null;
         try {
             proveedor = proveedorDAO.obtener(id);
@@ -69,7 +68,7 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     }
 
     @Transactional(readOnly = true)
-    public List<Proveedor> obtenerTodos() {
+    public List<Proveedor> obtenerTodos() throws Exception {
         List<Proveedor> proveedores = null;
         try {
             proveedores = proveedorDAO.obtenerTodos();
@@ -79,46 +78,21 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
         return proveedores;
     }
 
-    @Transactional(readOnly = true)
-    public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
-        XStream xstream = new XStream();
-        xstream.alias("root", jqGridModel.class);
-        xstream.alias("proveedor", Proveedor.class);
-        modelo = new jqGridModel<Proveedor>();
-        int primerResultado = numeroFilas * (numeroPagina - 1);
-        int totalPaginas = 0;
-        List<Proveedor> proveedores = null;
-        try {
-            proveedores = proveedorDAO.obtenerTodosAGrid(primerResultado, numeroFilas, ordenarPor, ordenarAsc);
-            if (proveedores.size() > 0) {
-                totalPaginas = Math.round(proveedores.size() / numeroFilas);
-            }
-            if (numeroPagina > totalPaginas) {
-                numeroPagina = totalPaginas;
-            }
-            modelo.setPage(1);
-            modelo.setTotal(1);
-            modelo.setRecords(proveedores.size());
-            modelo.setRows(proveedores);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return xstream.toXML(modelo);
-        //return map;
-    }
-
     /*@Transactional(readOnly = true)
-     public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
+     public String obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
+     XStream xstream = new XStream();
+     xstream.alias("root", jqGridModel.class);
+     xstream.alias("proveedor", Proveedor.class);
      modelo = new jqGridModel<Proveedor>();
-     int primerResultado = numeroFilas *(numeroPagina - 1);
+     int primerResultado = numeroFilas * (numeroPagina - 1);
      int totalPaginas = 0;
      List<Proveedor> proveedores = null;
      try {
      proveedores = proveedorDAO.obtenerTodosAGrid(primerResultado, numeroFilas, ordenarPor, ordenarAsc);
-     if(proveedores.size() > 0){
+     if (proveedores.size() > 0) {
      totalPaginas = Math.round(proveedores.size() / numeroFilas);
      }
-     if(numeroPagina > totalPaginas){
+     if (numeroPagina > totalPaginas) {
      numeroPagina = totalPaginas;
      }
      modelo.setPage(1);
@@ -128,10 +102,35 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
      } catch (Exception ex) {
      ex.printStackTrace();
      }
-     return modelo;
+     return xstream.toXML(modelo);
+     //return map;
      }*/
     @Transactional(readOnly = true)
-    public Proveedor obtenerProveedorNombre(String nombreProveedor) {
+    public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
+        modelo = new jqGridModel<Proveedor>();
+        int primerResultado = numeroFilas * (numeroPagina - 1);
+        int totalPaginas = 0;
+        List<Proveedor> proveedores = null;
+        try {
+            proveedores = proveedorDAO.obtenerTodos();
+            if (proveedores.size() > 0) {
+                totalPaginas = (int) Math.ceil(proveedores.size() / numeroFilas);
+            }
+            if (numeroPagina > totalPaginas) {
+                numeroPagina = totalPaginas;
+            }
+            modelo.setPage(numeroPagina);
+            modelo.setTotal(totalPaginas);
+            modelo.setRecords(proveedores.size());
+            modelo.setRows(proveedores);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return modelo;
+    }
+
+    @Transactional(readOnly = true)
+    public Proveedor obtenerProveedorNombre(String nombreProveedor) throws Exception {
         Proveedor proveedor = null;
         try {
             proveedor = proveedorDAO.obtenerProveedorNombre(nombreProveedor);
