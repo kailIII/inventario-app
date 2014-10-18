@@ -8,9 +8,11 @@ package com.app.inventario.controlador;
 import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
+import java.net.URI;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -114,45 +116,56 @@ public class Controlador {
 
     @RequestMapping(value = "/agregar-proveedor", method = RequestMethod.POST)
     public @ResponseBody
-    void agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, HttpServletResponse response) throws Exception{
-        proveedorServicio.guardar(proveedor);
+    Map agregarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, HttpServletRequest request, HttpServletResponse response) {
+        Map map = new HashMap();
+        try {
+            proveedorServicio.guardar(proveedor);
+            response.setStatus(HttpServletResponse.SC_OK);
+            map.put("Status", "OK");
+            map.put("Message", "Agregado Correctamente");
+            return map;
+        } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            map.put("Status", "FAIL");
+            map.put("Message", ex.getCause().getCause().getCause().getMessage());
+        }
+        return map;
     }
 
     @RequestMapping(value = "/buscar-proveedor-nombre", method = RequestMethod.GET)
     public @ResponseBody
-    Proveedor obtenerProveedorNombre(@RequestParam("nombreProveedor") String nombreProveedor) throws Exception{
+    Proveedor obtenerProveedorNombre(@RequestParam("nombreProveedor") String nombreProveedor) throws Exception {
         Proveedor proveedor = proveedorServicio.obtenerProveedorNombre(nombreProveedor);
         return proveedor;
     }
 
     @RequestMapping(value = "/actualizar-proveedor", method = RequestMethod.POST)
-    public String actualizarProveedor(@ModelAttribute("proveedor-modificar") Proveedor proveedor) throws Exception{
+    public String actualizarProveedor(@ModelAttribute("proveedor-modificar") Proveedor proveedor) throws Exception {
         proveedorServicio.actualizar(proveedor);
         return "redirect:mantenimiento-proveedor";
     }
 
-    @RequestMapping(value = "/listar-proveedores", method = {RequestMethod.POST}, produces = "application/json")
+    @RequestMapping(value = "/listar-proveedores", method = {RequestMethod.POST})
     public @ResponseBody
-    jqGridModel obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String datos = "";
+    jqGridModel obtenerTodosProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int numeroPagina = Integer.parseInt(request.getParameter("page"));
         int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
         String ordenarPor = request.getParameter("sidx");
         String ordenarAsc = request.getParameter("sord");
+        Map map = new HashMap();
+        map.put("rows", this.proveedorServicio.obtenerTodos());
         return this.proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
-        //datos = proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
-        //return datos;
     }
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    List<Proveedor> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         List<String> nombresProveedores = new ArrayList<String>();
         for (Proveedor p : proveedores) {
             nombresProveedores.add(p.getNombreProveedor());
         }
-        return nombresProveedores;
+        return proveedores;
     }
 
     public UsuarioServicioImpl getUsuarioServicio() {

@@ -2,6 +2,13 @@ $(document).ready(function () {
 
     $("#modificar-proveedor").hide();
 
+    $("#nombreProveedorBuscar").autocomplete({
+        source: 'cargar-proveedores',
+        select: function(event, ui){
+            value: ui.id;
+            label: ui.nombreProveedor;
+        }
+    });
 
     $.fn.cargar_proveedores = function () {
         $.ajax({
@@ -19,9 +26,7 @@ $(document).ready(function () {
             }
         });
     };
-    
-    $.cargar_proveedores();
-    
+
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
             url: 'buscar-proveedor-nombre',
@@ -81,16 +86,14 @@ $(document).ready(function () {
                     dataType: 'JSON',
                     type: 'POST',
                     success: function (data) {
-                        console.log("Agregado correctamente");
+                        alert(data.Message);
                         $("#list").trigger('reloadGrid');
-                        $.cargar_proveedores();
                         $('#agregar-proveedor').each(function () {
                             this.reset();
                         });
                     },
                     error: function (error) {
-                        alert("Error");
-                        console.log(error);
+                        console.log(error.Message);
                     }
                 });
                 return false;
@@ -102,19 +105,19 @@ $(document).ready(function () {
         url: 'listar-proveedores',
         mtype: 'POST',
         datatype: 'json',
-        ajaxGridOptions: {Accept: 'application/json'},
+        //ajaxGridOptions: {Accept: 'application/json'},
         /*xmlReader: {
-            repeatitems: false,
-            root: 'rows',
-            row: 'proveedor',
-            page: "rows>page",
-            total: "rows>total",
-            records: "rows>records"
-        },*/
-        jsonReader: {
          repeatitems: false,
-         root: 'rows'
-         },
+         root: 'rows',
+         row: 'proveedor',
+         page: "rows>page",
+         total: "rows>total",
+         records: "rows>records"
+         },*/
+        jsonReader: {
+            repeatitems: false,
+            root: 'rows'
+        },
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false},
