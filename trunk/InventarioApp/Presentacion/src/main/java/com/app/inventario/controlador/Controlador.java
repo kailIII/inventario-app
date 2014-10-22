@@ -8,13 +8,12 @@ package com.app.inventario.controlador;
 import com.app.inventario.entidades.*;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
-import java.net.URI;
+import java.security.Principal;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,8 +48,10 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/principal")
-    public ModelAndView devolverPantallaPrincipal(ModelMap model, HttpServletRequest request) {
-        return new ModelAndView("paginas/principal");
+    public String devolverPantallaPrincipal(ModelMap model, Principal principal, HttpServletRequest request) {
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("username", principal.getName().toUpperCase());
+        return "paginas/principal";
     }
 
     // Mantenimiento Usuario
