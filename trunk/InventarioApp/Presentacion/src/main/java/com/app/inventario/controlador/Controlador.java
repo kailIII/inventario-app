@@ -153,8 +153,9 @@ public class Controlador {
         int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
         String ordenarPor = request.getParameter("sidx");
         String ordenarAsc = request.getParameter("sord");
-        Map map = new HashMap();
-        map.put("rows", this.proveedorServicio.obtenerTodos());
+        //Map map = new HashMap();
+        //jqGridModel proveedores = this.proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+        //map.put("rows", this.proveedorServicio.obtenerTodos());
         return this.proveedorServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
     }
 

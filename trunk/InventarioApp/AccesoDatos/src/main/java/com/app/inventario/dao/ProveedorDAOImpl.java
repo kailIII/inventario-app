@@ -129,13 +129,11 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         return proveedores;
     }
 
-    public List<Proveedor> obtenerTodosAGrid(int primerResultado, int numeroFilas, String ordenarPor, String ordenarAsc) {
+    public List<Proveedor> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
         List proveedores = null;
         try {
             this.iniciaOperacion();
             Criteria criteria = session.createCriteria(Proveedor.class);
-            criteria.setFirstResult(primerResultado);
-            criteria.setMaxResults(numeroFilas);
             if (ordenarAsc.equalsIgnoreCase("asc")) {
                 criteria.addOrder(Order.asc(ordenarPor));
             } else if (ordenarAsc.equalsIgnoreCase("desc")) {
