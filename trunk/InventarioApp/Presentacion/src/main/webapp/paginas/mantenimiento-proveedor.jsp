@@ -19,6 +19,7 @@
         <script src="js/jqgrid/grid.locale-es.js" type="text/javascript"></script>
         <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
         <script src="js/jquery-validate.js" type="text/javascript"></script>
+        <script src="js/bootbox.min.js" type="text/javascript"></script>
         <script src="js/proveedor.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>

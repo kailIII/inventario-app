@@ -1,10 +1,9 @@
 $(document).ready(function () {
-
     $("#modificar-proveedor").hide();
 
     $("#nombreProveedorBuscar").autocomplete({
         source: 'cargar-proveedores',
-        select: function(event, ui){
+        select: function (event, ui) {
             value: ui.id;
             label: ui.nombreProveedor;
         }
@@ -85,14 +84,37 @@ $(document).ready(function () {
                     data: $(form).serialize(),
                     dataType: 'JSON',
                     type: 'POST',
+                    beforeSend: function () {
+                        // Codigo para mostrar el spinner
+                    },
+                    complete: function () {
+                        // Codigo para ocultar el spinner
+                    },
                     success: function (data) {
-                        alert(data.Message);
+                        bootbox.alert({
+                            message: data.message,
+                            buttons: {
+                                success: {
+                                    label: 'Aceptar',
+                                    className: 'btn-success'
+                                }
+                            }
+                        });
                         $("#list").trigger('reloadGrid');
                         $('#agregar-proveedor').each(function () {
                             this.reset();
                         });
                     },
                     error: function (error) {
+                        bootbox.dialog({
+                            message: error.message,
+                            buttons: {
+                                danger: {
+                                    label: 'Aceptar',
+                                    className: 'btn-danger'
+                                }
+                            }
+                        });
                         console.log(error.Message);
                     }
                 });
@@ -120,7 +142,7 @@ $(document).ready(function () {
         },
         colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
         colModel: [
-            {name: 'id', index: 'id', align: 'center', search: false},
+            {name: 'id', index: 'id', align: 'center', search: false, hidden: true},
             {name: 'nombreProveedor', index: 'nombreProveedor', align: 'center', search: false},
             {name: 'cedulaJuridica', index: 'cedulaJuridica', align: 'center', search: false},
             {name: 'telefono', index: 'telefono', align: 'center', search: false},
