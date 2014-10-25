@@ -29,28 +29,52 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     }
 
     public void actualizar(Proveedor proveedor) throws Exception {
-        proveedorLogica.actualizar(proveedor);
+        try {
+            proveedorLogica.actualizar(proveedor);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public void eliminar(Proveedor proveedor) throws Exception {
-        proveedorLogica.eliminar(proveedor);
+        try {
+            proveedorLogica.eliminar(proveedor);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public Proveedor obtener(int id) throws Exception {
-        return proveedorLogica.obtener(id);
+        try {
+            return proveedorLogica.obtener(id);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public List<Proveedor> obtenerTodos() throws Exception {
-        return proveedorLogica.obtenerTodos();
+        try {
+            return proveedorLogica.obtenerTodos();
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
-    public String obtenerListaTodosXML(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) {
-        String datos = proveedorLogica.obtenerListaTodosXML(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
-        return datos;
+    public String obtenerListaTodosXML(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
+        try {
+            String datos = proveedorLogica.obtenerListaTodosXML(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+            return datos;
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
-        return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+        try {
+            return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public Proveedor obtenerProveedorNombre(String nombreProveedor) throws Exception {
