@@ -10,7 +10,6 @@ import com.app.inventario.entidades.Proveedor;
 import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import com.thoughtworks.xstream.XStream;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,38 +28,58 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
         try {
             proveedorDAO.guardar(proveedor);
         } catch (HibernateException ex) {
-            throw new Exception(ex);
+            throw ex;
         }
     }
 
     @Transactional
     public void actualizar(Proveedor proveedor) throws Exception {
-        proveedorDAO.actualizar(proveedor);
+        try {
+            proveedorDAO.actualizar(proveedor);
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     @Transactional
     public void eliminar(Proveedor proveedor) throws Exception {
-        proveedorDAO.eliminar(proveedor);
+        try {
+            proveedorDAO.eliminar(proveedor);
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     @Transactional(readOnly = true)
     public Proveedor obtener(int id) throws Exception {
-        Proveedor proveedor = proveedorDAO.obtener(id);
-        return proveedor;
+        try {
+            Proveedor proveedor = proveedorDAO.obtener(id);
+            return proveedor;
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     @Transactional(readOnly = true)
     public List<Proveedor> obtenerTodos() throws Exception {
-        List<Proveedor> proveedores = null;
-        proveedores = proveedorDAO.obtenerTodos();
-        return proveedores;
+        try {
+            List<Proveedor> proveedores = null;
+            proveedores = proveedorDAO.obtenerTodos();
+            return proveedores;
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     @Transactional(readOnly = true)
     public Proveedor obtenerProveedorNombre(String nombreProveedor) {
-        Proveedor proveedor = null;
-        proveedor = proveedorDAO.obtenerProveedorNombre(nombreProveedor);
-        return proveedor;
+        try {
+            Proveedor proveedor = null;
+            proveedor = proveedorDAO.obtenerProveedorNombre(nombreProveedor);
+            return proveedor;
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     @Transactional(readOnly = true)

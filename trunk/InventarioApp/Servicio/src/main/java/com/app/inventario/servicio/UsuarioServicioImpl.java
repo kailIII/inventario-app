@@ -6,10 +6,11 @@
 package com.app.inventario.servicio;
 
 import com.app.inventario.entidades.Usuario;
+import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logica.UsuarioLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;
 import java.util.List;
-import java.util.Map;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -20,37 +21,77 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
     UsuarioLogicaImpl usuarioLogica;
 
     public void guardar(Usuario usuario) {
-        usuarioLogica.guardar(usuario);
+        try {
+            usuarioLogica.guardar(usuario);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
 
     public void actualizar(Usuario usuario) {
-        usuarioLogica.actualizar(usuario);
+        try {
+            usuarioLogica.actualizar(usuario);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
 
     public void eliminar(Usuario usuario) {
-        usuarioLogica.eliminar(usuario);
+        try {
+            usuarioLogica.eliminar(usuario);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
 
     public Usuario obtener(int id) {
-        return usuarioLogica.obtener(id);
+        try {
+            return usuarioLogica.obtener(id);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
 
     public List<Usuario> obtenerTodos() {
-        return usuarioLogica.obtenerTodos();
-    }
-    
-    public List<Usuario> obtenerListaTodos(){
-        return usuarioLogica.obtenerListaTodos();
-    }
-    
-    public boolean validarUsername(String username){
-        return usuarioLogica.validarUsername(username);
+        try {
+            return usuarioLogica.obtenerTodos();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
 
-    public Usuario obtenerUsuarioUsername(String username){
-        return usuarioLogica.obtenerUsuarioUsername(username);
+    public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
+        try {
+            return usuarioLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
     }
-    
+
+    public boolean validarUsername(String username) {
+        try {
+            return usuarioLogica.validarUsername(username);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
+    }
+
+    public Usuario obtenerUsuarioUsername(String username) {
+        try {
+            return usuarioLogica.obtenerUsuarioUsername(username);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
+        }
+    }
+
     public UsuarioLogicaImpl getUsuarioLogica() {
         return usuarioLogica;
     }

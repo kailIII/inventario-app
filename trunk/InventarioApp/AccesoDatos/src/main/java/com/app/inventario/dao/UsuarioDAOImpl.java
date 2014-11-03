@@ -17,6 +17,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -43,7 +44,6 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     @Override
     public void guardar(Usuario usuario) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             //String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities
@@ -54,18 +54,16 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             calendar.add(Calendar.MONTH, 3);
             usuario.setFechaExpiracion(calendar.getTime());
             session.save(usuario);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
@@ -73,25 +71,22 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     @Override
     public void actualizar(Usuario usuario) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
             Object salt = saltSource.getSalt(user);
             usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             session.update(usuario);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
@@ -99,22 +94,19 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     @Override
     public void eliminar(Usuario usuario) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             session.delete(usuario);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
@@ -122,22 +114,21 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     @Override
     public Usuario obtener(int id) {
-        Usuario usuario = null;
         try {
             this.iniciaOperacion();
-            usuario = (Usuario) session.get(Usuario.class, id);
+            return (Usuario) session.get(Usuario.class, id);
         } catch (HibernateException he) {
-            
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            he.printStackTrace();
+            throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
-        return usuario;
     }
 
     @Override
@@ -148,17 +139,41 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             usuarios = session.createQuery("FROM Usuario").list();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            he.printStackTrace();
+            throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
         return usuarios;
+    }
+    
+    public List<Usuario> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
+        try {
+            this.iniciaOperacion();
+            Criteria criteria = session.createCriteria(Usuario.class);
+            if (ordenarAsc.equalsIgnoreCase("asc")) {
+                criteria.addOrder(Order.asc(ordenarPor));
+            } else if (ordenarAsc.equalsIgnoreCase("desc")) {
+                criteria.addOrder(Order.desc(ordenarPor));
+            }
+            return criteria.list();
+        } catch (HibernateException he) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            tx.rollback();
+            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+        } finally {
+            try {
+                session.close();
+            } catch (HibernateException he) {
+                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            }
+        }
     }
 
     public boolean validarUsername(String username) {
@@ -169,14 +184,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             usuario = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            manejaExcepcion(he);
             throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
@@ -191,14 +204,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             usuario = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            manejaExcepcion(he);
             throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }
@@ -233,14 +244,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             }
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            manejaExcepcion(he);
             throw he;
         } finally {
             try {
                 session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                manejaExcepcion(he);
                 throw he;
             }
         }

@@ -12,8 +12,6 @@ import java.security.Principal;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,9 +62,21 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/agregar-usuario", method = RequestMethod.POST)
-    public String agregarUsuario(@ModelAttribute("usuario") Usuario usuario) {
-        usuarioServicio.guardar(usuario);
-        return "redirect:mantenimiento-usuario";
+    public @ResponseBody
+    Map agregarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request, HttpServletResponse response) {
+        Map map = new HashMap();
+        try {
+            this.usuarioServicio.guardar(usuario);
+            response.setStatus(HttpServletResponse.SC_OK);
+            map.put("Status", "OK");
+            map.put("Message", "Agregado Correctamente");
+            return map;
+        } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            map.put("Status", "FAIL");
+            map.put("Message", ex.getCause().getCause().getCause().getMessage());
+        }
+        return map;
     }
 
     @RequestMapping(value = "/actualizar-usuario", method = RequestMethod.POST)
@@ -75,6 +85,16 @@ public class Controlador {
         return "redirect:mantenimiento-usuario";
     }
 
+    @RequestMapping(value = "/listar-usuarios", method = {RequestMethod.POST})
+    public @ResponseBody
+    jqGridModel obtenerTodosUsuarios(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int numeroPagina = Integer.parseInt(request.getParameter("page"));
+        int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
+        String ordenarPor = request.getParameter("sidx");
+        String ordenarAsc = request.getParameter("sord");
+        return this.usuarioServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+    }
+    
     @RequestMapping(value = "/cargar-usuarios", method = RequestMethod.GET)
     public @ResponseBody
     List<String> cargarUsuarios(HttpServletRequest request, HttpServletResponse response) {

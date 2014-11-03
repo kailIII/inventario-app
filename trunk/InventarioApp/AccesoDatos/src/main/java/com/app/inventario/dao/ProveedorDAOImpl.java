@@ -89,10 +89,9 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
 
     @Override
     public Proveedor obtener(int id) {
-        Proveedor proveedor = null;
         try {
             this.iniciaOperacion();
-            proveedor = (Proveedor) session.get(Proveedor.class, id);
+            return (Proveedor) session.get(Proveedor.class, id);
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
@@ -105,15 +104,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
             }
         }
-        return proveedor;
     }
 
     @Override
     public List<Proveedor> obtenerTodos() {
-        List proveedores = null;
         try {
             this.iniciaOperacion();
-            proveedores = session.createQuery("FROM Proveedor").list();
+            return session.createQuery("FROM Proveedor").list();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
@@ -126,11 +123,9 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
             }
         }
-        return proveedores;
     }
 
     public List<Proveedor> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
-        List proveedores = null;
         try {
             this.iniciaOperacion();
             Criteria criteria = session.createCriteria(Proveedor.class);
@@ -139,7 +134,7 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             } else if (ordenarAsc.equalsIgnoreCase("desc")) {
                 criteria.addOrder(Order.desc(ordenarPor));
             }
-            proveedores = criteria.list();
+            return criteria.list();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
@@ -152,7 +147,6 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
                 throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
             }
         }
-        return proveedores;
     }
 
     public Proveedor obtenerProveedorNombre(String nombreProveedor) {

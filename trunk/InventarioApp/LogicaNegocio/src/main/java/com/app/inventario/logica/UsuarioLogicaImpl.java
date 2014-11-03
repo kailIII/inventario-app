@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.app.inventario.logica;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
+import com.app.inventario.entidades.Proveedor;
 import com.app.inventario.entidades.Usuario;
+import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -20,57 +18,56 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioLogicaImpl implements ILogica<Usuario> {
 
     UsuarioDAOImpl usuarioDAO;
+    private jqGridModel<Usuario> modelo;
 
     @Transactional
     public void guardar(Usuario usuario) {
-        int id = 0;
         try {
             usuarioDAO.guardar(usuario);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
     }
 
     @Transactional
     public void actualizar(Usuario usuario) {
-        int id = 0;
         try {
             usuarioDAO.actualizar(usuario);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
     }
 
     @Transactional
     public void eliminar(Usuario usuario) {
-        int id = 0;
         try {
             usuarioDAO.eliminar(usuario);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
     }
 
     @Transactional(readOnly = true)
     public Usuario obtener(int id) {
-        Usuario usuario = null;
         try {
-            usuario = usuarioDAO.obtener(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            return usuarioDAO.obtener(id);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
-        return usuario;
     }
 
     @Transactional(readOnly = true)
     public List<Usuario> obtenerTodos() {
-        List<Usuario> usuarios = null;
         try {
-            usuarios = usuarioDAO.obtenerTodos();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            return usuarioDAO.obtenerTodos();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
-        return usuarios;
     }
 
     @Transactional(readOnly = true)
@@ -78,33 +75,51 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
         Map<String, Object> datos = new HashMap<String, Object>();
         List<Usuario> usuarios = null;
         try {
-            usuarios = usuarioDAO.obtenerTodos();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            return usuarioDAO.obtenerTodos();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
-        return usuarios;
     }
 
+    @Transactional(readOnly = true)
+    public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
+        modelo = new jqGridModel<Usuario>();
+        int primerResultado = numeroFilas * (numeroPagina - 1);
+        List<Usuario> usuarios = null;
+        try {
+            usuarios = usuarioDAO.obtenerTodosAGrid(ordenarPor, ordenarAsc);
+            modelo.setPage(numeroPagina);
+            modelo.setTotal((int) Math.ceil((double) usuarios.size() / (double) numeroFilas));
+            modelo.setRecords(usuarios.size());
+            modelo.setRows(usuarios.subList(primerResultado, numeroFilas > usuarios.size() ? usuarios.size() : numeroFilas));
+            return modelo;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+    
     @Transactional(readOnly = true)
     public boolean validarUsername(String username) {
         boolean valido = false;
         try {
             valido = usuarioDAO.validarUsername(username);
-        } catch (Exception e) {
-            e.printStackTrace();
+            return valido;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
-        return valido;
     }
 
     @Transactional(readOnly = true)
     public Usuario obtenerUsuarioUsername(String username) {
-        Usuario usuario = null;
         try {
-            usuario = usuarioDAO.obtenerUsuarioUsername(username);
-        } catch (Exception e) {
-            e.printStackTrace();
+            return usuarioDAO.obtenerUsuarioUsername(username);
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw he;
         }
-        return usuario;
     }
 
     public UsuarioDAOImpl getUsuarioDAO() {

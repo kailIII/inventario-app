@@ -1,15 +1,17 @@
+debugger;
 $(document).ready(function () {
+    
     $("#modificar-proveedor").hide();
 
-    $("#nombreProveedorBuscar").autocomplete({
-        source: 'cargar-proveedores',
-        select: function (event, ui) {
-            value: ui.id;
-            label: ui.nombreProveedor;
-        }
-    });
+//    $("#nombreProveedorBuscar").autocomplete({
+//        source: 'cargar-proveedores',
+//        select: function (event, ui) {
+//            value: ui.id;
+//            label: ui.nombreProveedor;
+//        }
+//    });
 
-    $.fn.cargar_proveedores = function () {
+    $.cargar_proveedores = function () {
         $.ajax({
             url: 'cargar-proveedores',
             dataType: 'JSON',
@@ -25,7 +27,7 @@ $(document).ready(function () {
             }
         });
     };
-
+    
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
             url: 'buscar-proveedor-nombre',
@@ -35,10 +37,11 @@ $(document).ready(function () {
             beforeSend: function () {
             },
             success: function (proveedor) {
-                $("#nombreProveedorAct").val(proveedor.nombreProveedor);
-                $("#cedulaJuridicaAct").val(proveedor.cedulaJuridica);
-                $("#direccionAct").val(proveedor.direccion);
-                $("#telefonoAct").val(proveedor.telefono);
+                $("#idAct").prop("value", proveedor.id);
+                $("#nombreProveedorAct").prop("value", proveedor.nombreProveedor);
+                $("#cedulaJuridicaAct").prop("value", proveedor.cedulaJuridica);
+                $("#direccionAct").prop("value", proveedor.direccion);
+                $("#telefonoAct").prop("value", proveedor.telefono);
                 $("#modificar-proveedor").show("slow");
             },
             error: function (error) {

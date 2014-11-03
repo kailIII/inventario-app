@@ -24,9 +24,10 @@
 <div id="modificar-proveedor">
     <fieldset>
         <legend>Datos del Proveedor</legend>
-        <form:form role="form" id="form-modifcar-proveedor" method="POST" action="actualizar-proveedor" modelAttribute="proveedor-modificar">  
-            <input type="hidden" id="nombreProveedorAct" path="nombreProveedor"/>
-            <input type="hidden" id="cedulaJuridicaAct" path="cedulaJuridica"/>
+        <form:form role="form" id="form-modifcar-proveedor" method="POST" action="actualizar-proveedor" modelAttribute="proveedor-modificar">
+            <form:hidden id="idAct" path="id"/>
+            <form:hidden id="nombreProveedorAct" path="nombreProveedor"/>
+            <form:hidden id="cedulaJuridicaAct" path="cedulaJuridica"/>
             <div class="col_12">
                 <table>  
                     <tbody>

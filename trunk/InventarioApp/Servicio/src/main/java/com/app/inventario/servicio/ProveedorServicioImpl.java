@@ -31,7 +31,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public void actualizar(Proveedor proveedor) throws Exception {
         try {
             proveedorLogica.actualizar(proveedor);
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
@@ -39,7 +39,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public void eliminar(Proveedor proveedor) throws Exception {
         try {
             proveedorLogica.eliminar(proveedor);
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
@@ -47,7 +47,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public Proveedor obtener(int id) throws Exception {
         try {
             return proveedorLogica.obtener(id);
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
@@ -55,7 +55,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public List<Proveedor> obtenerTodos() throws Exception {
         try {
             return proveedorLogica.obtenerTodos();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
@@ -64,7 +64,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
         try {
             String datos = proveedorLogica.obtenerListaTodosXML(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
             return datos;
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
@@ -72,13 +72,17 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
         try {
             return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             throw ex;
         }
     }
 
     public Proveedor obtenerProveedorNombre(String nombreProveedor) throws Exception {
-        return proveedorLogica.obtenerProveedorNombre(nombreProveedor);
+        try {
+            return proveedorLogica.obtenerProveedorNombre(nombreProveedor);
+        } catch (HibernateException ex) {
+            throw ex;
+        }
     }
 
     public ProveedorLogicaImpl getProveedorLogica() {

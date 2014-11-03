@@ -101,7 +101,8 @@
                                     </div>
                                     <div class="tab-pane fade" id="all">
                                         <br/>
-                                        <%@include file="forms/listar-proveedores.jsp" %>
+                                        <table id="list"></table>
+                                        <div id="pager"></div>
                                     </div>
                                 </div>
                             </div>

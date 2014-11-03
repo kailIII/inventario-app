@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("#cedula").val("");
     $("#usuario").val("");
     $("#modificar-usuario").hide();
@@ -6,23 +6,23 @@ $(document).ready(function() {
         url: 'cargar-usuarios',
         dataType: 'JSON',
         type: 'GET',
-        success: function(data) {
+        success: function (data) {
             $("#nombreUsuario").autocomplete({
                 source: data
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
     });
 
-    $("#btnBuscarUsuario").click(function() {
+    $("#btnBuscarUsuario").click(function () {
         $.ajax({
             url: 'buscar-usuario-username',
             dataType: 'json',
             type: 'GET',
             data: {'nombreUsuario': $("#nombreUsuario").val()},
-            success: function(usuario) {
+            success: function (usuario) {
                 $("#idAct").val(usuario.id);
                 $("#cedulaAct").val(usuario.cedula);
                 $("#usuarioAct").val(usuario.usuario);
@@ -45,13 +45,13 @@ $(document).ready(function() {
                 }
                 $("#modificar-usuario").show("slow");
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(JSON.stringify(error));
             }
         });
     });
 
-    $("#btnGuardar").click(function() {
+    $("#btnGuardar").click(function () {
         $("#agregar-usuario").validate({
             rules: {
                 cedula: {
@@ -126,11 +126,52 @@ $(document).ready(function() {
                     matches: "Digite solo nÃºmeros",
                     minlength: "Digite un telefono valido"
                 }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: 'agregar-usuario',
+                    data: $(form).serialize(),
+                    dataType: 'JSON',
+                    type: 'POST',
+                    beforeSend: function () {
+                        // Codigo para mostrar el spinner
+                    },
+                    complete: function () {
+                        // Codigo para ocultar el spinner
+                    },
+                    success: function (data) {
+                        bootbox.alert({
+                            message: data.message,
+                            buttons: {
+                                success: {
+                                    label: 'Aceptar',
+                                    className: 'btn-success'
+                                }
+                            }
+                        });
+                        //$("#list").trigger('reloadGrid');
+                        $('#agregar-usuario').each(function () {
+                            this.reset();
+                        });
+                    },
+                    error: function (error) {
+                        bootbox.dialog({
+                            message: error.message,
+                            buttons: {
+                                danger: {
+                                    label: 'Aceptar',
+                                    className: 'btn-danger'
+                                }
+                            }
+                        });
+                        console.log(error.Message);
+                    }
+                });
             }
         });
     });
 
-    $("#btnActualizar").click(function() {
+    $("#btnActualizar").click(function () {
         $("#form-modificar-usuario").validate({
             rules: {
                 contrasenaAct: {
@@ -184,4 +225,44 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("#list").jqGrid({
+        url: 'listar-usuarios',
+        mtype: 'POST',
+        datatype: 'json',
+        //ajaxGridOptions: {Accept: 'application/json'},
+        /*xmlReader: {
+         repeatitems: false,
+         root: 'rows',
+         row: 'proveedor',
+         page: "rows>page",
+         total: "rows>total",
+         records: "rows>records"
+         },*/
+        jsonReader: {
+            repeatitems: false,
+            root: 'rows'
+        },
+        colNames: ['Identificacion', 'Cédula', 'Usuario', 'Correo Electrónico', 'Rol', 'Teléfono'],
+        colModel: [
+            {name: 'id', index: 'id', align: 'center', search: false, hidden: true},
+            {name: 'cedula', index: 'cedula', align: 'center', search: false},
+            {name: 'usuario', index: 'usuario', align: 'center', search: false},
+            {name: 'correo', index: 'correo', align: 'center', search: false},
+            {name: 'rol', index: 'rol', align: 'center', search: false},
+            {name: 'telefono', index: 'telefono', align: 'center', search: false}
+        ],
+        caption: 'Lista de Usuarios',
+        pager: '#pager',
+        height: 'auto',
+        rowNum: 15,
+        rowList: [15, 30, 45],
+        sortname: 'id',
+        sortorder: 'asc',
+        viewrecords: true,
+        pagination: true,
+        pgbuttons: true,
+        emptyrecords: "No hay datos disponibles"
+    });
+
 });

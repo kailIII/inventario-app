@@ -87,6 +87,8 @@
                                     </li>
                                     <li class=""><a href="#search" data-toggle="tab">Buscar</a>
                                     </li>
+                                    <li class=""><a href="#list" data-toggle="tab">Ver todos</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade active in" id="add">
@@ -94,6 +96,10 @@
                                     </div>
                                     <div class="tab-pane fade" id="search">
                                         <%@ include file="forms/buscar-usuario.jsp" %>
+                                    </div>
+                                    <div class="tab-pane fade" id="list">
+                                        <table id="list"></table>
+                                        <div id="pager"></div>
                                     </div>
                                 </div>
                             </div>
