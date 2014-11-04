@@ -93,6 +93,9 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
             modelo.setTotal((int) Math.ceil((double) usuarios.size() / (double) numeroFilas));
             modelo.setRecords(usuarios.size());
             modelo.setRows(usuarios.subList(primerResultado, numeroFilas > usuarios.size() ? usuarios.size() : numeroFilas));
+            for(Usuario u : modelo.getRows()){
+                u.setFacturas(null);
+            }
             return modelo;
         } catch (Exception ex) {
             ex.printStackTrace();

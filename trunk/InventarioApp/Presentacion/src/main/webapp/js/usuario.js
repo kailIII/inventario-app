@@ -230,15 +230,6 @@ $(document).ready(function () {
         url: 'listar-usuarios',
         mtype: 'POST',
         datatype: 'json',
-        //ajaxGridOptions: {Accept: 'application/json'},
-        /*xmlReader: {
-         repeatitems: false,
-         root: 'rows',
-         row: 'proveedor',
-         page: "rows>page",
-         total: "rows>total",
-         records: "rows>records"
-         },*/
         jsonReader: {
             repeatitems: false,
             root: 'rows'

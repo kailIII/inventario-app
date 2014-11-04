@@ -1,6 +1,5 @@
-debugger;
 $(document).ready(function () {
-    
+
     $("#modificar-proveedor").hide();
 
 //    $("#nombreProveedorBuscar").autocomplete({
@@ -11,23 +10,22 @@ $(document).ready(function () {
 //        }
 //    });
 
-    $.cargar_proveedores = function () {
-        $.ajax({
-            url: 'cargar-proveedores',
-            dataType: 'JSON',
-            type: 'GET',
-            success: function (data) {
-                $("#nombreProveedorBuscar").empty();
-                $("#nombreProveedorBuscar").autocomplete({
-                    source: data
-                });
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    };
-    
+
+    $.ajax({
+        url: 'cargar-proveedores',
+        dataType: 'JSON',
+        type: 'GET',
+        success: function (data) {
+            $("#nombreProveedorBuscar").empty();
+            $("#nombreProveedorBuscar").autocomplete({
+                source: data
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
             url: 'buscar-proveedor-nombre',

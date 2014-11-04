@@ -92,7 +92,8 @@ public class Controlador {
         int numeroColumnas = Integer.parseInt(request.getParameter("rows"));
         String ordenarPor = request.getParameter("sidx");
         String ordenarAsc = request.getParameter("sord");
-        return this.usuarioServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+        jqGridModel result = usuarioServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
+        return result;
     }
     
     @RequestMapping(value = "/cargar-usuarios", method = RequestMethod.GET)

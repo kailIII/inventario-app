@@ -24,7 +24,7 @@
 <div id="modificar-usuario">
     <fieldset>
         <legend>Datos del usuario</legend>
-        <form:form role="form" method="POST" id="form-modificar-usuario" modelAttribute="usuario-modificar">  
+        <form:form role="form" method="POST" id="form-modificar-usuario" action="actualizar-usuario" modelAttribute="usuario-modificar">  
             <div>
                 <form:input type="hidden" id="idAct" path="id"></form:input>
                 <form:input type="hidden" id="cedulaAct" path="cedula"></form:input>

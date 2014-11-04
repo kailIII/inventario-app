@@ -61,7 +61,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
@@ -84,7 +84,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
@@ -104,7 +104,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
@@ -114,45 +114,48 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     @Override
     public Usuario obtener(int id) {
+        Usuario result = null;
         try {
             this.iniciaOperacion();
-            return (Usuario) session.get(Usuario.class, id);
+            result = (Usuario) session.get(Usuario.class, id);
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
             }
         }
+        return result;
     }
 
     @Override
     public List<Usuario> obtenerTodos() {
-        List<Usuario> usuarios = null;
+        List<Usuario> result = null;
         try {
             this.iniciaOperacion();
-            usuarios = session.createQuery("FROM Usuario").list();
+            result = session.createQuery("FROM Usuario").list();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
             }
         }
-        return usuarios;
+        return result;
     }
     
     public List<Usuario> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
+        List<Usuario> result = null;
         try {
             this.iniciaOperacion();
             Criteria criteria = session.createCriteria(Usuario.class);
@@ -161,62 +164,89 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             } else if (ordenarAsc.equalsIgnoreCase("desc")) {
                 criteria.addOrder(Order.desc(ordenarPor));
             }
-            return criteria.list();
+            result = criteria.list();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
-        } finally {
-            try {
-                session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
-            }
-        }
-    }
-
-    public boolean validarUsername(String username) {
-        Usuario usuario = null;
-        try {
-            this.iniciaOperacion();
-            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
-            usuario = (Usuario) criteria.uniqueResult();
-        } catch (HibernateException he) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
             }
         }
-        return usuario == null;
+        return result;
+    }
+    
+    /*public List<Proveedor> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
+        try {
+            this.iniciaOperacion();
+            Criteria criteria = session.createCriteria(Proveedor.class);
+            if (ordenarAsc.equalsIgnoreCase("asc")) {
+                criteria.addOrder(Order.asc(ordenarPor));
+            } else if (ordenarAsc.equalsIgnoreCase("desc")) {
+                criteria.addOrder(Order.desc(ordenarPor));
+            }
+            return criteria.list();
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            tx.rollback();
+            throw he;
+        } finally {
+            try {
+                session.close();
+            } catch (HibernateException he) {
+                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+                throw he;
+            }
+        }
+    }*/
+    
+    
+
+    public boolean validarUsername(String username) {
+        Usuario result = null;
+        try {
+            this.iniciaOperacion();
+            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
+            result = (Usuario) criteria.uniqueResult();
+        } catch (HibernateException he) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        } finally {
+            try {
+                //session.close();
+            } catch (HibernateException he) {
+                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+                throw he;
+            }
+        }
+        return result == null;
     }
 
     public Usuario obtenerUsuarioUsername(String username) {
-        Usuario usuario = null;
+        Usuario result = null;
         try {
             this.iniciaOperacion();
             Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
-            usuario = (Usuario) criteria.uniqueResult();
+            result = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
             }
         }
-        usuario.setContrasena("");
-        usuario.setConfirmarContrasena("");
-        usuario.setFacturas(null);
-        return usuario;
+        result.setContrasena("");
+        result.setConfirmarContrasena("");
+        result.setFacturas(null);
+        return result;
     }
 
     @Override
@@ -247,7 +277,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             throw he;
         } finally {
             try {
-                session.close();
+                //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
                 throw he;
