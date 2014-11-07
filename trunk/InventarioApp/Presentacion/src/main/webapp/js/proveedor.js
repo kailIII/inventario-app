@@ -93,7 +93,7 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         bootbox.alert({
-                            message: data.message,
+                            message: data.Message,
                             buttons: {
                                 success: {
                                     label: 'Aceptar',
@@ -108,7 +108,7 @@ $(document).ready(function () {
                     },
                     error: function (error) {
                         bootbox.dialog({
-                            message: error.message,
+                            message: error.Message,
                             buttons: {
                                 danger: {
                                     label: 'Aceptar',
