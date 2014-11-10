@@ -2,6 +2,7 @@ $(document).ready(function () {
     $("#cedula").val("");
     $("#usuario").val("");
     $("#modificar-usuario").hide();
+    
     $.ajax({
         url: 'cargar-usuarios',
         dataType: 'JSON',
@@ -51,7 +52,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#btnGuardar").click(function () {
+    $("#btnGuardarUsuario").click(function () {
         $("#agregar-usuario").validate({
             rules: {
                 cedula: {
@@ -63,7 +64,7 @@ $(document).ready(function () {
                     maxlength: 30,
                     remote: {
                         url: "validar-username",
-                        method: "POST",
+                        method: "GET",
                         data: {
                             usuario: $("usuario").attr("value")
                         }
@@ -88,51 +89,48 @@ $(document).ready(function () {
                     required: true
                 },
                 telefono: {
-                    required: true,
-                    matches: "[0-9]+",
-                    minlength: 8,
-                    maxlength: 10
+                    required: true
                 }
             },
             messages: {
                 cedula: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño de identificacion"
+                    maxlength: "Ha excedido el tama�o de identificacion"
                 },
                 usuario: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño del nombre de usuario",
+                    maxlength: "Ha excedido el tama�o del nombre de usuario",
                     remote: "El nombre de usuario ya se encuentra en uso"
                 },
                 contrasena: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño de caracteres",
+                    maxlength: "Ha excedido el tama�o de caracteres",
                     minlength: "La contraseña debe de tener al menos 8 caracteres"
                 },
                 confirmarContrasena: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño de caracteres",
-                    minlength: "La contraseña debe de tener al menos 8 caracteres",
-                    equalTo: "Las contraseñas no coinciden"
+                    maxlength: "Ha excedido el tama�o de caracteres",
+                    minlength: "La contrase�a debe de tener al menos 8 caracteres",
+                    equalTo: "Las contrase�as no coinciden"
                 },
                 correo: {
-                    email: "Digite un correo valido"
+                    email: "Digite un correo v�lido"
                 },
                 rol: {
-                    required: "Seleccione una opción"
+                    required: "Seleccione una opci�n"
                 },
                 telefono: {
-                    required: "Campo obligatorio",
-                    matches: "Digite solo números",
-                    minlength: "Digite un telefono valido"
+                    required: "Campo obligatorio"
                 }
             },
             submitHandler: function (form) {
+                alert("Hola Mundo");
                 $.ajax({
                     url: 'agregar-usuario',
                     data: $(form).serialize(),
                     dataType: 'JSON',
                     type: 'POST',
+                    headers: { 'Access-Control-Allow-Methods': 'POST' },
                     beforeSend: function () {
                         // Codigo para mostrar el spinner
                     },
@@ -140,30 +138,14 @@ $(document).ready(function () {
                         // Codigo para ocultar el spinner
                     },
                     success: function (data) {
-                        bootbox.alert({
-                            message: data.message,
-                            buttons: {
-                                success: {
-                                    label: 'Aceptar',
-                                    className: 'btn-success'
-                                }
-                            }
-                        });
-                        //$("#list").trigger('reloadGrid');
+                        alert(data.Message);
+                        $("#list").trigger('reloadGrid');
                         $('#agregar-usuario').each(function () {
                             this.reset();
                         });
                     },
                     error: function (error) {
-                        bootbox.dialog({
-                            message: error.message,
-                            buttons: {
-                                danger: {
-                                    label: 'Aceptar',
-                                    className: 'btn-danger'
-                                }
-                            }
-                        });
+                        alert(error.Message);
                         console.log(error.Message);
                     }
                 });

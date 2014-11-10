@@ -92,30 +92,14 @@ $(document).ready(function () {
                         // Codigo para ocultar el spinner
                     },
                     success: function (data) {
-                        bootbox.alert({
-                            message: data.Message,
-                            buttons: {
-                                success: {
-                                    label: 'Aceptar',
-                                    className: 'btn-success'
-                                }
-                            }
-                        });
+                        alert(data.Message);
                         $("#list").trigger('reloadGrid');
-                        $('#agregar-proveedor').each(function () {
+                        $("#agregar-proveedor").each(function () {
                             this.reset();
                         });
                     },
                     error: function (error) {
-                        bootbox.dialog({
-                            message: error.Message,
-                            buttons: {
-                                danger: {
-                                    label: 'Aceptar',
-                                    className: 'btn-danger'
-                                }
-                            }
-                        });
+                        alert(error.Message);
                         console.log(error.Message);
                     }
                 });
