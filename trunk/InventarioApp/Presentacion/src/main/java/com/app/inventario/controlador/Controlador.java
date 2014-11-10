@@ -66,9 +66,7 @@ public class Controlador {
     Map agregarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request, HttpServletResponse response) {
         Map map = new HashMap();
         try {
-            String accept = request.getHeader("Accept");
             this.usuarioServicio.guardar(usuario);
-            response.addHeader("Allow", "POST");
             response.setStatus(HttpServletResponse.SC_OK);
             map.put("Status", "OK");
             map.put("Message", "Agregado Correctamente");
@@ -96,7 +94,7 @@ public class Controlador {
         jqGridModel result = usuarioServicio.obtenerListaTodos(numeroPagina, numeroColumnas, ordenarPor, ordenarAsc);
         return result;
     }
-    
+
     @RequestMapping(value = "/cargar-usuarios", method = RequestMethod.GET)
     public @ResponseBody
     List<String> cargarUsuarios(HttpServletRequest request, HttpServletResponse response) {
@@ -182,13 +180,15 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    /*List<Proveedor>  */
+    String cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
-        List<String> nombresProveedores = new ArrayList<String>();
+        //return proveedores;
+        String sb = "";
         for (Proveedor p : proveedores) {
-            nombresProveedores.add(p.getNombreProveedor());
+            sb += "<option value=" + p.getId() + ">" + p.getNombreProveedor() + "</option>";
         }
-        return nombresProveedores;
+        return sb;
     }
 
     public UsuarioServicioImpl getUsuarioServicio() {

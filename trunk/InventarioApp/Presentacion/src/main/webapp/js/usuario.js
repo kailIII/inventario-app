@@ -1,3 +1,7 @@
+$.validator.addMethod("validaTelefono", function(value, element){
+    return this.optional(element)|| /^\d{4}-\d{4}$/.test(value);
+}, "Ingrese un n&uacute;mero de tel&eacute;fono v&aacute;lido.");
+
 $(document).ready(function () {
     $("#cedula").val("");
     $("#usuario").val("");
@@ -16,7 +20,9 @@ $(document).ready(function () {
             console.log(error);
         }
     });
-
+    
+    
+    
     $("#btnBuscarUsuario").click(function () {
         $.ajax({
             url: 'buscar-usuario-username',
@@ -89,35 +95,36 @@ $(document).ready(function () {
                     required: true
                 },
                 telefono: {
-                    required: true
+                    required: true,
+                    validaTelefono: true
                 }
             },
             messages: {
                 cedula: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño de identificacion"
+                    maxlength: "Ha excedido el tama&ntilde;o de identificacion"
                 },
                 usuario: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño del nombre de usuario",
+                    maxlength: "Ha excedido el tama&ntilde;o del nombre de usuario",
                     remote: "El nombre de usuario ya se encuentra en uso"
                 },
                 contrasena: {
                     required: "Campo obligatorio",
                     maxlength: "Ha excedido el tamaño de caracteres",
-                    minlength: "La contraseÃ±a debe de tener al menos 8 caracteres"
+                    minlength: "La contrase&ntilde;a debe de tener al menos 8 caracteres"
                 },
                 confirmarContrasena: {
                     required: "Campo obligatorio",
-                    maxlength: "Ha excedido el tamaño de caracteres",
-                    minlength: "La contraseña debe de tener al menos 8 caracteres",
-                    equalTo: "Las contraseñas no coinciden"
+                    maxlength: "Ha excedido el tama&ntilde;o de caracteres",
+                    minlength: "La contrase&ntilde;a debe de tener al menos 8 caracteres",
+                    equalTo: "Las contrase&ntilde;as no coinciden"
                 },
                 correo: {
-                    email: "Digite un correo válido"
+                    email: "Digite un correo v&aacute;lido"
                 },
                 rol: {
-                    required: "Seleccione una opción"
+                    required: "Seleccione una opci&oacute;n"
                 },
                 telefono: {
                     required: "Campo obligatorio"
@@ -216,7 +223,7 @@ $(document).ready(function () {
             repeatitems: false,
             root: 'rows'
         },
-        colNames: ['Identificacion', 'Cédula', 'Usuario', 'Correo Electrónico', 'Rol', 'Teléfono'],
+        colNames: ['Identificaci&oacute;n', 'C&eacute;dula', 'Usuario', 'Correo Electr&oacute;nico', 'Rol', 'Tel&eacute;fono'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false, hidden: true},
             {name: 'cedula', index: 'cedula', align: 'center', search: false},

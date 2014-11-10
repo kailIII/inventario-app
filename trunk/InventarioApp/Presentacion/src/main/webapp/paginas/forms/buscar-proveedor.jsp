@@ -6,19 +6,22 @@
 
 <fieldset>
     <legend>Datos del Proveedor</legend>
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="ui-widget">
                             <label for="nombreProveedorBuscar">Nombre Proveedor:</label>
-                            <input type="text" class="form-control" id="nombreProveedorBuscar" />
-                            <button id="btnBuscarProveedor" type="button" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                            <select id="nombreProveedorBuscar"></select>
+                        </div>
+                        <!--<input type="text" class="form-control" id="nombreProveedorBuscar" />-->
+                        <button id="btnBuscarProveedor" type="button" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </fieldset>
 
 <div id="modificar-proveedor">

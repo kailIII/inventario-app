@@ -15,10 +15,10 @@
             recordtext: "Mostrando {0} - {1} de {2}",
             emptyrecords: "Sin registros que mostrar",
             loadtext: "Cargando...",
-            pgtext: "Página {0} de {1}"
+            pgtext: "P&aacute;gina {0} de {1}"
         },
         search: {
-            caption: "Búsqueda...",
+            caption: "B&uacute;squeda...",
             Find: "Buscar",
             Reset: "Limpiar",
             odata: [{oper: 'eq', text: "igual "}, {oper: 'ne', text: "no igual a"}, {oper: 'lt', text: "menor que"}, {oper: 'le', text: "menor o igual que"}, {oper: 'gt', text: "mayor que"}, {oper: 'ge', text: "mayor o igual a"}, {oper: 'bw', text: "empiece por"}, {oper: 'bn', text: "no empiece por"}, {oper: 'in', text: "estÃ¡ en"}, {oper: 'ni', text: "no estÃ¡ en"}, {oper: 'ew', text: "termina por"}, {oper: 'en', text: "no termina por"}, {oper: 'cn', text: "contiene"}, {oper: 'nc', text: "no contiene"}, {oper: 'nu', text: 'is null'}, {oper: 'nn', text: 'is not null'}],
@@ -38,17 +38,17 @@
             bExit: "Cancelar",
             msg: {
                 required: "Campo obligatorio",
-                number: "Introduzca un número",
+                number: "Introduzca un n&uacute;mero",
                 minValue: "El valor debe ser mayor o igual a ",
                 maxValue: "El valor debe ser menor o igual a ",
-                email: "no es una dirección de correo válida",
+                email: "no es una direcci&oacute;n de correo v&aacute;lida",
                 integer: "Introduzca un valor entero",
                 date: "Introduza una fecha correcta ",
-                url: "no es una URL válida. Prefijo requerido ('http://' or 'https://')",
-                nodefined: " no está definido.",
+                url: "no es una URL v&aacute;lida. Prefijo requerido ('http://' or 'https://')",
+                nodefined: " no est&aacute; definido.",
                 novalue: " valor de retorno es requerido.",
-                customarray: "La función personalizada debe devolver un array.",
-                customfcheck: "La función personalizada debe estar presente en el caso de validación personalizada."
+                customarray: "La funci&oacute;n personalizada debe devolver un array.",
+                customfcheck: "La funci&oacute;n personalizada debe estar presente en el caso de validaci&oacute;n personalizada."
             }
         },
         view: {
@@ -69,7 +69,7 @@
             deltext: " ",
             deltitle: "Eliminar fila seleccionada",
             searchtext: " ",
-            searchtitle: "Buscar información",
+            searchtitle: "Buscar informaci&oacute;n",
             refreshtext: "",
             refreshtitle: "Recargar datos",
             alertcap: "Aviso",

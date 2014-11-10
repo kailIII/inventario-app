@@ -1,30 +1,25 @@
 $(document).ready(function () {
 
+    $.cargar_proveedores = function () {
+        $.ajax({
+            url: 'cargar-proveedores',
+            dataType: 'html',
+            type: 'GET',
+            success: function (data) {
+                $("#nombreProveedorBuscar").html("");
+                $("#nombreProveedorBuscar").html(data);
+            },
+            error: function (error) {
+                alert("Error:" + error);
+            }
+        });
+    };
+    
+    $.cargar_proveedores();
+    
+    $("#nombreProveedorBuscar").combobox();
+
     $("#modificar-proveedor").hide();
-
-//    $("#nombreProveedorBuscar").autocomplete({
-//        source: 'cargar-proveedores',
-//        select: function (event, ui) {
-//            value: ui.id;
-//            label: ui.nombreProveedor;
-//        }
-//    });
-
-
-    $.ajax({
-        url: 'cargar-proveedores',
-        dataType: 'JSON',
-        type: 'GET',
-        success: function (data) {
-            $("#nombreProveedorBuscar").empty();
-            $("#nombreProveedorBuscar").autocomplete({
-                source: data
-            });
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
 
     $("#btnBuscarProveedor").click(function () {
         $.ajax({
@@ -97,6 +92,7 @@ $(document).ready(function () {
                         $("#agregar-proveedor").each(function () {
                             this.reset();
                         });
+                        $.cargar_proveedores();
                     },
                     error: function (error) {
                         alert(error.Message);
@@ -125,7 +121,7 @@ $(document).ready(function () {
             repeatitems: false,
             root: 'rows'
         },
-        colNames: ['Identificacion', 'Nombre Proveedor', 'Cédula Juridica', 'Telefono', 'Direccion'],
+        colNames: ['Identificaci&oacute;n', 'Nombre Proveedor', 'C&eacute;dula Jur&iacute;dica', 'Tel&eacute;fono', 'Direcci&oacute;n'],
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false, hidden: true},
             {name: 'nombreProveedor', index: 'nombreProveedor', align: 'center', search: false},
