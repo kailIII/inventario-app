@@ -63,17 +63,16 @@
     <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
     </bean>
     <!-- Utilizando la configuracion dentro del Servidor de aplicaciones web -->
-    <jee:jndi-lookup jndi-name="java:comp/env/jdbc/inventarioDB" id="dataSource" />
+    
+    <!--<jee:jndi-lookup jndi-name="java:comp/env/jdbc/inventarioDB" id="dataSource" />-->
     
     <!-- Creando el datasource como un bean propio de Spring Framework    -->
-    <!--
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/prueba" />
+        <property name="url" value="jdbc:mysql://localhost:3306/inventario" />
         <property name="username" value="root" />
         <property name="password" value="root" />
     </bean>
-    -->
     
     <!-- Session factory, es un bean de configuracion de hibernate
          es necesario para el funcionamiento de los mapeos y las consultas
