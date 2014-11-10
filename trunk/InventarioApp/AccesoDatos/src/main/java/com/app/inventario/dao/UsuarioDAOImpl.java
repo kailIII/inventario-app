@@ -50,9 +50,6 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
             Object salt = saltSource.getSalt(user);
             usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MONTH, 3);
-            usuario.setFechaExpiracion(calendar.getTime());
             session.save(usuario);
             tx.commit();
         } catch (HibernateException he) {
