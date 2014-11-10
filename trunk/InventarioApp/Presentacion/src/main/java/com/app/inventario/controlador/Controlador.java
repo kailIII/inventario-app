@@ -66,11 +66,12 @@ public class Controlador {
     Map agregarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request, HttpServletResponse response) {
         Map map = new HashMap();
         try {
+            String accept = request.getHeader("Accept");
             this.usuarioServicio.guardar(usuario);
+            response.addHeader("Allow", "POST");
             response.setStatus(HttpServletResponse.SC_OK);
             map.put("Status", "OK");
             map.put("Message", "Agregado Correctamente");
-            return map;
         } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("Status", "FAIL");
@@ -114,7 +115,7 @@ public class Controlador {
         return usuario;
     }
 
-    @RequestMapping(value = "/validar-username", method = RequestMethod.POST)
+    @RequestMapping(value = "/validar-username", method = RequestMethod.GET)
     public @ResponseBody
     boolean validarUsername(HttpServletRequest request) {
         String username = request.getParameter("usuario");
@@ -145,7 +146,6 @@ public class Controlador {
             response.setStatus(HttpServletResponse.SC_OK);
             map.put("Status", "OK");
             map.put("Message", "Agregado Correctamente");
-            return map;
         } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("Status", "FAIL");
@@ -182,13 +182,13 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    List<Proveedor> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    List<String> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         List<String> nombresProveedores = new ArrayList<String>();
         for (Proveedor p : proveedores) {
             nombresProveedores.add(p.getNombreProveedor());
         }
-        return proveedores;
+        return nombresProveedores;
     }
 
     public UsuarioServicioImpl getUsuarioServicio() {
