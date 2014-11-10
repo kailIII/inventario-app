@@ -3,14 +3,14 @@
     Created on : 17/11/2013, 03:22:05 PM
     Author     : Erick
 --%>
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8" accept="application/json"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Mantenimiento Usuarios</title>
         <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
@@ -20,7 +20,6 @@
         <script src="js/jqgrid/grid.locale-es.js" type="text/javascript"></script>
         <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
         <script src="js/jquery-validate.js" type="text/javascript"></script>
-        <script src="js/bootbox.min.js" type="text/javascript"></script>
         <script src="js/usuario.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>

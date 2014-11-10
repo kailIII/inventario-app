@@ -1,9 +1,10 @@
 <%-- 
     Document   : mantenimiento-proveedor
     Created on : 17/11/2013, 03:22:05 PM
-    Author     : Erick Pérez
+    Author     : Erick PÃ©rez
 --%>
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
@@ -19,7 +20,6 @@
         <script src="js/jqgrid/grid.locale-es.js" type="text/javascript"></script>
         <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
         <script src="js/jquery-validate.js" type="text/javascript"></script>
-        <script src="js/bootbox.min.js" type="text/javascript"></script>
         <script src="js/proveedor.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>
