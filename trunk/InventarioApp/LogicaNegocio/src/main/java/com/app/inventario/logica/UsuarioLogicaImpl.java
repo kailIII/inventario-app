@@ -1,10 +1,11 @@
 package com.app.inventario.logica;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
-import com.app.inventario.entidades.Proveedor;
+import org.springframework.security.authentication.dao.SaltSource;
 import com.app.inventario.entidades.Usuario;
 import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     @Transactional
     public void guardar(Usuario usuario) {
         try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.MONTH, 3);
+            usuario.setFechaExpiracion(calendar.getTime());
             usuarioDAO.guardar(usuario);
         } catch (HibernateException he) {
             he.printStackTrace();
@@ -93,7 +97,7 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
             modelo.setTotal((int) Math.ceil((double) usuarios.size() / (double) numeroFilas));
             modelo.setRecords(usuarios.size());
             modelo.setRows(usuarios.subList(primerResultado, numeroFilas > usuarios.size() ? usuarios.size() : numeroFilas));
-            for(Usuario u : modelo.getRows()){
+            for (Usuario u : modelo.getRows()) {
                 u.setFacturas(null);
             }
             return modelo;
@@ -102,7 +106,7 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
             throw ex;
         }
     }
-    
+
     @Transactional(readOnly = true)
     public boolean validarUsername(String username) {
         boolean valido = false;
