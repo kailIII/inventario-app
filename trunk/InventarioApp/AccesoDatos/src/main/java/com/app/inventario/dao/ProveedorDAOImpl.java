@@ -37,12 +37,12 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             //tx.rollback();
-            throw new HibernateException(he.getMessage(), he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
-                throw new HibernateException(he.getMessage(), he);
+                throw he;
             }
         }
     }
@@ -56,13 +56,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
     }
@@ -76,13 +76,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
     }
@@ -96,13 +96,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
         return result;
@@ -117,13 +117,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
         return result;
@@ -143,13 +143,13 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
         return result;
