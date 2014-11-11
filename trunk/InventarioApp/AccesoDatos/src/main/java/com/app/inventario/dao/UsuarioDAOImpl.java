@@ -256,7 +256,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
             usuario = (Usuario) criteria.uniqueResult();
             Date fechaActual = Calendar.getInstance().getTime();
-            expirado = !fechaActual.equals(usuario.getFechaExpiracion());
+            expirado = !fechaActual.before(usuario.getFechaExpiracion());
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority(usuario.getRol()));
             user = new User(usuario.getUsuario(), usuario.getContrasena(), usuario.isHabilitado(), true, expirado, true, authorities);
