@@ -180,7 +180,6 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    /*List<Proveedor>  */
     String cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         //return proveedores;
