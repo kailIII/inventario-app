@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -164,26 +164,30 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             tx.rollback();
-            throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+            throw he;
         } finally {
             try {
                 //session.close();
             } catch (HibernateException he) {
                 Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
+                throw he;
             }
         }
         return proveedor;
     }
 
-    public int cantidadFilas() {
-        this.iniciaOperacion();
-        int cantidad = 0;
-        Criteria criteria = session.createCriteria(Proveedor.class);
-        criteria.setProjection(Projections.rowCount());
-        cantidad = (Integer) criteria.list().get(0);
-        session.close();
-        return cantidad;
+    public List<Proveedor> obtenerNombresProveedores() throws HibernateException {
+        List<Proveedor> lista = null;
+        try{
+            this.iniciaOperacion();
+            Query consulta = session.createQuery("SELECT p.nombreProveedor FROM Proveedor p");
+            lista = consulta.list();
+        }
+        catch(HibernateException he){
+            Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+        return lista;
     }
 
     // Inicia una transaccion contra la base de datos.

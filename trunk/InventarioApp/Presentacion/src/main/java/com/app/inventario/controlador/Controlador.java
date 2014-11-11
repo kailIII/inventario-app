@@ -187,7 +187,7 @@ public class Controlador {
         for (Proveedor p : proveedores) {
             sb.append("<option value=" + p.getId() + ">" + p.getNombreProveedor() + "</option>");
         }
-        return sb;
+        return sb.toString();
     }
 
     public UsuarioServicioImpl getUsuarioServicio() {
