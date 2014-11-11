@@ -183,9 +183,9 @@ public class Controlador {
     String cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
         //return proveedores;
-        String sb = "";
+        StringBuilder sb = new StringBuilder();
         for (Proveedor p : proveedores) {
-            sb += "<option value=" + p.getId() + ">" + p.getNombreProveedor() + "</option>";
+            sb.append("<option value=" + p.getId() + ">" + p.getNombreProveedor() + "</option>");
         }
         return sb;
     }
