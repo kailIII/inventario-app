@@ -10,6 +10,8 @@ import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logica.ProveedorLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 
 /**
@@ -23,40 +25,54 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
     public void guardar(Proveedor proveedor) throws Exception {
         try {
             proveedorLogica.guardar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public void actualizar(Proveedor proveedor) throws Exception {
         try {
             proveedorLogica.actualizar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public void eliminar(Proveedor proveedor) throws Exception {
         try {
             proveedorLogica.eliminar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public Proveedor obtener(int id) throws Exception {
         try {
             return proveedorLogica.obtener(id);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public List<Proveedor> obtenerTodos() throws Exception {
         try {
             return proveedorLogica.obtenerTodos();
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+    }
+
+    public String obtenerNombresProveedores() throws HibernateException {
+        try {
+            return proveedorLogica.obtenerNombresProveedores();
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -64,24 +80,27 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
         try {
             String datos = proveedorLogica.obtenerListaTodosXML(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
             return datos;
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public jqGridModel obtenerListaTodos(int numeroPagina, int numeroFilas, String ordenarPor, String ordenarAsc) throws Exception {
         try {
             return proveedorLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
     public Proveedor obtenerProveedorNombre(String nombreProveedor) throws Exception {
         try {
             return proveedorLogica.obtenerProveedorNombre(nombreProveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 

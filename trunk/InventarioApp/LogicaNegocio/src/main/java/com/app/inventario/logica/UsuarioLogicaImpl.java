@@ -1,15 +1,21 @@
 package com.app.inventario.logica;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
-import org.springframework.security.authentication.dao.SaltSource;
 import com.app.inventario.entidades.Usuario;
 import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -20,68 +26,89 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
 
     UsuarioDAOImpl usuarioDAO;
     private jqGridModel<Usuario> modelo;
+    private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
+    private SaltSource saltSource;
 
     @Transactional
-    public void guardar(Usuario usuario) {
+    public void guardar(Usuario usuario) throws Exception {
         try {
+            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
+            Object salt = saltSource.getSalt(user);
+            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MONTH, 3);
             usuario.setFechaExpiracion(calendar.getTime());
             usuarioDAO.guardar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional
-    public void actualizar(Usuario usuario) {
+    public void actualizar(Usuario usuario) throws Exception {
         try {
+            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
+            Object salt = saltSource.getSalt(user);
+            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             usuarioDAO.actualizar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional
-    public void eliminar(Usuario usuario) {
+    public void eliminar(Usuario usuario) throws Exception {
         try {
             usuarioDAO.eliminar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional(readOnly = true)
-    public Usuario obtener(int id) {
+    public Usuario obtener(int id) throws Exception {
         try {
             return usuarioDAO.obtener(id);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> obtenerTodos() {
+    public List<Usuario> obtenerTodos() throws Exception {
         try {
             return usuarioDAO.obtenerTodos();
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> obtenerListaTodos() {
-        Map<String, Object> datos = new HashMap<String, Object>();
-        List<Usuario> usuarios = null;
+    public List<Usuario> obtenerListaTodos() throws Exception {
         try {
             return usuarioDAO.obtenerTodos();
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public String obtenerNombresUsuario() throws HibernateException {
+        try {
+            List<Usuario> lista = usuarioDAO.obtenerNombresUsuarios();
+            StringBuilder sb = new StringBuilder();
+            for (Object o : lista.toArray()) {
+                sb.append("<option value=" + Array.get(o, 0).toString() + ">" + Array.get(o, 1).toString() + "</option>");
+            }
+            return sb.toString();
+        } catch (HibernateException he) {
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
@@ -101,30 +128,30 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
                 u.setFacturas(null);
             }
             return modelo;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public boolean validarUsername(String username) {
-        boolean valido = false;
-        try {
-            valido = usuarioDAO.validarUsername(username);
-            return valido;
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
     @Transactional(readOnly = true)
-    public Usuario obtenerUsuarioUsername(String username) {
+    public boolean validarUsername(String username) throws Exception {
+        boolean valido = false;
+        try {
+            valido = usuarioDAO.validarUsername(username);
+            return valido;
+        } catch (HibernateException he) {
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario obtenerUsuarioUsername(String username) throws Exception {
         try {
             return usuarioDAO.obtenerUsuarioUsername(username);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
@@ -135,5 +162,13 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
 
     public void setUsuarioDAO(UsuarioDAOImpl usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
+    }
+
+    public void setMessageDigestPasswordEncoder(MessageDigestPasswordEncoder messageDigestPasswordEncoder) {
+        this.messageDigestPasswordEncoder = messageDigestPasswordEncoder;
+    }
+
+    public void setSaltSource(SaltSource saltSource) {
+        this.saltSource = saltSource;
     }
 }

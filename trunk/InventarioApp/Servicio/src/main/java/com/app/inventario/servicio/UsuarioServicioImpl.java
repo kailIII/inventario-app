@@ -10,6 +10,8 @@ import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logica.UsuarioLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 
 /**
@@ -20,47 +22,47 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
 
     UsuarioLogicaImpl usuarioLogica;
 
-    public void guardar(Usuario usuario) {
+    public void guardar(Usuario usuario) throws Exception {
         try {
             usuarioLogica.guardar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public void actualizar(Usuario usuario) {
+    public void actualizar(Usuario usuario) throws Exception {
         try {
             usuarioLogica.actualizar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public void eliminar(Usuario usuario) {
+    public void eliminar(Usuario usuario) throws Exception {
         try {
             usuarioLogica.eliminar(usuario);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public Usuario obtener(int id) {
+    public Usuario obtener(int id) throws Exception {
         try {
             return usuarioLogica.obtener(id);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public List<Usuario> obtenerTodos() {
+    public List<Usuario> obtenerTodos() throws Exception {
         try {
             return usuarioLogica.obtenerTodos();
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
@@ -69,25 +71,34 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
         try {
             return usuarioLogica.obtenerListaTodos(numeroPagina, numeroFilas, ordenarPor, ordenarAsc);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public boolean validarUsername(String username) {
+    public boolean validarUsername(String username) throws Exception {
         try {
             return usuarioLogica.validarUsername(username);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
 
-    public Usuario obtenerUsuarioUsername(String username) {
+    public String obtenerNombresUsuario() throws Exception {
+        try {
+            return usuarioLogica.obtenerNombresUsuario();
+        } catch (HibernateException he) {
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+    }
+
+    public Usuario obtenerUsuarioUsername(String username) throws Exception {
         try {
             return usuarioLogica.obtenerUsuarioUsername(username);
         } catch (HibernateException he) {
-            he.printStackTrace();
+            Logger.getLogger(UsuarioServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }

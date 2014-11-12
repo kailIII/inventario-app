@@ -7,28 +7,31 @@ $(document).ready(function () {
     $("#usuario").val("");
     $("#modificar-usuario").hide();
     
-    $.ajax({
-        url: 'cargar-usuarios',
-        dataType: 'JSON',
-        type: 'GET',
-        success: function (data) {
-            $("#nombreUsuario").autocomplete({
-                source: data
-            });
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    $.cargar_usuarios = function () {
+        $.ajax({
+            url: 'cargar-usuarios',
+            dataType: 'html',
+            type: 'GET',
+            success: function (data) {
+                $("#nombreUsuario").html("");
+                $("#nombreUsuario").html(data);
+            },
+            error: function (error) {
+                alert("Error:" + error);
+            }
+        });
+    };
     
+    $("#nombreUsuario").combobox();
     
+    $.cargar_usuarios();
     
     $("#btnBuscarUsuario").click(function () {
         $.ajax({
             url: 'buscar-usuario-username',
             dataType: 'json',
             type: 'GET',
-            data: {'nombreUsuario': $("#nombreUsuario").val()},
+            data: {'idUsuario': $("#nombreUsuario").val()},
             success: function (usuario) {
                 $("#idAct").val(usuario.id);
                 $("#cedulaAct").val(usuario.cedula);
@@ -131,13 +134,11 @@ $(document).ready(function () {
                 }
             },
             submitHandler: function (form) {
-                alert("Hola Mundo");
                 $.ajax({
                     url: 'agregar-usuario',
                     data: $(form).serialize(),
                     dataType: 'JSON',
                     type: 'POST',
-                    headers: { 'Access-Control-Allow-Methods': 'POST' },
                     beforeSend: function () {
                         // Codigo para mostrar el spinner
                     },
@@ -150,6 +151,7 @@ $(document).ready(function () {
                         $('#agregar-usuario').each(function () {
                             this.reset();
                         });
+                        $.cargar_usuarios();
                     },
                     error: function (error) {
                         alert(error.Message);

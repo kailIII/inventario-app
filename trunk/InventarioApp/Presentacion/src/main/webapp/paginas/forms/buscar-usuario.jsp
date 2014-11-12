@@ -6,19 +6,21 @@
 
 <fieldset>
     <legend>Datos del usuario</legend>
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="ui-widget">
                             <label for="nombreUsuario">Nombre de usuario:&nbsp;</label>
-                            <input type="text" class="form-control" id="nombreUsuario" />
-                            <button type="button" id="btnBuscarUsuario" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                            <select id="nombreUsuario"></select>
+                        </div>
+                        <button type="button" id="btnBuscarUsuario" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </fieldset>
 
 <div id="modificar-usuario">

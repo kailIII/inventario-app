@@ -21,6 +21,7 @@
         <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
         <script src="js/jquery-validate.js" type="text/javascript"></script>
         <script src="js/usuario.js" type="text/javascript"></script>
+        <script src="js/combobox-autocomplete.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>
         <script src="js/bootstrapjs/jquery.metisMenu.js" type="text/javascript"></script>

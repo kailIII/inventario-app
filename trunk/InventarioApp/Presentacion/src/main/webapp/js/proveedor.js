@@ -26,7 +26,7 @@ $(document).ready(function () {
             url: 'buscar-proveedor-nombre',
             dataType: 'json',
             type: 'GET',
-            data: {'nombreProveedor': $("#nombreProveedorBuscar").val()},
+            data: {'idProveedor': $("#nombreProveedorBuscar").val()},
             beforeSend: function () {
             },
             success: function (proveedor) {

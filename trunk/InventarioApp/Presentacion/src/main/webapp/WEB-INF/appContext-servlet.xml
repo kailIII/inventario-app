@@ -24,7 +24,7 @@
     <!-- Configures the @Controller programming model -->
     <mvc:annotation-driven />
     
-   <!-- <mvc:view-controller path="/login" view-name="login"/> -->
+    <!-- <mvc:view-controller path="/login" view-name="login"/> -->
     
     <!--Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
@@ -110,13 +110,13 @@
     
     
     
-   <!-- Beans utilizados para todo el flujo con las entidades Usuario -->
+    <!-- Beans utilizados para todo el flujo con las entidades Usuario -->
     <bean id="usuarioDAO" class="com.app.inventario.dao.UsuarioDAOImpl">
-        <property name="messageDigestPasswordEncoder" ref="passwordEncoder"/>
-        <property name="saltSource" ref="saltSource"/>
     </bean>
     
     <bean id="usuarioLogica" class="com.app.inventario.logica.UsuarioLogicaImpl">  
+        <property name="messageDigestPasswordEncoder" ref="passwordEncoder"/>
+        <property name="saltSource" ref="saltSource"/>
     </bean>
     
     <bean id="usuarioServicio" class="com.app.inventario.servicio.UsuarioServicioImpl">  

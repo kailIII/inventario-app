@@ -180,7 +180,7 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         List<Proveedor> lista = null;
         try{
             this.iniciaOperacion();
-            Query consulta = session.createQuery("SELECT p.nombreProveedor FROM Proveedor p");
+            Query consulta = session.createQuery("SELECT p.id, p.nombreProveedor FROM Proveedor p");
             lista = consulta.list();
         }
         catch(HibernateException he){

@@ -10,7 +10,10 @@ import com.app.inventario.entidades.Proveedor;
 import com.app.inventario.entidades.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import com.thoughtworks.xstream.XStream;
+import java.lang.reflect.Array;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +30,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     public void guardar(Proveedor proveedor) throws Exception {
         try {
             proveedorDAO.guardar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -36,8 +40,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     public void actualizar(Proveedor proveedor) throws Exception {
         try {
             proveedorDAO.actualizar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -45,8 +50,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     public void eliminar(Proveedor proveedor) throws Exception {
         try {
             proveedorDAO.eliminar(proveedor);
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -55,8 +61,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
         try {
             Proveedor proveedor = proveedorDAO.obtener(id);
             return proveedor;
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -66,8 +73,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             List<Proveedor> proveedores = null;
             proveedores = proveedorDAO.obtenerTodos();
             return proveedores;
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -77,8 +85,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             Proveedor proveedor = null;
             proveedor = proveedorDAO.obtenerProveedorNombre(nombreProveedor);
             return proveedor;
-        } catch (HibernateException ex) {
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 
@@ -97,11 +106,29 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             modelo.setRecords(proveedores.size());
             modelo.setRows(proveedores.subList(primerResultado, numeroFilas > proveedores.size() ? proveedores.size() : numeroFilas));
             return xstream.toXML(modelo);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
         //return map;
+    }
+
+    @Transactional(readOnly = true)
+    public String obtenerNombresProveedores() throws HibernateException {
+        try{
+        List<Proveedor> lista = proveedorDAO.obtenerNombresProveedores();
+        StringBuilder sb = new StringBuilder();
+        //Proveedor p = new Proveedor();
+        for (Object o : lista.toArray()) {
+            //p.setId(Integer.parseInt(Array.get(o, 0).toString()));
+            //p.setNombreProveedor(Array.get(o, 1).toString());
+            sb.append("<option value=" + Array.get(o, 0).toString() + ">" + Array.get(o, 1).toString() + "</option>");
+        }
+        return sb.toString();
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
     }
 
     @Transactional(readOnly = true)
@@ -116,9 +143,9 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
             modelo.setRecords(proveedores.size());
             modelo.setRows(proveedores.subList(primerResultado, numeroFilas > proveedores.size() ? proveedores.size() : numeroFilas));
             return modelo;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
+        } catch (HibernateException he) {
+            Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
         }
     }
 

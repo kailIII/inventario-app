@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Order;
@@ -22,8 +23,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -39,17 +38,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
 
     private Session session;
     private Transaction tx;
-    private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
-    private SaltSource saltSource;
 
     @Override
     public void guardar(Usuario usuario) {
         try {
             this.iniciaOperacion();
             //String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities
-            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
-            Object salt = saltSource.getSalt(user);
-            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             session.save(usuario);
             tx.commit();
         } catch (HibernateException he) {
@@ -70,9 +64,6 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
     public void actualizar(Usuario usuario) {
         try {
             this.iniciaOperacion();
-            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
-            Object salt = saltSource.getSalt(user);
-            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             session.update(usuario);
             tx.commit();
         } catch (HibernateException he) {
@@ -149,6 +140,20 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             }
         }
         return result;
+    }
+    
+    public List<Usuario> obtenerNombresUsuarios() throws HibernateException {
+        List<Usuario> lista = null;
+        try{
+            this.iniciaOperacion();
+            Query consulta = session.createQuery("SELECT u.id, u.usuario FROM Usuario u");
+            lista = consulta.list();
+        }
+        catch(HibernateException he){
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            throw he;
+        }
+        return lista;
     }
     
     public List<Usuario> obtenerTodosAGrid(String ordenarPor, String ordenarAsc) {
@@ -294,14 +299,5 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         tx.rollback();
         throw new HibernateException("OcurriÃ³ un error en la capa de acceso a datos", he);
     }
-
-    public void setMessageDigestPasswordEncoder(MessageDigestPasswordEncoder messageDigestPasswordEncoder) {
-        this.messageDigestPasswordEncoder = messageDigestPasswordEncoder;
-    }
-
-    public void setSaltSource(SaltSource saltSource) {
-        this.saltSource = saltSource;
-    }
-
 
 }

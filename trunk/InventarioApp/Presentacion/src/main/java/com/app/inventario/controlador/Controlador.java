@@ -79,7 +79,7 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/actualizar-usuario", method = RequestMethod.POST)
-    public String actualizarUsuario(@ModelAttribute("usuario-modificar") Usuario usuario) {
+    public String actualizarUsuario(@ModelAttribute("usuario-modificar") Usuario usuario) throws Exception {
         usuarioServicio.actualizar(usuario);
         return "redirect:mantenimiento-usuario";
     }
@@ -97,25 +97,20 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-usuarios", method = RequestMethod.GET)
     public @ResponseBody
-    List<String> cargarUsuarios(HttpServletRequest request, HttpServletResponse response) {
-        List<Usuario> usuarios = usuarioServicio.obtenerTodos();
-        List<String> usernames = new ArrayList<String>();
-        for (Usuario u : usuarios) {
-            usernames.add(u.getUsuario());
-        }
-        return usernames;
+    String cargarUsuarios(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return usuarioServicio.obtenerNombresUsuario();
     }
 
     @RequestMapping(value = "/buscar-usuario-username", method = RequestMethod.GET)
     public @ResponseBody
-    Usuario obtenerUsuarioUsername(@RequestParam("nombreUsuario") String username) {
-        Usuario usuario = usuarioServicio.obtenerUsuarioUsername(username);
+    Usuario obtenerUsuarioUsername(@RequestParam("idUsuario") int id) throws Exception {
+        Usuario usuario = usuarioServicio.obtener(id);
         return usuario;
     }
 
     @RequestMapping(value = "/validar-username", method = RequestMethod.GET)
     public @ResponseBody
-    boolean validarUsername(HttpServletRequest request) {
+    boolean validarUsername(HttpServletRequest request) throws Exception {
         String username = request.getParameter("usuario");
         return usuarioServicio.validarUsername(username);
     }
@@ -154,8 +149,8 @@ public class Controlador {
 
     @RequestMapping(value = "/buscar-proveedor-nombre", method = RequestMethod.GET)
     public @ResponseBody
-    Proveedor obtenerProveedorNombre(@RequestParam("nombreProveedor") String nombreProveedor) throws Exception {
-        Proveedor proveedor = proveedorServicio.obtenerProveedorNombre(nombreProveedor);
+    Proveedor obtenerProveedorNombre(@RequestParam("idProveedor") int idProveedor) throws Exception {
+        Proveedor proveedor = proveedorServicio.obtener(idProveedor);
         return proveedor;
     }
 
@@ -181,13 +176,7 @@ public class Controlador {
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
     String cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Proveedor> proveedores = proveedorServicio.obtenerTodos();
-        //return proveedores;
-        StringBuilder sb = new StringBuilder();
-        for (Proveedor p : proveedores) {
-            sb.append("<option value=" + p.getId() + ">" + p.getNombreProveedor() + "</option>");
-        }
-        return sb.toString();
+        return this.proveedorServicio.obtenerNombresProveedores();
     }
 
     public UsuarioServicioImpl getUsuarioServicio() {
