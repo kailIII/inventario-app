@@ -36,14 +36,10 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            //tx.rollback();
+            tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -58,12 +54,7 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -78,12 +69,7 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -95,15 +81,10 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             result = (Proveedor) session.get(Proveedor.class, id);
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            tx.rollback();
+            //tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result;
     }
@@ -116,15 +97,10 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             result = session.createQuery("FROM Proveedor").list();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            tx.rollback();
+            //tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result;
     }
@@ -145,12 +121,7 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+           // Cerrar la session
         }
         return result;
     }
@@ -163,15 +134,10 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
             proveedor = (Proveedor) criteria.uniqueResult();
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            tx.rollback();
+            //tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return proveedor;
     }
@@ -186,6 +152,9 @@ public class ProveedorDAOImpl extends HibernateDaoSupport implements IDAO<Provee
         catch(HibernateException he){
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
+        }
+        finally{
+            // Cerrar la session
         }
         return lista;
     }

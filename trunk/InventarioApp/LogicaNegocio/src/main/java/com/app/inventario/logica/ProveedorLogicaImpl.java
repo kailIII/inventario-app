@@ -7,7 +7,7 @@ package com.app.inventario.logica;
 
 import com.app.inventario.dao.ProveedorDAOImpl;
 import com.app.inventario.entidades.Proveedor;
-import com.app.inventario.entidades.jqGridModel;
+import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import com.thoughtworks.xstream.XStream;
 import java.lang.reflect.Array;

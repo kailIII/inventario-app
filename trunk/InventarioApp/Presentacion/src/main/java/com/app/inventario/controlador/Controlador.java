@@ -6,6 +6,8 @@
 package com.app.inventario.controlador;
 
 import com.app.inventario.entidades.*;
+import com.app.inventario.grid.jqGridModel;
+import com.app.inventario.servicio.FamiliaServicioImpl;
 import com.app.inventario.servicio.ProveedorServicioImpl;
 import com.app.inventario.servicio.UsuarioServicioImpl;
 import java.security.Principal;
@@ -31,9 +33,9 @@ public class Controlador {
 
     UsuarioServicioImpl usuarioServicio;
     ProveedorServicioImpl proveedorServicio;
+    FamiliaServicioImpl familiaServicio;
 
-    private org.springframework.web.servlet.view.json.MappingJacksonJsonView jsonView = new MappingJacksonJsonView();
-
+    // private org.springframework.web.servlet.view.json.MappingJacksonJsonView jsonView = new MappingJacksonJsonView();
     // Generales
     @RequestMapping(value = "/login")
     public ModelAndView devolverPantallaLogin(ModelMap model, HttpServletRequest request) {
@@ -193,5 +195,13 @@ public class Controlador {
 
     public void setProveedorServicio(ProveedorServicioImpl proveedorServicio) {
         this.proveedorServicio = proveedorServicio;
+    }
+
+    public FamiliaServicioImpl getFamiliaServicio() {
+        return familiaServicio;
+    }
+
+    public void setFamiliaServicio(FamiliaServicioImpl familiaServicio) {
+        this.familiaServicio = familiaServicio;
     }
 }

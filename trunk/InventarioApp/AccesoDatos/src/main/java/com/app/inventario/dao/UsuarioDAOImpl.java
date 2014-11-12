@@ -47,16 +47,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             session.save(usuario);
             tx.commit();
         } catch (HibernateException he) {
+            tx.rollback();
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -67,16 +63,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             session.update(usuario);
             tx.commit();
         } catch (HibernateException he) {
+            tx.rollback();
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -87,16 +79,12 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             session.delete(usuario);
             tx.commit();
         } catch (HibernateException he) {
+            tx.rollback();
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             he.printStackTrace();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
     }
 
@@ -111,12 +99,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             he.printStackTrace();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result;
     }
@@ -132,12 +115,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             he.printStackTrace();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result;
     }
@@ -152,6 +130,9 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         catch(HibernateException he){
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
+        }
+        finally{
+            // Cerrar la session
         }
         return lista;
     }
@@ -169,15 +150,10 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             result = criteria.list();
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            tx.rollback();
+            //tx.rollback();
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result;
     }
@@ -218,12 +194,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return result == null;
     }
@@ -238,12 +209,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         result.setContrasena("");
         result.setConfirmarContrasena("");
@@ -278,12 +244,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
-            try {
-                //session.close();
-            } catch (HibernateException he) {
-                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-                throw he;
-            }
+            // Cerrar la session
         }
         return user;
     }

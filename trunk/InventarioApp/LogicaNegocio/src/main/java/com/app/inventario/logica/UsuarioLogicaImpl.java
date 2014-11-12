@@ -2,7 +2,7 @@ package com.app.inventario.logica;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
 import com.app.inventario.entidades.Usuario;
-import com.app.inventario.entidades.jqGridModel;
+import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import java.lang.reflect.Array;
 import java.util.ArrayList;

@@ -131,8 +131,17 @@
     
     <bean id="proveedorServicio" class="com.app.inventario.servicio.ProveedorServicioImpl">  
     </bean>
-
-        
+    
+    <!-- Beans utilizados para todo el flujo con las entidades Proveedor -->
+    <bean id="familiaDAO" class="com.app.inventario.dao.FamiliaDAOImpl">
+    </bean>
+    
+    <bean id="familiaLogica" class="com.app.inventario.logica.FamiliaLogicaImpl">  
+    </bean>
+    
+    <bean id="familiaServicio" class="com.app.inventario.servicio.FamiliaServicioImpl">  
+    </bean>
+    
     <!-- Controladores que utilizan la capa de servicio o fachadas -->
     <bean id="controlador" class="com.app.inventario.controlador.Controlador">
     </bean>

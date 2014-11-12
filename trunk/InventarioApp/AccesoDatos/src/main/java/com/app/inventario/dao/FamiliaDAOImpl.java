@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.app.inventario.dao;
 
 /**
@@ -15,9 +14,11 @@ import com.app.inventario.entidades.Familia;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia> {
@@ -27,52 +28,43 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
 
     @Override
     public void guardar(Familia familia) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             session.save(familia);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
-            session.close();
+            // Cerrar la session
         }
     }
 
     @Override
     public void actualizar(Familia familia) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             session.saveOrUpdate(familia);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
-            session.close();
+            // Cerrar la session
         }
     }
 
     @Override
     public void eliminar(Familia familia) {
-        int id = 0;
         try {
             this.iniciaOperacion();
             session.delete(familia);
-            id = 1;
             tx.commit();
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            he.printStackTrace();
-            id = -1;
+            throw he;
         } finally {
-            session.close();
+           // Cerrar la session
         }
     }
 
@@ -82,13 +74,13 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
         try {
             this.iniciaOperacion();
             familia = (Familia) session.get(Familia.class, id);
+            return familia;
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            throw he;
         } finally {
-            session.close();
+            // Cerrar la session
         }
-        return familia;
     }
 
     @Override
@@ -97,17 +89,38 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
         try {
             this.iniciaOperacion();
             familias = session.createQuery("from familia").list();
+            return familias;
         } catch (HibernateException he) {
             Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
-            this.manejaExcepcion(he);
+            throw he;
         } finally {
-            session.close();
+            // Cerrar la session
         }
-        return familias;
+    }
+    
+    public List<Familia> obtenerTodosAGrid(String ordenarPor, String ordenarAsc){
+        List<Familia> result = null;
+        try {
+            this.iniciaOperacion();
+            Criteria criteria = session.createCriteria(Familia.class);
+            if (ordenarAsc.equalsIgnoreCase("asc")) {
+                criteria.addOrder(Order.asc(ordenarPor));
+            } else if (ordenarAsc.equalsIgnoreCase("desc")) {
+                criteria.addOrder(Order.desc(ordenarPor));
+            }
+            result = criteria.list();
+        } catch (HibernateException he) {
+            Logger.getLogger(FamiliaDAOImpl.class.getName()).log(Level.SEVERE, null, he);
+            tx.rollback();
+            throw he;
+        } finally {
+            // Cerrar la session
+        }
+        return result;
     }
 
     // Inicia una transaccion contra la base de datos.
-   private void iniciaOperacion() throws HibernateException {
+    private void iniciaOperacion() throws HibernateException {
         session = this.getHibernateTemplate().getSessionFactory().openSession();
         tx = session.beginTransaction();
     }
@@ -119,4 +132,3 @@ public class FamiliaDAOImpl extends HibernateDaoSupport implements IDAO<Familia>
     }
 
 }
-
