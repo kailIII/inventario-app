@@ -118,11 +118,8 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
         try{
         List<Proveedor> lista = proveedorDAO.obtenerNombresProveedores();
         StringBuilder sb = new StringBuilder();
-        //Proveedor p = new Proveedor();
         for (Object o : lista.toArray()) {
-            //p.setId(Integer.parseInt(Array.get(o, 0).toString()));
-            //p.setNombreProveedor(Array.get(o, 1).toString());
-            sb.append("<option value=" + Array.get(o, 0).toString() + ">" + Array.get(o, 1).toString() + "</option>");
+            sb.append("<option value=").append(Array.get(o, 0).toString()).append(">").append(Array.get(o, 1).toString()).append("</option>");
         }
         return sb.toString();
         } catch (HibernateException he) {

@@ -7,9 +7,7 @@ import com.app.inventario.logicainterface.ILogica;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
@@ -104,7 +102,7 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
             List<Usuario> lista = usuarioDAO.obtenerNombresUsuarios();
             StringBuilder sb = new StringBuilder();
             for (Object o : lista.toArray()) {
-                sb.append("<option value=" + Array.get(o, 0).toString() + ">" + Array.get(o, 1).toString() + "</option>");
+                sb.append("<option value=").append(Array.get(o, 0).toString()).append(">").append(Array.get(o, 1).toString()).append("</option>");
             }
             return sb.toString();
         } catch (HibernateException he) {
