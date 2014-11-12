@@ -47,7 +47,7 @@
                     <tr>
                         <td><label for="habilitado">Habilitado:&nbsp;</label></td>
                         <td><div class="radio-inline"><form:radiobutton path="habilitado" id="habilitado" value="true"/>SI </div>
-                        <div class="radio-inline"><form:radiobutton path="habilitado" id="habilitado" value="false"/>NO </div></td>
+                        <div class="radio-inline"><form:radiobutton path="habilitado" id="noHabilitado" value="false"/>NO </div></td>
                     </tr>
                     <tr>  
                         <td colspan="2">

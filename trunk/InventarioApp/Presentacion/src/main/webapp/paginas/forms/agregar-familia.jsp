@@ -1,19 +1,17 @@
-
-
-<fieldset class="col_12">
-    <legend>Datos de la familia</legend>
-    <form:form cssClass="vertical" method="POST" id="frmFamilia" modelAttribute="familia" action="#">  
-        <div class="col_12">
+<fieldset>
+    <legend>Datos de la familia de producto</legend>
+    <form:form role="form" id="agregar-familia" modelAttribute="familia">
+        <div>
             <table>  
                 <tbody>
-                    <tr>  
-                        <td><form:label path="descripcion">Descripci&oacute;n:</form:label></td>  
-                <td><form:input id="descripcion" path="descripcion"></form:input></td>  
-                </tr
+                    <tr>
+                        <td><label for="descripcion">Descripcion Familia de Producto:&nbsp;</label></td>  
+                <td><form:input id="descripcion" class="form-control" path="descripcion"></form:input></td>  
+                </tr>
                 <tr>  
                     <td colspan="2">
-                        <button type="submit" class="inset"><i class="icon-save"></i>Guardar</button>
-                        <button type="reset" class="inset"><i class="icon-remove"></i>Cancelar</button>
+                        <button id="btnGuardar" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i>Guardar</button>
+                        <button type="reset" class="btn btn-danger"><i class="fa fa-warning"></i>Cancelar</button>
                     </td>  
                     <td></td>  
                     <td></td>  

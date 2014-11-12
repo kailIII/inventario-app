@@ -12,10 +12,9 @@
                 <tr>
                     <td>
                         <div class="ui-widget">
-                            <label for="nombreProveedorBuscar">Nombre Proveedor:</label>
+                            <label for="nombreProveedorBuscar">Nombre Proveedor:&nbsp;</label>
                             <select id="nombreProveedorBuscar"></select>
                         </div>
-                        <!--<input type="text" class="form-control" id="nombreProveedorBuscar" />-->
                         <button id="btnBuscarProveedor" type="button" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
                     </td>
                 </tr>
@@ -34,11 +33,11 @@
             <div class="col_12">
                 <table>  
                     <tbody>
-                    <td><form:label path="direccion">Direcci&oacute;n:</form:label></td>  
+                    <td><label for="direccionAct">Direcci&oacute;n:&nbsp;</label></td>  
                     <td><form:input id="direccionAct" class="form-control" path="direccion"></form:input></td>  
                     </tr>
                     <tr>
-                        <td><form:label path="telefono">Telefono:</form:label></td>  
+                        <td><label for="telefonoAct">Telefono:&nbsp;</label></td>  
                     <td><form:input id="telefonoAct" class="form-control" path="telefono"></form:input></td>  
                     </tr>
                     <tr>  

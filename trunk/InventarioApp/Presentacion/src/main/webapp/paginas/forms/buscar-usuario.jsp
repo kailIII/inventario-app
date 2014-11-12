@@ -34,24 +34,24 @@
                 <table>  
                     <tbody>
                         <tr>
-                            <td><form:label path="contrasena">Contrase&ntilde;a:</form:label></td>  
+                            <td><label for="contrasenaAct">Contrase&ntilde;a:&nbsp;</label></td>  
                     <td><form:password id="contrasenaAct" class="form-control" path="contrasena"></form:password></td>  
                     </tr>
                     <tr>
-                        <td><form:label path="confirmarContrasena">Confirmar Contrase&ntilde;a:</form:label></td>  
+                        <td><label path="confirmarContrasenaAct">Confirmar Contrase&ntilde;a:&nbsp;</label></td>  
                     <td><form:password id="confirmarContrasenaAct" class="form-control" path="confirmarContrasena"></form:password></td>  
                     </tr>
                     <tr>
-                        <td><form:label path="correo">Correo:</form:label></td>  
+                        <td><label for="correoAct">Correo:&nbsp;</label></td>  
                     <td><form:input id="correoAct" class="form-control" path="correo"></form:input></td>  
                     </tr>
                     <tr>
-                        <td><form:label path="telefono">Telefono:</form:label></td>  
+                        <td><label path="telefonoAct">Telefono:&nbsp;</label></td>  
                     <td><form:input id="telefonoAct" class="form-control" path="telefono"></form:input></td>  
                     </tr>
                     <tr>
                     <div class="form-group">
-                        <td><form:label path="rol">Rol:</form:label></td>
+                        <td><label for="rolAct">Rol:&nbsp;</label></td>
                         <td><form:select id="rolAct" class="form-control" path="rol">
                             <form:option value="">Seleccione...</form:option>
                             <form:option value="ROLE_ADMIN">ADMINISTRADOR</form:option>
@@ -61,8 +61,7 @@
                     </div>
                     </tr>
                     <tr>
-
-                        <td><form:label path="habilitado">Habilitado:</form:label></td>
+                        <td><label for="habilitadoAct">Habilitado:&nbsp;</label></td>
                     <td>
                         <div class="radio-inline">
                             <form:radiobutton id="habilitadoAct" path="habilitado" value="true" />SI </br>

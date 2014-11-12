@@ -1,103 +1,122 @@
 <%-- 
-    Document   : otra
+    Document   : mantenimiento-proveedor
     Created on : 17/11/2013, 03:22:05 PM
-    Author     : Pruebas
+    Author     : Erick PÃ©rez
 --%>
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="utiles/includes.jsp" %>
-        <title>Mantenimiento Familias</title>
+        <meta charset="utf-8" accept="application/json"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mantenimiento Familias de Productos</title>
+        <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jqgridstyle/ui.jqgrid.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/jqgrid/grid.locale-es.js" type="text/javascript"></script>
+        <script src="js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
+        <script src="js/jquery-validate.js" type="text/javascript"></script>
+        <script src="js/familia.js" type="text/javascript"></script>
+        <script src="js/combobox-autocomplete.js" type="text/javascript"></script>
+        <script src="js/bootstrapjs/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrapjs/custom.js" type="text/javascript"></script>
+        <script src="js/bootstrapjs/jquery.metisMenu.js" type="text/javascript"></script>
+        <script src="js/bootstrapjs/morris.js" type="text/javascript"></script>
+        <script src="js/bootstrapjs/raphael-2.1.0.min.js" type="text/javascript"></script>
+        <link href="css/bootstraptemplate/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstraptemplate/custom.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstraptemplate/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstraptemplate/morris-0.4.3.min.css" rel="stylesheet" type="text/css"/>
+        <!-- GOOGLE FONTS-->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     </head>
     <body>
-
-        <nav class="navbar">
-            <li style="list-style:none"></li>
-            <li style="list-style:none"></li>
-            <li style="list-style:none"></li>   
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </nav>
-
-        <div class="grid">
-
-            <!-- ===================================== 
-                    INSTRUCTIONS 
-            ===================================== -->
-            <h3></h3>
-            <li style="list-style:none"></li>
-            <li style="list-style:none"></li>
-            <li style="list-style:none"></li>
-
-            <!-- ===================================== 
-                    MENUS
-            ===================================== -->
-
-            <!-- MENU HORIZONTAL -->
-            <div class="col_12">
-                <h4></h4>
-                <ul class="menu">
-                    <sec:authorize ifAnyGranted="ROLE_ADMIN">
-                        <li><a href="<c:url value='/mantenimiento-usuario' />">Mantenimiento Usuarios</a></li>
-                        <li class="current"><a href="<c:url value='/mantenimiento-familias'/>">Mantimiento Familias</a></li>
-                        <li><a href="<c:url value='/mantenimiento-proveedor'/>">Mantimiento Proveedores</a></li>
-                        <li><a href="<c:url value='#'/>">Mantimiento Productos</a></li>
-                        <li><a href="<c:url value='#'/>">Configuraci&oacute;n</a></li>
-                    </sec:authorize>¸
-                    <sec:authorize ifAnyGranted="ROLE_USER">
-                        <li><a href="<c:url value='#'/>">Punto Venta</a>
-                            <ul>
-                                <li><a href=""><i class="icon-cog"></i> Sub Item</a></li>
-                                <li><a href=""><i class="icon-envelope-alt"></i> Sub Item</a>
-                                    <ul>
-                                        <li><a href=""><i class="icon-wrench"></i> Sub Item</a></li>
-                                        <li><a href=""><i class="icon-camera-retro"></i> Sub Item</a></li>
-                                        <li><a href=""><i class="icon-coffee"></i> Sub Item</a></li>
-                                        <li><a href=""><i class="icon-twitter"></i> Sub Item</a></li>
-                                    </ul>
-                                </li>
-                                <li class="divider"><a href=""><i class="icon-trash"></i> li.divider</a></li>
-                            </ul>
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<c:url value='/principal'/>">Inicio</a> 
+                </div>
+                <div style="color: white;
+                     padding: 15px 50px 5px 50px;
+                     float: right;
+                     font-size: 16px;"><a href="<c:url value='/logout'/>" class="btn btn-danger square-btn-adjust">Salir</a> 
+                </div>
+            </nav>   
+            <!-- /. NAV TOP  -->
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li class="text-center">
+                            <img src="css/img/find_user.png" class="user-image img-responsive"/>
                         </li>
-                    </sec:authorize>
-                    <li><a href="<c:url value='/logout' />">Cerrar Sesi&oacute;n</a></li>
-                </ul>
+                        <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                            <li><a href="<c:url value='/principal'/>"><i class="fa fa-dashboard fa-3x"></i>Inicio</a></li>
+                            <li><a href="<c:url value='/mantenimiento-usuario'/>"><i class="fa fa-edit fa-3x"></i>Mantenimiento Usuarios</a></li>
+                            <li><a class="active-menu" href="<c:url value='/mantenimiento-familias'/>"><i class="fa fa-edit fa-3x"></i>Mantenimiento Familias</a></li>
+                            <li><a href="<c:url value='/mantenimiento-proveedor'/>"><i class="fa fa-edit fa-3x"></i>Mantenimiento Proveedores</a></li>
+                            <li><a href="<c:url value='#'/>"><i class="fa fa-edit fa-3x"></i>Mantenimiento Productos</a></li>
+                            <li><a href="<c:url value='#'/>"><i class="fa fa-edit fa-3x"></i>Configuraci&oacute;n</a></li>
+                            </sec:authorize>
+                    </ul>
+                </div>
+            </nav>  
+            <!-- /. NAV SIDE  -->
+            <div id="page-wrapper" >
+                <div id="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Mantenimiento Familias de Productos</h2>   
+                        </div>
+                    </div>              
+                    <!-- /. ROW  -->
+                    <hr />
+                    <div class="row" >
+                        <div class="col-md-9 col-sm-12">
+                            <div class="panel-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#add" data-toggle="tab">Agregar</a>
+                                    </li>
+                                    <li class=""><a href="#search" data-toggle="tab">Buscar</a>
+                                    </li>
+                                    <li class=""><a href="#all" data-toggle="tab">Ver Todos</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in" id="add">
+                                        <br/>
+                                        <%@ include file="forms/agregar-familia.jsp" %>
+                                    </div>
+                                    <div class="tab-pane fade" id="search">
+                                        <br/>
+                                        <%@ include file="forms/buscar-familia.jsp" %>
+                                    </div>
+                                    <div class="tab-pane fade" id="all">
+                                        <br/>
+                                        <table id="list"></table>
+                                        <div id="pager"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /. PAGE INNER  -->
+                <!--
+                Para poder crear un footer!!
+                -->
             </div>
-
-
-            <div id="tabs">
-                <ul>
-                    <li><a href="#tabs-1">Agregar</a></li>
-                    <li><a href="#tabs-2">Buscar</a></li>
-                    <li><a href="#tabs-3">Ver todos</a></li>
-                </ul>
-                <div id="tabs-1">
-                    <%@ include file="forms/agregar-familia.jsp" %>
-                </div>
-                <div id="tabs-2">
-                </div>
-                <div id="tabs-3">
-                </div>
-            </div>
-
+            <!-- /. PAGE WRAPPER  -->
         </div>
-
-
-        <div id="resultado">
-
-        </div>
-        <!-- ===================================== START FOOTER ===================================== -->
-        <div class="clear"></div>
-        <div id="footer">
-            &copy;2014 Desarrollado por Erick P&eacute;rez Ibarra <a target="_blank" href="http://www.facebook.com/erickperez091"><i class="icon-facebook-sign"></i></a>
-        </div>
+        <!-- /. WRAPPER  -->
     </body>
 </html>
