@@ -67,7 +67,7 @@ public class ProveedorServicioImpl implements IServicio<Proveedor> {
         }
     }
 
-    public String obtenerNombresProveedores() throws HibernateException {
+    public List<Proveedor> obtenerNombresProveedores() throws HibernateException {
         try {
             return proveedorLogica.obtenerNombresProveedores();
         } catch (HibernateException he) {

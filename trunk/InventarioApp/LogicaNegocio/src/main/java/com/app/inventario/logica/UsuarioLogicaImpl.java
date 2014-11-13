@@ -97,14 +97,18 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     }
 
     @Transactional(readOnly = true)
-    public String obtenerNombresUsuario() throws HibernateException {
+    public List<Usuario> obtenerNombresUsuario() throws HibernateException {
         try {
-            List<Usuario> lista = usuarioDAO.obtenerNombresUsuarios();
-            StringBuilder sb = new StringBuilder();
+            List lista = usuarioDAO.obtenerNombresUsuarios();
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            Usuario u;
             for (Object o : lista.toArray()) {
-                sb.append("<option value=").append(Array.get(o, 0).toString()).append(">").append(Array.get(o, 1).toString()).append("</option>");
+                u = new Usuario();
+                u.setId(Integer.parseInt(Array.get(o, 0).toString()));
+                u.setUsuario(Array.get(o, 1).toString());
+                usuarios.add(u);
             }
-            return sb.toString();
+            return usuarios;
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;

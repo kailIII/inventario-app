@@ -1,31 +1,35 @@
-$.validator.addMethod("validaTelefono", function(value, element){
-    return this.optional(element)|| /^\d{4}-\d{4}$/.test(value);
+$.validator.addMethod("validaTelefono", function (value, element) {
+    return this.optional(element) || /^\d{4}-\d{4}$/.test(value);
 }, "Ingrese un n&uacute;mero de tel&eacute;fono v&aacute;lido.");
 
 $(document).ready(function () {
     $("#cedula").val("");
     $("#usuario").val("");
     $("#modificar-usuario").hide();
-    
+
     $.cargar_usuarios = function () {
         $.ajax({
             url: 'cargar-usuarios',
-            dataType: 'html',
+            dataType: 'JSON',
             type: 'GET',
             success: function (data) {
-                $("#nombreUsuario").html("");
-                $("#nombreUsuario").html(data);
+                $(data).each(function () {
+                    var option = $(document.createElement("option"));
+                    option.text(this.usuario);
+                    option.val(this.id);
+                    $("#nombreUsuario").append(option);
+                });
             },
             error: function (error) {
                 alert("Error:" + error);
             }
         });
     };
-    
+
     $("#nombreUsuario").combobox();
-    
+
     $.cargar_usuarios();
-    
+
     $("#btnBuscarUsuario").click(function () {
         $.ajax({
             url: 'buscar-usuario-username',

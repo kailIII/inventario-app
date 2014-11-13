@@ -85,7 +85,7 @@ public class UsuarioServicioImpl implements IServicio<Usuario> {
         }
     }
 
-    public String obtenerNombresUsuario() throws Exception {
+    public List<Usuario> obtenerNombresUsuario() throws Exception {
         try {
             return usuarioLogica.obtenerNombresUsuario();
         } catch (HibernateException he) {

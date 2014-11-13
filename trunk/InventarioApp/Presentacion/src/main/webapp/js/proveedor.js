@@ -3,11 +3,15 @@ $(document).ready(function () {
     $.cargar_proveedores = function () {
         $.ajax({
             url: 'cargar-proveedores',
-            dataType: 'html',
+            dataType: 'JSON',
             type: 'GET',
             success: function (data) {
-                $("#nombreProveedorBuscar").html("");
-                $("#nombreProveedorBuscar").html(data);
+                $(data).each(function(){
+                    var option = $(document.createElement("option"));
+                    option.text(this.nombreProveedor);
+                    option.val(this.id) ;
+                    $("#nombreProveedorBuscar").append(option);
+                });
             },
             error: function (error) {
                 alert("Error:" + error);

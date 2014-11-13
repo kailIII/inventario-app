@@ -11,6 +11,7 @@ import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import com.thoughtworks.xstream.XStream;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,14 +115,18 @@ public class ProveedorLogicaImpl implements ILogica<Proveedor> {
     }
 
     @Transactional(readOnly = true)
-    public String obtenerNombresProveedores() throws HibernateException {
+    public List<Proveedor> obtenerNombresProveedores() throws HibernateException {
         try{
-        List<Proveedor> lista = proveedorDAO.obtenerNombresProveedores();
-        StringBuilder sb = new StringBuilder();
+        List lista = proveedorDAO.obtenerNombresProveedores();
+        List<Proveedor> proveedores = new ArrayList<Proveedor>();
+        Proveedor p;
         for (Object o : lista.toArray()) {
-            sb.append("<option value=").append(Array.get(o, 0).toString()).append(">").append(Array.get(o, 1).toString()).append("</option>");
+            p = new Proveedor();
+            p.setId(Integer.parseInt(Array.get(o, 0).toString()));
+            p.setNombreProveedor(Array.get(o, 1).toString());
+            proveedores.add(p);
         }
-        return sb.toString();
+        return proveedores;
         } catch (HibernateException he) {
             Logger.getLogger(ProveedorLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;

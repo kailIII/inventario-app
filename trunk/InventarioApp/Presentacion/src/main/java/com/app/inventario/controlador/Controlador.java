@@ -99,7 +99,7 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-usuarios", method = RequestMethod.GET)
     public @ResponseBody
-    String cargarUsuarios(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    List<Usuario> cargarUsuarios(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return usuarioServicio.obtenerNombresUsuario();
     }
 
@@ -177,7 +177,7 @@ public class Controlador {
 
     @RequestMapping(value = "/cargar-proveedores", method = RequestMethod.GET)
     public @ResponseBody
-    String cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    List<Proveedor> cargarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return this.proveedorServicio.obtenerNombresProveedores();
     }
 
