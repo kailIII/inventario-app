@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.app.inventario.entidades;
 
 import java.io.Serializable;
@@ -30,11 +29,12 @@ import javax.persistence.Transient;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
+    // <editor-fold defaultstate="collapsed" desc="Atributos">
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "IDUSUARIO", unique = true)
     private int id;
-    @Column(name = "CEDULA",unique = true, nullable = false)
+    @Column(name = "CEDULA", unique = true, nullable = false)
     private int cedula;
     @Column(name = "USUARIO", unique = true, nullable = false)
     private String usuario;
@@ -53,10 +53,14 @@ public class Usuario implements Serializable {
     private Date fechaExpiracion;
     @Column(name = "HABILITADO", nullable = false)
     private boolean habilitado;
+    @Column(name = "BLOQUEADO", nullable = false)
+    private boolean bloqueado;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Factura> facturas;
+    //</editor-fold>
 
-    public Usuario(int id, int cedula, String usuario, String contrasena, String confirmarContrasena, String correo, String telefono, String rol, Date fechaExpiracion, boolean habilitado, List<Factura> facturas) {
+    // <editor-fold defaultstate="collapsed" desc="Constructores">
+    public Usuario(int id, int cedula, String usuario, String contrasena, String confirmarContrasena, String correo, String telefono, String rol, Date fechaExpiracion, boolean habilitado, boolean bloqueado, List<Factura> facturas) {
         this.id = id;
         this.cedula = cedula;
         this.usuario = usuario;
@@ -67,103 +71,154 @@ public class Usuario implements Serializable {
         this.rol = rol;
         this.fechaExpiracion = fechaExpiracion;
         this.habilitado = habilitado;
+        this.bloqueado = bloqueado;
         this.facturas = facturas;
     }
 
     public Usuario() {
     }
-
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Metodos Getter">
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
-    }
-
     public String getUsuario() {
         return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getContrasena() {
         return contrasena;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
     public String getConfirmarContrasena() {
         return confirmarContrasena;
     }
 
-    public void setConfirmarContrasena(String confirmarContrasena) {
-        this.confirmarContrasena = confirmarContrasena;
-    }
-    
     public String getCorreo() {
         return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public String getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-    
     public Date getFechaExpiracion() {
         return fechaExpiracion;
-    }
-
-    public void setFechaExpiracion(Date fechaExpiracion) {
-        this.fechaExpiracion = fechaExpiracion;
     }
 
     public boolean isHabilitado() {
         return habilitado;
     }
 
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+    public boolean isBloqueado() {
+        return bloqueado;
     }
 
     public List<Factura> getFacturas() {
         return facturas;
     }
+    
+    // </editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodos Setter">
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public void setConfirmarContrasena(String confirmarContrasena) {
+        this.confirmarContrasena = confirmarContrasena;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public void setFechaExpiracion(Date fechaExpiracion) {
+        this.fechaExpiracion = fechaExpiracion;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
 
     public void setFacturas(List<Factura> facturas) {
         this.facturas = facturas;
     }
+    
+    
+    
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Metodos sobre escritos">
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + this.cedula;
+        hash = 97 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.cedula != other.cedula) {
+            return false;
+        }
+        if ((this.usuario == null) ? (other.usuario != null) : !this.usuario.equals(other.usuario)) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", cedula=" + cedula + ", usuario=" + usuario + ", contrasena=" + contrasena + ", correo=" + correo + ", telefono=" + telefono + ", rol=" + rol + ", habilitado=" + habilitado + ", facturas=" + facturas + '}';
+        return "Usuario{" + "id=" + id + ", cedula=" + cedula + ", usuario=" + usuario + ", contrasena=" + contrasena + ", confirmarContrasena=" + confirmarContrasena + ", correo=" + correo + ", telefono=" + telefono + ", rol=" + rol + ", fechaExpiracion=" + fechaExpiracion + ", habilitado=" + habilitado + ", bloqueado=" + bloqueado + ", facturas=" + facturas + '}';
     }
-}
+    // </editor-fold>
 
+}
