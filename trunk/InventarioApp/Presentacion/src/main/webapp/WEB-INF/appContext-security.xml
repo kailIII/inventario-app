@@ -11,7 +11,7 @@
 
     <http pattern="/login" security="none"/>
     <http auto-config="true">
-        <session-management invalid-session-url="/login">
+        <session-management invalid-session-url="/login?timeout">
             <concurrency-control max-sessions="1" expired-url="/login" />
         </session-management>
         
