@@ -7,6 +7,9 @@ package com.app.inventario.dao.seguridad;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
 import com.app.inventario.entidades.seguridad.Usuario;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +25,7 @@ public class UsuarioServicio implements UserDetailsService{
 
     private UsuarioDAOImpl usuarioDAO;
     
-    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException, BadCredentialsException, CredentialsExpiredException, DisabledException {
         Usuario usuarioAux = (Usuario)usuarioDAO.loadUserByUsername(usuario);
         return usuarioAux;
     }
