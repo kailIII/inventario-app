@@ -154,7 +154,7 @@
         
     </dependencies>
     <build>
-        <finalName>Presentacion</finalName>
+        <finalName>Sistema de Inventario</finalName>
     </build>
     
     <repositories>
