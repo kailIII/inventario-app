@@ -5,7 +5,7 @@
  */
 package com.app.inventario.servicio;
 
-import com.app.inventario.entidades.Usuario;
+import com.app.inventario.entidades.seguridad.Usuario;
 import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.logica.UsuarioLogicaImpl;
 import com.app.inventario.serviciointerface.IServicio;

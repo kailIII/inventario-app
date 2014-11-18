@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.app.inventario.entidades;
+package com.app.inventario.entidades.seguridad;
 
+import com.app.inventario.entidades.Factura;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -27,7 +32,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "USUARIO")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, UserDetails {
 
     // <editor-fold defaultstate="collapsed" desc="Atributos">
     @Id
@@ -46,39 +51,21 @@ public class Usuario implements Serializable {
     private String correo;
     @Column(name = "TELEFONO")
     private String telefono;
-    @Column(name = "ROL", nullable = false)
-    private String rol;
     @Temporal(TemporalType.DATE)
     @Column(name = "FECHAEXPIRACION", nullable = false)
     private Date fechaExpiracion;
-    @Column(name = "HABILITADO", nullable = false)
+    @Column(name = "ROL")
+    private String rol;
+    @Column(name = "HABILITADO")
     private boolean habilitado;
-    @Column(name = "BLOQUEADO", nullable = false)
+    @Column(name = "EXPIRADO")
+    private boolean expirado;
+    @Column(name = "BLOQUEADO")
     private boolean bloqueado;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Factura> facturas;
     //</editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Constructores">
-    public Usuario(int id, int cedula, String usuario, String contrasena, String confirmarContrasena, String correo, String telefono, String rol, Date fechaExpiracion, boolean habilitado, boolean bloqueado, List<Factura> facturas) {
-        this.id = id;
-        this.cedula = cedula;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.confirmarContrasena = confirmarContrasena;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.rol = rol;
-        this.fechaExpiracion = fechaExpiracion;
-        this.habilitado = habilitado;
-        this.bloqueado = bloqueado;
-        this.facturas = facturas;
-    }
-
-    public Usuario() {
-    }
-    //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Metodos Getter">
     public int getId() {
         return id;
@@ -88,14 +75,14 @@ public class Usuario implements Serializable {
         return cedula;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getPassword() {
+        return this.contrasena;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getUsername() {
+        return this.usuario;
     }
-
+    
     public String getConfirmarContrasena() {
         return confirmarContrasena;
     }
@@ -108,29 +95,43 @@ public class Usuario implements Serializable {
         return telefono;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
     public Date getFechaExpiracion() {
         return fechaExpiracion;
     }
-
-    public boolean isHabilitado() {
-        return habilitado;
-    }
-
-    public boolean isBloqueado() {
-        return bloqueado;
+    
+    public String getRol(){
+        return rol;
     }
 
     public List<Factura> getFacturas() {
         return facturas;
     }
     
+    public boolean isAccountNonExpired() {
+        return this.expirado;
+    }
+
+    public boolean isAccountNonLocked() {
+        return this.bloqueado;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return this.habilitado;
+    }
+    
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<Rol> roles = new ArrayList<Rol>();
+        roles.add(new Rol(this.rol));
+        return roles;
+    }
+    
     // </editor-fold>
     
-    //<editor-fold defaultstate="collapsed" desc="Metodos Setter">
+    // <editor-fold defaultstate="collapsed" desc="Metodos Setter">
 
     public void setId(int id) {
         this.id = id;
@@ -140,7 +141,7 @@ public class Usuario implements Serializable {
         this.cedula = cedula;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsername(String usuario) {
         this.usuario = usuario;
     }
 
@@ -160,16 +161,20 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public void setFechaExpiracion(Date fechaExpiracion) {
         this.fechaExpiracion = fechaExpiracion;
+    }
+    
+    public void setRol(String rol){
+        this.rol = rol;
     }
 
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
+    }
+
+    public void setExpirado(boolean expirado) {
+        this.expirado = expirado;
     }
 
     public void setBloqueado(boolean bloqueado) {
@@ -180,45 +185,5 @@ public class Usuario implements Serializable {
         this.facturas = facturas;
     }
     
-    
-    
     //</editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Metodos sobre escritos">
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + this.cedula;
-        hash = 97 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.cedula != other.cedula) {
-            return false;
-        }
-        if ((this.usuario == null) ? (other.usuario != null) : !this.usuario.equals(other.usuario)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" + "id=" + id + ", cedula=" + cedula + ", usuario=" + usuario + ", contrasena=" + contrasena + ", confirmarContrasena=" + confirmarContrasena + ", correo=" + correo + ", telefono=" + telefono + ", rol=" + rol + ", fechaExpiracion=" + fechaExpiracion + ", habilitado=" + habilitado + ", bloqueado=" + bloqueado + ", facturas=" + facturas + '}';
-    }
-    // </editor-fold>
-
 }

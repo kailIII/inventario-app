@@ -6,7 +6,7 @@
 package com.app.inventario.dao;
 
 import com.app.inventario.daointerface.IDAO;
-import com.app.inventario.entidades.Usuario;
+import com.app.inventario.entidades.seguridad.Usuario;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,12 +29,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 /**
  *
  * @author Erick
  */
-public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>, UserDetailsService {
+
+public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario> {
 
     private Session session;
     private Transaction tx;
@@ -217,36 +217,18 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         return result;
     }
 
-    @Override
     public UserDetails loadUserByUsername(String username) {
-        Usuario usuario = null;
-        UserDetails user = null;
-        boolean expirado = true;
+        Usuario usuario;
         try {
             this.iniciaOperacion();
             Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
             usuario = (Usuario) criteria.uniqueResult();
-            Date fechaActual = Calendar.getInstance().getTime();
-            expirado = !fechaActual.before(usuario.getFechaExpiracion());
-            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-            authorities.add(new SimpleGrantedAuthority(usuario.getRol()));
-            user = new User(usuario.getUsuario(), usuario.getContrasena(), usuario.isHabilitado(), true, expirado, true, authorities);
-            if (usuario == null) {
-                throw new UsernameNotFoundException("Usuario no encontrado");
-            }
-            if (!user.isEnabled()) {
-                throw new DisabledException("Usuario deshabilitado");
-            }
-            if (user.isCredentialsNonExpired() == false) {
-                throw new CredentialsExpiredException("Contraseña expirada");
-            }
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         } finally {
-            // Cerrar la session
         }
-        return user;
+        return usuario;
     }
 
     // Inicia una transaccion contra la base de datos.

@@ -5,6 +5,7 @@
  */
 package com.app.inventario.controlador;
 
+import com.app.inventario.entidades.seguridad.Usuario;
 import com.app.inventario.entidades.*;
 import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.servicio.FamiliaServicioImpl;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 /**
  *

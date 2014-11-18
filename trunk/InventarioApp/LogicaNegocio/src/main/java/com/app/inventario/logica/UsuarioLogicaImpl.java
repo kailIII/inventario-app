@@ -1,7 +1,7 @@
 package com.app.inventario.logica;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
-import com.app.inventario.entidades.Usuario;
+import com.app.inventario.entidades.seguridad.Usuario;
 import com.app.inventario.grid.jqGridModel;
 import com.app.inventario.logicainterface.ILogica;
 import java.lang.reflect.Array;
@@ -30,9 +30,9 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     @Transactional
     public void guardar(Usuario usuario) throws Exception {
         try {
-            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
-            Object salt = saltSource.getSalt(user);
-            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
+            //User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
+            //Object salt = saltSource.getSalt(user);
+            //usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MONTH, 3);
             usuario.setFechaExpiracion(calendar.getTime());
@@ -46,9 +46,9 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     @Transactional
     public void actualizar(Usuario usuario) throws Exception {
         try {
-            User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
-            Object salt = saltSource.getSalt(user);
-            usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
+            //User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
+            //Object salt = saltSource.getSalt(user);
+            //usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
             usuarioDAO.actualizar(usuario);
         } catch (HibernateException he) {
             Logger.getLogger(UsuarioLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
@@ -105,7 +105,7 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
             for (Object o : lista.toArray()) {
                 u = new Usuario();
                 u.setId(Integer.parseInt(Array.get(o, 0).toString()));
-                u.setUsuario(Array.get(o, 1).toString());
+                u.setUsername(Array.get(o, 1).toString());
                 usuarios.add(u);
             }
             return usuarios;

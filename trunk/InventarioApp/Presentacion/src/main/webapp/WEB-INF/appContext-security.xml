@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans" 
+             xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:p="http://www.springframework.org/schema/p"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-                                 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                                 http://www.springframework.org/schema/security
-                                 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http pattern="/login" security="none"/>
     <http auto-config="true">
@@ -22,22 +20,23 @@
         <logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
     </http>
     
-    <authentication-manager>
+    <!--<authentication-manager>
         <authentication-provider>
             <user-service>
                 <user name="admin" password="admin" authorities="ROLE_ADMIN"></user>
                 <user name="prueba" password="prueba" authorities="ROLE_USER"></user>
             </user-service>
         </authentication-provider>
-    </authentication-manager>
-    <!--<authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="usuarioDAO">
+    </authentication-manager>-->
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="usuarioServicioAuth">
             <password-encoder ref="passwordEncoder">
                 <salt-source ref="saltSource" />
             </password-encoder>
         </authentication-provider>
-    </authentication-manager>-->
-    
+    </authentication-manager>
+   
+   
     <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
         <beans:property name="exceptionMappings">
             <beans:props>
@@ -48,8 +47,10 @@
         </beans:property>
     </beans:bean>
     
-    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"
-                p:userPropertyToUse="username" />
+    
+    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <beans:property name="userPropertyToUse" value="username"></beans:property>
+    </beans:bean> 
     
     <!-- Bean que codifica la contraseña -->
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder">

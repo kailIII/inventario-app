@@ -1,6 +1,7 @@
 
 package com.app.inventario.entidades;
 
+import com.app.inventario.entidades.seguridad.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Date;

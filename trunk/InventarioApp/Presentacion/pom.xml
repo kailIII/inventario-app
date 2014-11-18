@@ -15,7 +15,7 @@
     <url>http://maven.apache.org</url>
     
     <properties>
-        <springVersion>3.1.1.RELEASE</springVersion>
+        <springVersion>4.0.1.RELEASE</springVersion>
         <slf4j.version>1.5.10</slf4j.version>
         <logback.version>0.9.15</logback.version>
     </properties>
@@ -65,37 +65,34 @@
         </dependency>
         
         <!-- Dependencia Spring -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.context</artifactId>
             <version>${springVersion}</version>
             <exclusions>
-                <!-- Exclude commons logging in favour of slf4j -->
+                Exclude commons logging in favour of slf4j
                 <exclusion>
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web.servlet</artifactId>
+            <artifactId>spring-core</artifactId>
             <version>${springVersion}</version>
         </dependency>
+ 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web</artifactId>
+            <artifactId>spring-web</artifactId>
             <version>${springVersion}</version>
         </dependency>
+ 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
+            <artifactId>spring-webmvc</artifactId>
             <version>${springVersion}</version>
         </dependency>
         
@@ -120,27 +117,27 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.1.0.RELEASE</version>
+            <version>3.2.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.1.0.RELEASE</version>
+            <version>3.2.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-acl</artifactId>
-            <version>3.1.0.RELEASE</version>
+            <version>3.2.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>3.1.0.RELEASE</version>
+            <version>3.2.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.1.0.RELEASE</version>
+            <version>3.2.0.RELEASE</version>
         </dependency>
         
         <!-- Dependencias JSON (JACKSON) -->

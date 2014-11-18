@@ -67,5 +67,12 @@
         </dependency>
         <!-- Final dependencia libreria Hibernate -->
         
+        <!-- Sprinn security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.2.5.RELEASE</version>
+        </dependency>
+        
     </dependencies>
 </project>
