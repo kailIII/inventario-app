@@ -63,6 +63,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd"
         <property name="annotatedClasses">
             <list>
                 <value>com.app.inventario.entidades.seguridad.Usuario</value>
+                <value>com.app.inventario.entidades.seguridad.IntentosLogin</value>
                 <value>com.app.inventario.entidades.Proveedor</value>
                 <value>com.app.inventario.entidades.Familia</value>
                 <value>com.app.inventario.entidades.Producto</value>
