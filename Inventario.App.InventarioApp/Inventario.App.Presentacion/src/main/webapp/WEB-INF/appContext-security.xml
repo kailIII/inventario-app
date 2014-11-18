@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http pattern="/login" security="none"/>
+    <http auto-config="true">
+        <session-management invalid-session-url="/login?timeout">
+            <concurrency-control max-sessions="1" expired-url="/login" />
+        </session-management>
+        
+        <intercept-url pattern="/*" access="ROLE_ADMIN,ROLE_USER"/>
+        <form-login login-page="/login" default-target-url="/principal"
+                    authentication-failure-handler-ref="exceptionTranslationFilter"
+                    always-use-default-target="true"/>
+        <logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
+    </http>
+    
+    <!--<authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="admin" authorities="ROLE_ADMIN"></user>
+                <user name="prueba" password="prueba" authorities="ROLE_USER"></user>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>-->
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="usuarioServicioAuth">
+            <password-encoder ref="passwordEncoder">
+                <salt-source ref="saltSource" />
+            </password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+   
+   
+    <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <beans:property name="exceptionMappings">
+            <beans:props>
+                <beans:prop key="org.springframework.security.authentication.BadCredentialsException">/login?error=true</beans:prop>
+                <beans:prop key="org.springframework.security.authentication.CredentialsExpiredException">/login?expired=true</beans:prop>
+                <beans:prop key="org.springframework.secuirty.authentication.DisabledException">/login?disable=true</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+    
+    
+    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <beans:property name="userPropertyToUse" value="username"></beans:property>
+    </beans:bean> 
+    
+    <!-- Bean que codifica la contraseña -->
+    <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder">
+        <beans:constructor-arg index="0" value="MD5"></beans:constructor-arg>
+    </beans:bean>
+</beans:beans>
