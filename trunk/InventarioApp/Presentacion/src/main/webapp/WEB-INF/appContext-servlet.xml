@@ -84,9 +84,9 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd"
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    <bean id="customAuthenticationProvider" class="com.app.inventario.logica.seguridad.CustomAuthenticationProvider">
+    <!--<bean id="customAuthenticationProvider" class="com.app.inventario.logica.seguridad.CustomAuthenticationProvider">
         
-    </bean>
+    </bean>-->
     
     <bean id="usuarioServicioAuth" class="com.app.inventario.dao.seguridad.UsuarioServicio">
     </bean>
