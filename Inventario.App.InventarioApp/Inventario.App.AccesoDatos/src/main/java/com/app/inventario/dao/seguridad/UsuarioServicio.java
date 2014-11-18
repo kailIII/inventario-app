@@ -6,6 +6,7 @@
 package com.app.inventario.dao.seguridad;
 
 import com.app.inventario.dao.UsuarioDAOImpl;
+import com.app.inventario.entidades.seguridad.Usuario;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UsuarioServicio implements UserDetailsService{
 
     private UsuarioDAOImpl usuarioDAO;
-
+    
+    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
+        Usuario usuarioAux = (Usuario)usuarioDAO.loadUserByUsername(usuario);
+        return usuarioAux;
+    }
+    
     public UsuarioDAOImpl getUsuarioDAO() {
         return usuarioDAO;
     }
@@ -28,9 +34,4 @@ public class UsuarioServicio implements UserDetailsService{
     public void setUsuarioDAO(UsuarioDAOImpl usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
     }
-    
-    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
-        return usuarioDAO.loadUserByUsername(usuario);
-    }
-    
 }
