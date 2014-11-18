@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.app.inventario</groupId>
+    <artifactId>Inventario.App.Inventario-app</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>Inventario.App.AccesoDatos</module>
+        <module>Inventario.App.Entidades</module>
+        <module>Inventario.App.LogicaNegocio</module>
+        <module>Inventario.App.Servicio</module>
+        <module>Inventario.App.Presentacion</module>
+    </modules>
+    <name>Inventario.App.Inventario-app</name>
+</project>
