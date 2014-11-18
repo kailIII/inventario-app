@@ -38,7 +38,13 @@ public class Controlador {
     // private org.springframework.web.servlet.view.json.MappingJacksonJsonView jsonView = new MappingJacksonJsonView();
     // Generales
     @RequestMapping(value = "/login")
-    public ModelAndView devolverPantallaLogin(ModelMap model, HttpServletRequest request) {
+    public ModelAndView devolverPantallaLogin(@RequestParam(value="error", required=false) Integer error, ModelMap model, HttpServletRequest request) {
+        if(error == null){
+            error = 0;
+        }
+        if(error == 1){
+            System.out.println("Error 1");
+        }
         return new ModelAndView("login");
     }
 
