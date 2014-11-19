@@ -18,7 +18,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd"
     <!-- Configures the @Controller programming model -->
     <mvc:annotation-driven />
     
-    <!-- <mvc:view-controller path="/login" view-name="login"/> -->
+    <mvc:view-controller path="/login" view-name="login"/>
     
     <!--Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
@@ -84,10 +84,6 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd"
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-    
-    <!--<bean id="customAuthenticationProvider" class="com.app.inventario.logica.seguridad.CustomAuthenticationProvider">
-        
-    </bean>-->
     
     <bean id="usuarioServicioAuth" class="com.app.inventario.dao.seguridad.UsuarioServicio">
     </bean>
