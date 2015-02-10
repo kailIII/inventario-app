@@ -30,9 +30,9 @@ public class UsuarioLogicaImpl implements ILogica<Usuario> {
     @Transactional
     public void guardar(Usuario usuario) throws Exception {
         try {
-            //User user = new User(usuario.getUsuario(), usuario.getContrasena(), true, true, true, true, new ArrayList());
-            //Object salt = saltSource.getSalt(user);
-            //usuario.setContrasena(messageDigestPasswordEncoder.encodePassword(usuario.getContrasena(), salt));
+            User user = new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, new ArrayList());
+            Object salt = saltSource.getSalt(user);
+            usuario.setPassword(messageDigestPasswordEncoder.encodePassword(usuario.getPassword(), salt));
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MONTH, 3);
             usuario.setFechaExpiracion(calendar.getTime());
