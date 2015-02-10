@@ -16,11 +16,11 @@
                     </tr>
                     <tr>
                         <td><label for="usuario">Usuario:&nbsp;</label></td>
-                        <td><form:input class="form-control" type="text" id="usuario" path="usuario"></form:input></td>
+                        <td><form:input class="form-control" type="text" id="usuario" path="username"></form:input></td>
                     </tr>
                     <tr>
                         <td><label for="contrasena">Contrase&ntilde;a:&nbsp;</label></td>
-                        <td><form:password class="form-control" id="contrasena" path="contrasena"></form:password></td>
+                        <td><form:password class="form-control" id="password" path="password"></form:password></td>
                     </tr>
                     <tr>
                         <td><label for="confirmarContrasena">Confirmar Contrase&ntilde;a:&nbsp;</label></td>
@@ -46,8 +46,8 @@
                     </tr>
                     <tr>
                         <td><label for="habilitado">Habilitado:&nbsp;</label></td>
-                        <td><div class="radio-inline"><form:radiobutton path="habilitado" id="habilitado" value="true"/>SI </div>
-                        <div class="radio-inline"><form:radiobutton path="habilitado" id="noHabilitado" value="false"/>NO </div></td>
+                        <td><div class="radio-inline"><form:radiobutton path="enabled" id="habilitado" value="true"/>SI </div>
+                        <div class="radio-inline"><form:radiobutton path="enabled" id="noHabilitado" value="false"/>NO </div></td>
                     </tr>
                     <tr>  
                         <td colspan="2">

@@ -15,7 +15,7 @@ $(document).ready(function () {
             success: function (data) {
                 $(data).each(function () {
                     var option = $(document.createElement("option"));
-                    option.text(this.usuario);
+                    option.text(this.username);
                     option.val(this.id);
                     $("#nombreUsuario").append(option);
                 });
@@ -72,7 +72,7 @@ $(document).ready(function () {
                     required: true,
                     maxlength: 20
                 },
-                usuario: {
+                username: {
                     required: true,
                     maxlength: 30,
                     remote: {
@@ -83,7 +83,7 @@ $(document).ready(function () {
                         }
                     }
                 },
-                contrasena: {
+                password: {
                     required: true,
                     maxlength: 15,
                     minlength: 8
@@ -92,10 +92,10 @@ $(document).ready(function () {
                     required: true,
                     maxlength: 15,
                     minlength: 8,
-                    equalTo: "#contrasena"
+                    equalTo: "#password"
                 },
                 correo: {
-                    required: false,
+                    required: true,
                     email: true
                 },
                 rol: {
@@ -111,12 +111,12 @@ $(document).ready(function () {
                     required: "Campo obligatorio",
                     maxlength: "Ha excedido el tama&ntilde;o de identificacion"
                 },
-                usuario: {
+                username: {
                     required: "Campo obligatorio",
                     maxlength: "Ha excedido el tama&ntilde;o del nombre de usuario",
                     remote: "El nombre de usuario ya se encuentra en uso"
                 },
-                contrasena: {
+                password: {
                     required: "Campo obligatorio",
                     maxlength: "Ha excedido el tamaño de caracteres",
                     minlength: "La contrase&ntilde;a debe de tener al menos 8 caracteres"
@@ -128,6 +128,7 @@ $(document).ready(function () {
                     equalTo: "Las contrase&ntilde;as no coinciden"
                 },
                 correo: {
+                    required: "Campo obligatorio",
                     email: "Digite un correo v&aacute;lido"
                 },
                 rol: {
@@ -233,7 +234,7 @@ $(document).ready(function () {
         colModel: [
             {name: 'id', index: 'id', align: 'center', search: false, hidden: true},
             {name: 'cedula', index: 'cedula', align: 'center', search: false},
-            {name: 'usuario', index: 'usuario', align: 'center', search: false},
+            {name: 'username', index: 'username', align: 'center', search: false},
             {name: 'correo', index: 'correo', align: 'center', search: false},
             {name: 'rol', index: 'rol', align: 'center', search: false},
             {name: 'telefono', index: 'telefono', align: 'center', search: false}

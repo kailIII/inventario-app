@@ -119,7 +119,7 @@ public class Controlador {
     @RequestMapping(value = "/validar-username", method = RequestMethod.GET)
     public @ResponseBody
     boolean validarUsername(HttpServletRequest request) throws Exception {
-        String username = request.getParameter("usuario");
+        String username = request.getParameter("username");
         return usuarioServicio.validarUsername(username);
     }
 

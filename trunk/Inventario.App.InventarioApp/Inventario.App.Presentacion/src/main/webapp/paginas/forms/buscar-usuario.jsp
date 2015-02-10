@@ -30,12 +30,12 @@
             <div>
                 <form:input type="hidden" id="idAct" path="id"></form:input>
                 <form:input type="hidden" id="cedulaAct" path="cedula"></form:input>
-                <form:input type="hidden" id="usuarioAct" path="usuario"></form:input>
+                <form:input type="hidden" id="usuarioAct" path="username"></form:input>
                 <table>  
                     <tbody>
                         <tr>
                             <td><label for="contrasenaAct">Contrase&ntilde;a:&nbsp;</label></td>  
-                    <td><form:password id="contrasenaAct" class="form-control" path="contrasena"></form:password></td>  
+                    <td><form:password id="contrasenaAct" class="form-control" path="password"></form:password></td>  
                     </tr>
                     <tr>
                         <td><label path="confirmarContrasenaAct">Confirmar Contrase&ntilde;a:&nbsp;</label></td>  
@@ -64,10 +64,10 @@
                         <td><label for="habilitadoAct">Habilitado:&nbsp;</label></td>
                     <td>
                         <div class="radio-inline">
-                            <form:radiobutton id="habilitadoAct" path="habilitado" value="true" />SI </br>
+                            <form:radiobutton id="habilitadoAct" path="enabled" value="true" />SI </br>
                         </div>
                         <div class="radio-inline">
-                            <form:radiobutton id="noHabilitadoAct" path="habilitado" value="false"/>NO
+                            <form:radiobutton id="noHabilitadoAct" path="enabled" value="false"/>NO
                         </div>
                     </td>  
                     </tr>
