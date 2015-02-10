@@ -23,9 +23,22 @@ public class UsuarioServicio implements UserDetailsService {
 
     private UsuarioDAOImpl usuarioDAO;
 
-    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException, LockedException, BadCredentialsException, CredentialsExpiredException, DisabledException {
-        Usuario usuarioAux = (Usuario) usuarioDAO.loadUserByUsername(usuario);
-        return usuarioAux;
+    public UserDetails loadUserByUsername(String usuario) {
+        try {
+            Usuario usuarioAux = (Usuario) usuarioDAO.loadUserByUsername(usuario);
+            return usuarioAux;
+        } catch (UsernameNotFoundException unfe) {
+            throw unfe;
+        } catch (LockedException le) {
+            throw le;
+        } catch (BadCredentialsException bce) {
+            throw bce;
+        } catch (CredentialsExpiredException cee) {
+            throw cee;
+        } catch (DisabledException de) {
+            throw de;
+        }
+
     }
 
     public UsuarioDAOImpl getUsuarioDAO() {
