@@ -145,7 +145,7 @@ public class Usuario implements Serializable, UserDetails {
         this.usuario = usuario;
     }
 
-    public void setContrasena(String contrasena) {
+    public void setPassword(String contrasena) {
         this.contrasena = contrasena;
     }
 
@@ -169,15 +169,15 @@ public class Usuario implements Serializable, UserDetails {
         this.rol = rol;
     }
 
-    public void setHabilitado(boolean habilitado) {
+    public void setEnabled(boolean habilitado) {
         this.habilitado = habilitado;
     }
 
-    public void setExpirado(boolean expirado) {
+    public void setAccountNonExpired(boolean expirado) {
         this.expirado = expirado;
     }
 
-    public void setBloqueado(boolean bloqueado) {
+    public void setAccountNonLocked(boolean bloqueado) {
         this.bloqueado = bloqueado;
     }
 

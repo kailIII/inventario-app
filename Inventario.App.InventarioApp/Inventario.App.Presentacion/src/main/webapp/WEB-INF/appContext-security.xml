@@ -20,21 +20,21 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         <logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
     </http>
     
-    <!--<authentication-manager>
+    <authentication-manager>
         <authentication-provider>
             <user-service>
                 <user name="admin" password="admin" authorities="ROLE_ADMIN"></user>
                 <user name="prueba" password="prueba" authorities="ROLE_USER"></user>
             </user-service>
         </authentication-provider>
-    </authentication-manager>-->
-    <authentication-manager alias="authenticationManager">
+    </authentication-manager>
+    <!--<authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="usuarioServicioAuth">
             <password-encoder ref="passwordEncoder">
                 <salt-source ref="saltSource" />
             </password-encoder>
         </authentication-provider>
-    </authentication-manager>
+    </authentication-manager>-->
    
    
     <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">

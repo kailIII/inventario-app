@@ -183,7 +183,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         } finally {
             // Cerrar la session
         }
-        usuario.setContrasena("");
+        usuario.setPassword("");
         usuario.setConfirmarContrasena("");
         usuario.setFacturas(null);
         return usuario;
