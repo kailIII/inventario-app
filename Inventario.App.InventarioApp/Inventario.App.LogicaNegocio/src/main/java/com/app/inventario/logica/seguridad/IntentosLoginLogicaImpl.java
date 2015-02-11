@@ -16,12 +16,12 @@ import org.hibernate.HibernateException;
  * @author eperez
  */
 public class IntentosLoginLogicaImpl {
-    private IntentosLoginDAOImpl intentosLogin;
+    private IntentosLoginDAOImpl intentosLoginDAO;
     
     
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
         try{
-            intentosLogin.actualizarIntentosFallidos(usuario);
+            intentosLoginDAO.actualizarIntentosFallidos(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
@@ -31,7 +31,7 @@ public class IntentosLoginLogicaImpl {
     
     public void resetearIntentosFallidos(String usuario) throws HibernateException {
         try{
-            intentosLogin.resetearIntentosFallidos(usuario);
+            intentosLoginDAO.resetearIntentosFallidos(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
@@ -40,19 +40,21 @@ public class IntentosLoginLogicaImpl {
     }
     public IntentosLogin obtenerIntentoLogin(String usuario) throws HibernateException {
         try{
-            return intentosLogin.obtenerIntentoLogin(usuario);
+            return intentosLoginDAO.obtenerIntentoLogin(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginLogicaImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
-    
-    public IntentosLoginDAOImpl getIntentosLogin() {
-        return intentosLogin;
+
+    public IntentosLoginDAOImpl getIntentosLoginDAO() {
+        return intentosLoginDAO;
     }
 
-    public void setIntentosLogin(IntentosLoginDAOImpl intentosLogin) {
-        this.intentosLogin = intentosLogin;
+    public void setIntentosLoginDAO(IntentosLoginDAOImpl intentosLoginDAO) {
+        this.intentosLoginDAO = intentosLoginDAO;
     }
+    
+    
 }

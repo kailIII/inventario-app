@@ -16,12 +16,12 @@ import org.hibernate.HibernateException;
  * @author eperez
  */
 public class IntentosLoginServicioImpl {
-    private IntentosLoginLogicaImpl intentosLogin;
+    private IntentosLoginLogicaImpl intentosLoginLogica;
 
     
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
         try{
-            intentosLogin.actualizarIntentosFallidos(usuario);
+            intentosLoginLogica.actualizarIntentosFallidos(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginServicioImpl.class.getName()).log(Level.SEVERE, null, he);
@@ -31,7 +31,7 @@ public class IntentosLoginServicioImpl {
     
     public void resetearIntentosFallidos(String usuario) throws HibernateException {
         try{
-            intentosLogin.resetearIntentosFallidos(usuario);
+            intentosLoginLogica.resetearIntentosFallidos(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginServicioImpl.class.getName()).log(Level.SEVERE, null, he);
@@ -40,20 +40,21 @@ public class IntentosLoginServicioImpl {
     }
     public IntentosLogin obtenerIntentoLogin(String usuario) throws HibernateException {
         try{
-            return intentosLogin.obtenerIntentoLogin(usuario);
+            return intentosLoginLogica.obtenerIntentoLogin(usuario);
         }
         catch(HibernateException he){
             Logger.getLogger(IntentosLoginServicioImpl.class.getName()).log(Level.SEVERE, null, he);
             throw he;
         }
     }
-    
-    
-    public IntentosLoginLogicaImpl getIntentosLogin() {
-        return intentosLogin;
+
+    public IntentosLoginLogicaImpl getIntentosLoginLogica() {
+        return intentosLoginLogica;
     }
 
-    public void setIntentosLogin(IntentosLoginLogicaImpl intentosLogin) {
-        this.intentosLogin = intentosLogin;
+    public void setIntentosLoginLogica(IntentosLoginLogicaImpl intentosLoginLogica) {
+        this.intentosLoginLogica = intentosLoginLogica;
     }
+    
+    
 }
