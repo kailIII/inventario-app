@@ -103,7 +103,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         List<Usuario> lista = null;
         try{
             this.iniciaOperacion();
-            Query consulta = session.createQuery("SELECT u.id, u.usuario FROM Usuario u");
+            Query consulta = session.createQuery("SELECT u.id, u.username FROM Usuario u");
             lista = consulta.list();
         }
         catch(HibernateException he){
@@ -162,7 +162,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         Usuario result = null;
         try {
             this.iniciaOperacion();
-            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
+            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("username", username));
             result = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
@@ -176,7 +176,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         Usuario usuario = null;
         try {
             this.iniciaOperacion();
-            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
+            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("username", username));
             usuario = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
@@ -193,7 +193,7 @@ public class UsuarioDAOImpl extends HibernateDaoSupport implements IDAO<Usuario>
         Usuario usuario = null;
         try {
             this.iniciaOperacion();
-            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("usuario", username));
+            Criteria criteria = session.createCriteria(Usuario.class).add(Restrictions.eq("username", username));
             usuario = (Usuario) criteria.uniqueResult();
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
