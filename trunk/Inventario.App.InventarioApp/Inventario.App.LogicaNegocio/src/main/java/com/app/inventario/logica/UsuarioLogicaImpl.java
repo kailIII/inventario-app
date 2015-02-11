@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class UsuarioLogicaImpl implements ILogica<Usuario> {
 
-    UsuarioDAOImpl usuarioDAO;
+    private UsuarioDAOImpl usuarioDAO;
     private jqGridModel<Usuario> modelo;
     private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
     private SaltSource saltSource;

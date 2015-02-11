@@ -14,7 +14,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         </session-management>
         
         <intercept-url pattern="/*" access="ROLE_ADMIN,ROLE_USER"/>
-        <form-login login-page="/login" default-target-url="/principal"
+        <form-login login-page="/login" default-target-url="/principal?success=1"
                     authentication-failure-handler-ref="customAuthenticationFailureHandler"
                     always-use-default-target="true"/>
         <logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
