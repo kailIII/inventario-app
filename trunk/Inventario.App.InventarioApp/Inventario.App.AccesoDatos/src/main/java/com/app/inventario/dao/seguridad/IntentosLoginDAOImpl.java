@@ -29,7 +29,7 @@ public class IntentosLoginDAOImpl extends HibernateDaoSupport {
             this.iniciaOperacion();
             IntentosLogin intento = this.obtenerIntentoLogin(usuario);
             if (intento == null) {
-                IntentosLogin intentoAux = new IntentosLogin(0, usuario, 1, new Date());
+                IntentosLogin intentoAux = new IntentosLogin(usuario, 1, new Date());
                 session.save(intentoAux);
             } else {
                 if (intento.getCantidadIntentos() < 3) {

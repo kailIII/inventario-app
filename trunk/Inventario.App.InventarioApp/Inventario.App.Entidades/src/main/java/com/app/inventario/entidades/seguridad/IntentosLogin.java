@@ -37,8 +37,7 @@ public class IntentosLogin implements Serializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Constructores">
-    public IntentosLogin(int id, String usuario, int cantidadIntentos, Date ultimoAcceso) {
-        this.id = id;
+    public IntentosLogin(String usuario, int cantidadIntentos, Date ultimoAcceso) {
         this.usuario = usuario;
         this.cantidadIntentos = cantidadIntentos;
         this.ultimoAcceso = ultimoAcceso;
