@@ -15,7 +15,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         
         <intercept-url pattern="/*" access="ROLE_ADMIN,ROLE_USER"/>
         <form-login login-page="/login" default-target-url="/principal"
-                    authentication-failure-handler-ref="exceptionTranslationFilter"
+                    authentication-failure-handler-ref="customAuthenticationFailureHandler"
                     always-use-default-target="true"/>
         <logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
     </http>
@@ -30,14 +30,18 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     </authentication-manager>-->
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="usuarioServicioAuth">
-           <password-encoder ref="passwordEncoder">
+            <password-encoder ref="passwordEncoder">
                 <salt-source ref="saltSource" />
             </password-encoder>
         </authentication-provider>
     </authentication-manager>
    
    
-    <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+    <beans:bean id="customAuthenticationFailureHandler" class="com.app.inventario.seguridad.CustomAuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/login?error=1"/>
+    </beans:bean>
+   
+    <!--<beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
         <beans:property name="exceptionMappings">
             <beans:props>
                 <beans:prop key="org.springframework.security.authentication.BadCredentialsException">/login?error=1</beans:prop>
@@ -46,7 +50,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
                 <beans:prop key="org.springframework.security.authentication.LockedException">/login?error=1</beans:prop>
             </beans:props>
         </beans:property>
-    </beans:bean>
+    </beans:bean>-->
     
     
     <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
