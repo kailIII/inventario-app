@@ -6,9 +6,11 @@
 package com.app.inventario.dao.seguridad;
 
 import com.app.inventario.entidades.seguridad.IntentosLogin;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -25,7 +27,24 @@ public class IntentosLoginDAOImpl extends HibernateDaoSupport {
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
         try {
             this.iniciaOperacion();
-            //session.save(intento);
+            IntentosLogin intento = this.obtenerIntentoLogin(usuario);
+            if (intento == null) {
+                IntentosLogin intentoAux = new IntentosLogin(0, usuario, 1, new Date());
+                session.save(intentoAux);
+            } else {
+                if (intento.getCantidadIntentos() < 3) {
+                    Query query = session.createQuery("UPDATE IntentosLogin SET cantidadIntentos = :cantidadIntentos, ultimoAcceso = :ultimoAcceso  WHERE usuario = :username");
+                    query.setInteger("cantidadIntentos", intento.getCantidadIntentos() + 1);
+                    query.setDate("ultimoAcceso", new Date());
+                    query.setString("username", usuario);
+                    query.executeUpdate();
+                }
+                else if(intento.getCantidadIntentos() + 1 == 3){
+                    Query query = session.createQuery("UPDATE Usuario SET noBloqueado = false WHERE username = :usuario");
+                    query.setParameter("usuario", intento.getUsuario());
+                    query.executeUpdate();
+                }
+            }
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
         } finally {
@@ -45,7 +64,10 @@ public class IntentosLoginDAOImpl extends HibernateDaoSupport {
     public IntentosLogin obtenerIntentoLogin(String usuario) throws HibernateException {
         try {
             this.iniciaOperacion();
-            //session.save(intento);
+            Query query = session.createQuery("FROM IntentosLogin il WHERE il.usuario = :username ");
+            query.setParameter("username", usuario);
+            IntentosLogin intentos = (IntentosLogin) query.list().get(0);
+            return intentos;
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
         } finally {
@@ -56,7 +78,7 @@ public class IntentosLoginDAOImpl extends HibernateDaoSupport {
     private boolean usuarioExiste(String usuario) throws HibernateException {
         try {
             this.iniciaOperacion();
-            //session.save(intento);
+
         } catch (HibernateException he) {
             this.manejaExcepcion(he);
         } finally {
