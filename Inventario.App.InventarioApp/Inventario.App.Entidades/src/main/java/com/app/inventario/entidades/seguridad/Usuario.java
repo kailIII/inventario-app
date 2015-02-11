@@ -42,9 +42,9 @@ public class Usuario implements Serializable, UserDetails {
     @Column(name = "CEDULA", unique = true, nullable = false)
     private int cedula;
     @Column(name = "USUARIO", unique = true, nullable = false)
-    private String usuario;
+    private String username;
     @Column(name = "CONTRASENA", nullable = false)
-    private String contrasena;
+    private String password;
     @Transient
     private String confirmarContrasena;
     @Column(name = "CORREO")
@@ -58,10 +58,10 @@ public class Usuario implements Serializable, UserDetails {
     private String rol;
     @Column(name = "HABILITADO")
     private boolean habilitado;
-    @Column(name = "EXPIRADO")
-    private boolean expirado;
-    @Column(name = "BLOQUEADO")
-    private boolean bloqueado;
+    @Column(name = "NOEXPIRADO")
+    private boolean noExpirado;
+    @Column(name = "NOBLOQUEADO")
+    private boolean noBloqueado;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Factura> facturas;
     //</editor-fold>
@@ -76,11 +76,11 @@ public class Usuario implements Serializable, UserDetails {
     }
 
     public String getPassword() {
-        return this.contrasena;
+        return this.password;
     }
 
     public String getUsername() {
-        return this.usuario;
+        return this.username;
     }
     
     public String getConfirmarContrasena() {
@@ -108,11 +108,11 @@ public class Usuario implements Serializable, UserDetails {
     }
     
     public boolean isAccountNonExpired() {
-        return this.expirado;
+        return this.noExpirado;
     }
 
     public boolean isAccountNonLocked() {
-        return this.bloqueado;
+        return this.noBloqueado;
     }
 
     public boolean isCredentialsNonExpired() {
@@ -141,12 +141,12 @@ public class Usuario implements Serializable, UserDetails {
         this.cedula = cedula;
     }
 
-    public void setUsername(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setPassword(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setConfirmarContrasena(String confirmarContrasena) {
@@ -173,12 +173,12 @@ public class Usuario implements Serializable, UserDetails {
         this.habilitado = habilitado;
     }
 
-    public void setAccountNonExpired(boolean expirado) {
-        this.expirado = expirado;
+    public void setAccountNonExpired(boolean noExpirado) {
+        this.noExpirado = noExpirado;
     }
 
-    public void setAccountNonLocked(boolean bloqueado) {
-        this.bloqueado = bloqueado;
+    public void setAccountNonLocked(boolean noBloqueado) {
+        this.noBloqueado = noBloqueado;
     }
 
     public void setFacturas(List<Factura> facturas) {

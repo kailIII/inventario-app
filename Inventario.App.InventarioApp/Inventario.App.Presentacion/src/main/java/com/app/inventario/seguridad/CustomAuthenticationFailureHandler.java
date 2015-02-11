@@ -26,6 +26,8 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         super.onAuthenticationFailure(request, response, exception);
+        
+        String username = (String)exception.getAuthentication().getPrincipal();
         if (exception.getClass().isAssignableFrom(UsernameNotFoundException.class)) {
             System.out.println("Usuario no encontrado");
         } else if (exception.getClass().isAssignableFrom(DisabledException.class)) {
