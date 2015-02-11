@@ -120,6 +120,17 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd"
     <bean id="familiaServicio" class="com.app.inventario.servicio.FamiliaServicioImpl">  
     </bean>
     
+    
+    <!-- Beans utilizados para todo el flujo con las entidades IntentosLogin -->
+    <bean id="intentosLoginDAO" class="com.app.inventario.dao.seguridad.IntentosLoginDAOImpl">
+    </bean>
+    
+    <bean id="intentosLoginLogica" class="com.app.inventario.logica.seguridad.IntentosLoginLogicaImpl">  
+    </bean>
+    
+    <bean id="intentosLoginServicio" class="com.app.inventario.servicio.seguridad.IntentosLoginServicioImpl">  
+    </bean>
+    
     <!-- Controladores que utilizan la capa de servicio o fachadas -->
     <bean id="controlador" class="com.app.inventario.controlador.Controlador">
     </bean>

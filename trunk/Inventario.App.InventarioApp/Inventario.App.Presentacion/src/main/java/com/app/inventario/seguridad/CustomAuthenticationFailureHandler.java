@@ -24,7 +24,7 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private IntentosLoginServicioImpl intentosLogin;    
+    private IntentosLoginServicioImpl intentosLoginServicio;    
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         super.onAuthenticationFailure(request, response, exception);
@@ -37,19 +37,20 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         } else if (exception.getClass().isAssignableFrom(LockedException.class)) {
             System.out.println("Usuario Bloqueado");
         } else if (exception.getClass().isAssignableFrom(BadCredentialsException.class)) {
-            intentosLogin.actualizarIntentosFallidos(username);
+            intentosLoginServicio.actualizarIntentosFallidos(username);
             System.out.println("Contraseña Incorrecta");
         } else if (exception.getClass().isAssignableFrom(CredentialsExpiredException.class)) {
             System.out.println("Contraseña expirada");
         }
     }
-    
-    
-    public IntentosLoginServicioImpl getIntentosLogin() {
-        return intentosLogin;
+
+    public IntentosLoginServicioImpl getIntentosLoginServicio() {
+        return intentosLoginServicio;
     }
 
-    public void setIntentosLogin(IntentosLoginServicioImpl intentosLogin) {
-        this.intentosLogin = intentosLogin;
+    public void setIntentosLoginServicio(IntentosLoginServicioImpl intentosLoginServicio) {
+        this.intentosLoginServicio = intentosLoginServicio;
     }
+    
+    
 }
