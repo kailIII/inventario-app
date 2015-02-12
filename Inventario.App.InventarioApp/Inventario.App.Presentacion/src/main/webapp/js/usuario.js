@@ -252,4 +252,11 @@ $(document).ready(function () {
         emptyrecords: "No hay datos disponibles"
     });
 
+    /*Plugin jqGrid responsive*/
+    $(window).on("resize", function () {
+        var $grid = $("#list"),
+                newWidth = $grid.closest(".ui-jqgrid").parent().width();
+        $grid.jqGrid("setGridWidth", newWidth, true);
+    });
+
 });
