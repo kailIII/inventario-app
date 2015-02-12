@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -26,7 +26,7 @@ public class IntentosLoginDAOImpl extends HibernateDaoSupport {
 
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
         try {
-            this.iniciaOperacion();
+            //this.iniciaOperacion();
             IntentosLogin intento = this.obtenerIntentoLogin(usuario);
             if (intento == null) {
                 IntentosLogin intentoAux = new IntentosLogin(usuario, 1, new Date());

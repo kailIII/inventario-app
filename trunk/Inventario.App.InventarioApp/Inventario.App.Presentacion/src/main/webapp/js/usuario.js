@@ -52,10 +52,10 @@ $(document).ready(function () {
                         opt.selected = false;
                     }
                 }
-                if (usuario.habilitado) {
-                    $("#habilitadoAct").prop("checked", usuario.habilitado);
+                if (usuario.enabled) {
+                    $("#habilitadoAct").prop("checked", usuario.enabled);
                 } else {
-                    $("#noHabilitadoAct").prop("checked", !usuario.habilitado);
+                    $("#noHabilitadoAct").prop("checked", !usuario.enabled);
                 }
                 $("#modificar-usuario").show("slow");
             },

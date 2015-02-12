@@ -10,15 +10,15 @@ import com.app.inventario.entidades.seguridad.IntentosLogin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author eperez
  */
 public class IntentosLoginLogicaImpl {
-    private IntentosLoginDAOImpl intentosLoginDAO;
-    
-    
+    @Autowired
+    private IntentosLoginDAOImpl intentosLoginDAO = new IntentosLoginDAOImpl();
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
         try{
             intentosLoginDAO.actualizarIntentosFallidos(usuario);
@@ -54,7 +54,5 @@ public class IntentosLoginLogicaImpl {
 
     public void setIntentosLoginDAO(IntentosLoginDAOImpl intentosLoginDAO) {
         this.intentosLoginDAO = intentosLoginDAO;
-    }
-    
-    
+    }    
 }

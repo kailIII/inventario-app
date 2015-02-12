@@ -10,13 +10,15 @@ import com.app.inventario.logica.seguridad.IntentosLoginLogicaImpl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author eperez
  */
 public class IntentosLoginServicioImpl {
-    private IntentosLoginLogicaImpl intentosLoginLogica;
+    
+    private IntentosLoginLogicaImpl intentosLoginLogica = new IntentosLoginLogicaImpl();
 
     
     public void actualizarIntentosFallidos(String usuario) throws HibernateException {
