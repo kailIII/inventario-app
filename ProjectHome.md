@@ -1,0 +1,1 @@
+Aplicación web para controlar el inventario de alguna organización
